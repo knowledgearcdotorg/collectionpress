@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JCar" default="help" basedir=".">
+    <property   file="build.properties"/>
+    <property   name="package.dest" value="${src}/build"/>
+
+    <target name="deploy" description="Updates plugins in the configured Wordpress site.">
+        <delete includeemptydirs="false">
+            <fileset dir="${path.wp}/wp-content/plugins/collectionpress/" includes="**/*"/>
+        </delete>
+
+        <copy todir="${path.wp}">
+            <fileset dir="${src}/">
+                <include name="wp-content/**"/>
+            </fileset>
+        </copy>
+    </target>
+</project>
