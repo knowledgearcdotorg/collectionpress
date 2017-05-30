@@ -19,7 +19,7 @@ class CollectionPress_ShortCode
 
     public function list_recent($author)
     {
-        $response = wp_remote_get('http://archive.dspace-demo.knowledgearc.net/rest/discover.json?q=author:"'.$author.'"');
+        $response = wp_remote_get($this->get_url('discover.json?q=author:"'.$author.'"'));
 
         $response = json_decode(wp_remote_retrieve_body($response));
 
@@ -30,5 +30,14 @@ class CollectionPress_ShortCode
         }
 
         echo "</ul>";
+    }
+
+    public function get_url($endpoint)
+    {
+        $options = collectionpress_settings();
+
+        $url = $options['rest_url'];
+
+        return $url."/".$endpoint;
     }
 }
