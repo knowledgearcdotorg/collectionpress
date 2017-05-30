@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="JCar" default="help" basedir=".">
     <property   file="build.properties"/>
+    <property   name="path.wp.plugins" value="${path.wp}/wp-content/plugins/collectionpress/"/>
     <property   name="package.dest" value="${src}/build"/>
 
     <target name="deploy" description="Updates plugins in the configured Wordpress site.">
         <delete includeemptydirs="false">
-            <fileset dir="${path.wp}/wp-content/plugins/collectionpress/" includes="**/*"/>
+            <fileset dir="${path.wp.plugins}" includes="**/*"/>
         </delete>
 
-        <copy todir="${path.wp}">
+        <copy todir="${path.wp.plugins}">
             <fileset dir="${src}/">
-                <include name="wp-content/**"/>
+                <include name="**/*.php"/>
             </fileset>
         </copy>
     </target>
