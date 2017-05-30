@@ -12,6 +12,16 @@ if (!function_exists('add_shortcode')) {
     exit;
 }
 
-require_once(dirname(__FILE__).'/class.collectionpress.php' );
 
-add_shortcode('collectionpress', array('CollectionPress', 'render'));
+$dir = dirname( __FILE__ );
+
+require_once($dir.'/includes/class-collectionpress.php' );
+
+if (is_admin()) {
+
+} else {
+    require_once($dir.'/frontend/class-collectionpress-shortcode.php');
+}
+
+$shortcode = new CollectionPress_Shortcode();
+add_shortcode('collectionpress', array($shortcode, 'render'));
