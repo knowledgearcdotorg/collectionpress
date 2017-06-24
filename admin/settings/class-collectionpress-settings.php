@@ -19,7 +19,7 @@ class CollectionPress_Settings
     {
         $settings = $this->get_all();
         $value = ! empty( $settings[$key]) ? $settings[$key] : $default;
-        return apply_filters('fp5_setting_'.$key, $value);
+        return apply_filters('collectionpress_setting_'.$key, $value);
     }
 
     public function register()
@@ -41,25 +41,44 @@ class CollectionPress_Settings
             'collectionpress_settings'                          // Settings page slug
         );
 
-        /* Create settings field */
+        /* Create settings - rest url */
         add_settings_field(
-            'rest_url',       // Field ID
-            'Rest Url',       // Field title
-            array($this, "text_callback"), // Section callback function
-            'collectionpress_settings',                    // Settings page slug
-            'collectionpress_settings_general',               // Section ID
-                                array(
-                        'id'        => "rest_url",
-                        'label_for' => '', // WP Core args
-                        'class'     => '', // WP Core args
-                        'desc'      => '',
-                        'name'      => "rest_url",
-                        'section'   => "collectionpress_settings_general",
-                        'size'      => null,
-                        'options'   => isset( $setting_config['options'] ) ? $setting_config['options'] : '',
-                        'value'     => $settings["rest_url"]
-                    )
+            'rest_url',
+            'Rest Url',
+            array($this, "text_callback"),
+            'collectionpress_settings',
+            'collectionpress_settings_general',
+            array(
+                'id'        =>"rest_url",
+                'label_for' =>'',
+                'class'     =>'',
+                'desc'      =>'',
+                'name'      =>"rest_url",
+                'section'   =>"collectionpress_settings_general",
+                'size'      =>null,
+                'options'   =>isset($setting_config['options']) ? $setting_config['options'] : '',
+                'value'     =>$settings["rest_url"]
+            )
+        );
 
+        /* Create settings - rest url */
+        add_settings_field(
+            'item_url',
+            'Item Url',
+            array($this, "text_callback"),
+            'collectionpress_settings',
+            'collectionpress_settings_general',
+            array(
+                'id'        =>"item_url",
+                'label_for' =>'',
+                'class'     =>'',
+                'desc'      =>'',
+                'name'      =>"item_url",
+                'section'   =>"collectionpress_settings_general",
+                'size'      =>null,
+                'options'   =>isset($setting_config['options']) ? $setting_config['options'] : '',
+                'value'     =>$settings["item_url"]
+            )
         );
     }
 
