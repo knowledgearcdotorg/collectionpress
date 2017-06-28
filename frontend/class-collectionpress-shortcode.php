@@ -16,13 +16,13 @@ class CollectionPress_ShortCode
     }
 
     public function include_template_file($fileName, $response){
-	    extract($response);
-	    if(file_exists(locate_template('collectionpress/'.$fileName))){
+        extract($response);
+	if(file_exists(locate_template('collectionpress/'.$fileName))){
             include(locate_template('collectionpress/'.$fileName));
-	    }else{
-	        include(plugin_dir_path( __FILE__ ) . 'template/'.$fileName);
-		}
+	}else{
+	    include(plugin_dir_path( __FILE__ ) . 'template/'.$fileName);
 	}
+    }
 	
     public function get_items($author)
     {
