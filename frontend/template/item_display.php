@@ -16,15 +16,13 @@
                 <?php  if ($handle = $doc->handle): ?>
                     <?php $url = $options['item_url']."/".$handle; ?>
                     <?php $title = sprintf('<a href="%s" target="_blank">%s</a>', $url, $title); ?>
-<<<<<<< HEAD
                 <?php endif; ?>
                 <?php $parts[] = $title; ?>
             <?php endif; ?>
-=======
+
                 <?php endif;?>
                 <?php $parts[] = $title; ?>
             <?php endif;?>
->>>>>>> refs/remotes/knowledgearcdotorg/master
 
             <?php if (is_array($publisher = $doc->{"dc.publisher"})): ?>
                 <?php $parts[] = array_shift($publisher); ?>
@@ -36,9 +34,8 @@
             
             <?php echo implode(", ", $parts); ?>            
         </li>
-<<<<<<< HEAD
+
     <?php endforeach; ?>
-=======
->>>>>>> refs/remotes/knowledgearcdotorg/master
+
 </ul>
 
