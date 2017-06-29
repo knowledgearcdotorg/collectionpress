@@ -42,10 +42,9 @@ class CollectionPress_ShortCode
 
         $response = json_decode(wp_remote_retrieve_body($response));
 
-        $this->include_template_file("item_display.php",$response);
-        
+        $this->include_template_file("item_display.php",$response);   
     }
-    
+
     public function get_url($endpoint)
     {
         $options = collectionpress_settings();
