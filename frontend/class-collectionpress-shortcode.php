@@ -15,14 +15,19 @@ class CollectionPress_ShortCode
         }
     }
 
-    public function include_template_file($fileName, $response){
+    public function include_template_file($fileName, $response)
+    {
         extract($response);
-	if(file_exists(locate_template('collectionpress/'.$fileName))){
+        if(file_exists(locate_template('collectionpress/'.$fileName))):
+        
             include(locate_template('collectionpress/'.$fileName));
-	}else{
-	    include(plugin_dir_path( __FILE__ ) . 'template/'.$fileName);
+            
+	    else:
+        
+            include(plugin_dir_path( __FILE__ ) . 'template/'.$fileName);
+            
+        endif;
 	}
-    }
 	
     public function get_items($author)
     {
@@ -37,7 +42,7 @@ class CollectionPress_ShortCode
 
         $response = json_decode(wp_remote_retrieve_body($response));
 
-		$this->include_template_file("item_display.php",$response);
+        $this->include_template_file("item_display.php",$response);
         
     }
     
