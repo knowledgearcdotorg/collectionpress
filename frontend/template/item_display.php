@@ -7,7 +7,7 @@
  * */
 ?>
 <ul>
-    <?php foreach($response->response->docs as $doc):?>
+    <?php foreach($response->response->docs as $doc): ?>
     	<?php $parts = array();?>
         <li>
             <?php if (is_array($title = $doc->title)): ?>
