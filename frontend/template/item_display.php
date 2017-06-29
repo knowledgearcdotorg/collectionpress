@@ -16,10 +16,6 @@
                 <?php  if ($handle = $doc->handle): ?>
                     <?php $url = $options['item_url']."/".$handle; ?>
                     <?php $title = sprintf('<a href="%s" target="_blank">%s</a>', $url, $title); ?>
-                <?php endif; ?>
-                <?php $parts[] = $title; ?>
-            <?php endif; ?>
-
                 <?php endif;?>
                 <?php $parts[] = $title; ?>
             <?php endif;?>
@@ -32,10 +28,8 @@
                 <?php $parts[] = array_shift($dateIssued); ?>
             <?php endif; ?>
             
-            <?php echo implode(", ", $parts); ?>            
+            <?php echo implode(", ", $parts); ?>
         </li>
-
     <?php endforeach; ?>
-
 </ul>
 
