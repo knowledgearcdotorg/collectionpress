@@ -28,7 +28,8 @@
                 <?php $parts[] = array_shift($dateIssued); ?>
             <?php endif; ?>
             
-            <?php echo implode(", ", $parts); ?>            
+            <?php echo implode(", ", $parts); ?>
         </li>
+    <?php endforeach; ?>
 </ul>
 
