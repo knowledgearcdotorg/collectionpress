@@ -15,6 +15,20 @@ class CollectionPress_ShortCode
         }
     }
 
+    public function include_template_file($fileName, $response)
+    {
+        extract($response);
+        if(file_exists(locate_template('collectionpress/'.$fileName))):
+        
+            include(locate_template('collectionpress/'.$fileName));
+            
+	    else:
+        
+            include(plugin_dir_path( __FILE__ ) . 'template/'.$fileName);
+            
+        endif;
+	}
+	
     public function get_items($author)
     {
         $options = collectionpress_settings();
@@ -28,39 +42,7 @@ class CollectionPress_ShortCode
 
         $response = json_decode(wp_remote_retrieve_body($response));
 
-        echo "<ul>";
-
-        foreach ($response->response->docs as $doc) {
-            $parts = array();
-
-            echo "<li>";
-
-            if (is_array($title = $doc->title)) {
-                $title = array_shift($title);
-
-                if ($handle = $doc->handle) {
-                    $url = $options['item_url']."/".$handle;
-
-                    $title = sprintf('<a href="%s" target="_blank">%s</a>', $url, $title);
-                }
-
-                $parts[] = $title;
-            }
-
-            if (is_array($publisher = $doc->{"dc.publisher"})) {
-                $parts[] = array_shift($publisher);
-            }
-
-            if (is_array($dateIssued = $doc->dateIssued)) {
-                $parts[] = array_shift($dateIssued);
-            }
-
-            echo implode(", ", $parts);
-
-            echo "</li>";
-        }
-
-        echo "</ul>";
+        $this->include_template_file("item_display.php",$response);   
     }
 
     public function get_url($endpoint)
