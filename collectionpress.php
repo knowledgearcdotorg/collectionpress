@@ -15,6 +15,8 @@ if (!function_exists('add_shortcode')) {
 
 $dir = dirname( __FILE__ );
 
+define( 'CP_TEMPLATE_PATH', plugin_dir_path( __FILE__ ).'frontend/template' );
+
 require_once($dir.'/includes/class-collectionpress.php');
 require_once($dir.'/admin/settings/class-collectionpress-settings.php');
 require_once($dir.'/includes/functions.php');
