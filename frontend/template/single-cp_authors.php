@@ -1,7 +1,7 @@
 <?php
 /**
  * The template for displaying single CollectionPress authors
- * You can add this file to theme folder by creating collectionpress folder and paste this file  there.
+ * You can add this file to theme folder and paste this file  there.
  * Path will be "<theme_name>/single-cp_authors.php"
  * @author Avinash
  */
