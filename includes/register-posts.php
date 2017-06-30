@@ -6,15 +6,22 @@
 if (!defined('WPINC')) {
     die;
 }
+
+
 class CP_Author
 {
+
     private $nonce = 'cp_author_nonce';
     
     public function __construct()
     {
         add_action( 'init', array( $this, 'register_post_author' ) );
         add_filter('template_include', array( $this,'cp_custom_single' ) );
+        add_filter( 'enter_title_here', array( $this,'cp_custom_title' ) );
+        add_filter( 'page_template', array( $this,'cp_author_template' ) );
+        
     }
+    
     public function register_post_author()
     {
         $labels = array(
@@ -34,6 +41,7 @@ class CP_Author
             'not_found'          => __( 'Nothing found.' ),
             'not_found_in_trash' => __( 'Nothing found in Trash.' )
             );
+
         $args = array(
             'labels'             => $labels,
             'public'             => true,
@@ -52,6 +60,7 @@ class CP_Author
         register_post_type( 'cp_authors', $args );
         
     }
+
     public function cp_custom_single( $template )
     {
         $post_types = array('cp_authors');
@@ -62,7 +71,32 @@ class CP_Author
                 $template = CP_TEMPLATE_PATH.'/single-cp_authors.php';
             }
         }
+
         return $template;
     }
-  }
+
+    public function cp_custom_title( $title )
+    {
+
+        $screen = get_current_screen();
+
+        if ( 'cp_authors' == $screen->post_type ){
+            $title = 'Enter Author Name here';
+        }
+
+        return $title;
+    }
+
+    public function cp_author_template($page_template)
+    {
+        if ( is_page( 'author-list' ) ) {
+            $templatefilename = 'cp_author_list.php';
+            $page_template = CP_TEMPLATE_PATH.'/'.$templatefilename;
+        }
+        return $page_template;
+    
+    } 
+}
+
 return new CP_Author();
+
