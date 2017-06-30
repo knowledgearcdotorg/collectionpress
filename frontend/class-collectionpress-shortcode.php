@@ -17,8 +17,7 @@ class CollectionPress_ShortCode
 
     public function include_template_file($fileName, $response)
     {
-        extract($response);
-
+       
         if (file_exists(locate_template('collectionpress/'.$fileName))) {
             include(locate_template('collectionpress/'.$fileName));
 	    } else {
