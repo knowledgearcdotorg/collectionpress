@@ -18,6 +18,8 @@ $dir = dirname( __FILE__ );
 require_once($dir.'/includes/class-collectionpress.php');
 require_once($dir.'/admin/settings/class-collectionpress-settings.php');
 require_once($dir.'/includes/functions.php');
+require_once($dir.'/includes/import-from-dspace.php');
+require_once($dir.'/includes/register-posts.php');
 
 $settings = new CollectionPress_Settings;
 add_action('admin_init', array($settings, 'register'));
