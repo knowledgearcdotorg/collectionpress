@@ -19,7 +19,9 @@ class CP_Author
         add_filter('template_include', array( $this,'cp_custom_single' ) );
         add_filter( 'enter_title_here', array( $this,'cp_custom_title' ) );
         add_filter( 'page_template', array( $this,'cp_author_template' ) );
-        add_shortcode( 'AuthorList', array($this,'cp_author_list'));
+        add_shortcode( 'AuthorList', array( $this,'cp_author_list'));
+        add_action( 'add_meta_boxes', array( $this,'cp_author_meta_box' ) );
+        
     }
     
     public function register_post_author()
@@ -83,7 +85,7 @@ class CP_Author
         if ( 'cp_authors' == $screen->post_type ){
             $title = 'Enter Author Name here';
         }
-
+        
         return $title;
     }
 
@@ -160,6 +162,82 @@ class CP_Author
         <?php endif; ?>        
         <?php
         return ob_get_clean();
+    }
+
+    public function cp_author_meta_box(){
+        add_meta_box( 'author-info', __('Author Info' ),  array( $this, 'cp_author_info_box'), "cp_authors", 'normal', 'high');	
+    }
+    
+    public function cp_author_info_box(){
+        global $pagenow;
+        global $typenow;
+        wp_enqueue_script("jquery-ui-autocomplete");
+        //~ cp_authorspost-new.phpSs
+        ?>
+        <style>
+        .ui-front{z-index:9999!important;}
+        </style>
+        <script type="text/javascript">
+            jQuery(document).ready(function($){
+                var ajaxurl = "<?php echo admin_url( 'admin-ajax.php' );?>";
+                 var title = $("#title");
+                title.addClass('search_authors')
+                title.keypress(function(event){
+                    if (event.keyCode == 10 || event.keyCode == 13)
+                        event.preventDefault();
+                });
+
+                title.keyup(function(){
+                   title.autocomplete({
+                        source:ajaxurl+"?action=cp_get_author_ajax&process=true&nextNonce=SearchAuthor",
+                        minLength:3,
+                        select: function( event, ui ) {
+                            event.preventDefault();
+                            var com_label=ui.item.label;
+                            title.val(com_label);
+                        },
+                    });			
+                });
+            });
+        </script>
+            
+        <?php 
+    }
+
+    public function cp_get_author_by_api(){
+        if(isset($_REQUEST) && isset($_REQUEST['process']) && $_REQUEST['process']==true
+            && isset($_REQUEST['nextNonce']) && $_REQUEST['nextNonce']=='SearchAuthor')
+        {
+            $search_term = strtolower($_REQUEST['term']);  
+            $result=[];
+            $collection_shortcode = new CollectionPress_ShortCode();
+            $options = collectionpress_settings();
+
+            $args = array(
+                'timeout'=>30,
+                'user-agent'=>'CollectionPress; '.home_url()
+            );
+
+            $response = wp_remote_get($collection_shortcode->get_url('discover.json?q=author:"'.$author.'"&rows=0&facet=true&facet.field=author_keyword'), $args);
+
+            $response = json_decode(wp_remote_retrieve_body($response));
+            if(count($response->facet_counts->facet_fields)){
+                $author_keyword = array_filter($response->facet_counts->facet_fields->author_keyword);
+                foreach($author_keyword as $author){
+                    $result[] = array(
+                            'label'=> html_entity_decode($author),
+                            );
+                }
+                echo json_encode($result);
+            }else{
+                $result[] = array(
+						'label'=> "Oops our bad ! No match available.",
+						);
+				echo json_encode($result);
+            }
+        }
+        else  echo 1;
+        wp_die();
     }
 }
 
