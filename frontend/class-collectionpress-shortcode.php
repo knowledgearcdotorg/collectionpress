@@ -26,8 +26,7 @@ class CollectionPress_ShortCode
     }
 
     public function include_template_file($fileName, $response)
-    {
-
+    {        
         if (file_exists(locate_template('collectionpress/'.$fileName))) {
             include(locate_template('collectionpress/'.$fileName));
         } else {
@@ -51,12 +50,10 @@ class CollectionPress_ShortCode
         $this->include_template_file("item_display.php",$response);
     }
 
-    public function get_authors($limit)
-    {
-        ob_start();
+    public function get_authors($limit){
         $posts_per_page = $limit;
 
-        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+        $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
         $author_results = new WP_Query(array(
                         "post_type"      =>"cp_authors",
                         "post_status"    =>"publish",
@@ -64,7 +61,7 @@ class CollectionPress_ShortCode
                         "order"          =>"DESC",
                         "posts_per_page" =>$posts_per_page,
                         "cache_results"  => false,
-                        "paged"          => $paged));
+                        "paged"          => $paged) );
         $found_posts =$author_results->found_posts;
         $total_pages =$author_results->max_num_pages;
         if ($author_results->have_posts()) :
@@ -82,43 +79,61 @@ class CollectionPress_ShortCode
                     $thumbnail = get_thumbnail($width, $height, $classtext, $titletext, $titletext, false, 'Blogimage');
                     $thumb = $thumbnail["thumb"];
 
-                    et_divi_post_format_content();
-                    ?>
-                    <h2 class="entry-title"><a href="<?php echo  get_the_permalink(); ?>"><?php echo $titletext; ?></a></h2>
-
-                    <?php if ($thumb) : ?>
-                        <div class="post-thumbnail">
-                            <img src="<?php echo $thumb?>" class="<?php echo $classtext?>" title="<?php echo $titletext?>" />
-                        </div>
-                    <?php endif; ?>
-
-
-                    <div class="entry-content">
+                    et_divi_post_format_content();               
+                        if ( ! in_array( $post_format, array( 'link', 'audio', 'quote' ) ) ) {
+                            if ( 'video' === $post_format && false !== ( $first_video = et_get_first_video() ) ) :
+                                printf(
+                                    '<div class="et_main_video_container">
+                                        %1$s
+                                    </div>',
+                                    $first_video
+                                );
+                            elseif ( ! in_array( $post_format, array( 'gallery' ) ) && 'on' === et_get_option( 'divi_thumbnails_index', 'on' ) && '' !== $thumb ) : ?>
+                                <a href="<?php the_permalink(); ?>">
+                                    <?php print_thumbnail( $thumb, $thumbnail["use_timthumb"], $titletext, $width, $height ); ?>
+                                </a>
                         <?php
-                        the_content();
-                        ?>
-                    </div>
-                </article><!-- #post-## -->
+                            elseif ( 'gallery' === $post_format ) :
+                                et_pb_gallery_images();
+                            endif;
+                        } ?>
 
+                    <?php if ( ! in_array( $post_format, array( 'link', 'audio', 'quote' ) ) ) : ?>
+                        <?php if ( ! in_array( $post_format, array( 'link', 'audio' ) ) ) : ?>
+                            <h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                        <?php endif; ?>
+
+                        <?php
+                            et_divi_post_meta();
+
+                            if ( 'on' !== et_get_option( 'divi_blog_style', 'false' ) || ( is_search() && ( 'on' === get_post_meta( get_the_ID(), '_et_pb_use_builder', true ) ) ) ) {
+                                truncate_post( 270 );
+                            } else {
+                                the_content();
+                            }
+                        ?>
+                    <?php endif; ?>
+                </article> <!-- .et_pb_post -->
+        
             <?php endwhile; ?>
             <div class="pagination">
-                <?php
-                $big = 999999999; // need an unlikely integer
-                echo paginate_links(array(
-                    'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-                    'format'    =>'?paged=%#%',
-                    'prev_text' =>__('&laquo;'),
-                    'next_text' =>__('&raquo;'),
-                    'current'   =>max(1, get_query_var('paged')),
-                    'total'     =>$total_pages
-                ));
+                <?php               
+                    $big = 999999999; // need an unlikely integer
+                    echo paginate_links( array(
+                        'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                        'format'    =>'?paged=%#%',
+                        'prev_text' =>__('&laquo;'),
+                        'next_text' =>__('&raquo;'),
+                        'current'   =>max(1, get_query_var('paged')),
+                        'total'     =>$total_pages
+                    ) );
                 ?>
             </div>
         <?php endif; ?>
         <?php
         //~ return ob_get_clean();
     }
-
+    
     public function get_url($endpoint)
     {
         $options = collectionpress_settings();
