@@ -19,7 +19,7 @@ class CP_Author
         add_filter('template_include', array( $this,'cp_custom_single' ) );
         add_filter( 'enter_title_here', array( $this,'cp_custom_title' ) );
         add_filter( 'page_template', array( $this,'cp_author_template' ) );
-        add_shortcode( 'AuthorList', array( $this,'cp_author_list'));
+        //~ add_shortcode( 'AuthorList', array( $this,'cp_author_list') );
         add_action( 'add_meta_boxes', array( $this,'cp_author_meta_box' ) );
         
     }
@@ -101,67 +101,7 @@ class CP_Author
 
     public function cp_author_list($atts)
     {
-        ob_start();
-        if(isset($atts['posts_per_page']))
-            $posts_per_page = $atts['posts_per_page'];
-        else
-            $posts_per_page = get_option('posts_per_page');
-
-        $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
-        $author_results = new WP_Query(array(
-                        "post_type"      =>"cp_authors",
-                        "post_status"    =>"publish",
-                        "orderby"        =>"modified",
-                        "order"          =>"DESC",
-                        "posts_per_page" =>$posts_per_page,
-                        "cache_results"  => false,
-                        "paged"          => $paged,
-                        )	);
-        $found_posts =$author_results->found_posts;
-        $total_pages =$author_results->max_num_pages;
-        if($author_results->have_posts()):
-            while ( $author_results->have_posts() ) : $author_results->the_post(); ?>
-
-                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-                    <?php get_the_title(); ?>                   
-
-                    <?php
-                        $author_image='';
-                        if(has_post_thumbnail()){
-                            $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(),'thumbnail');
-                            $author_image = $image_url[0];
-                        }
-                    ?>
-                    <?php if($author_image):?>
-                    <div class="post-thumbnail">
-                        <img src="<?php echo $author_image?>" />
-                    </div>
-                    <?php endif; ?>
-
-                    <div class="entry-content">
-                        <?php the_content(); ?>
-                    </div><!-- .entry-content -->
-
-                </article><!-- #post-## -->
-                
-            <?php endwhile; ?>
-            <div class="pagination">
-                <?php               
-                    $big = 999999999; // need an unlikely integer
-                    echo paginate_links( array(
-                        'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-                        'format' => '?paged=%#%',
-                        'prev_text' => __('&laquo;'),
-                        'next_text' => __('&raquo;'),
-                        'current' => max( 1, get_query_var('paged') ),
-                        'total' => $total_pages
-                    ) );
-                ?>
-            </div>
-        <?php endif; ?>        
-        <?php
-        return ob_get_clean();
+        
     }
 
     public function cp_author_meta_box(){
