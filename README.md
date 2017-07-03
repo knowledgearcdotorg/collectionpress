@@ -25,14 +25,42 @@ http://myarchive.tld/handle
 
 The CollectionPress shortcode allows you to include DSpace item lists within blog posts, pages and other content which can parse shortcode.
 
-The basic CollectionPress shortcode looks like:
+The basic CollectionPress shortcode.
 
-[collectionpress]
+**Syntax:**
+
+[collectionpress list="authors|items"]
+
+**Params:**
+
+*list*
+
+The type of list to display. The default is "items".
 
 ## DSpace Items by Author
 
-To retrieve items by an author, use the author parameter. I.e.
+Lists the items associated with an author.
 
-[collectionpress author="Author Name"]
+**Syntax:**
+
+[collectionpress list="items" author="Author Name"]
+
+**Params:**
+
+*author*
 
 The author parameter must exactly match the author name in DSpace.
+
+## List Authors
+
+Lists all authors who have an Author Page.
+
+**Syntax:**
+
+[collectionpress list="authors" limit="1"]
+
+**Params:**
+
+*limit*
+
+The number of records to display per page.

@@ -13,10 +13,10 @@ if (!function_exists('add_shortcode')) {
 }
 
 
-$dir = dirname( __FILE__ );
+$dir = dirname(__FILE__);
 
-define( 'CP_TEMPLATE_PATH', plugin_dir_path( __FILE__ ).'frontend/template' );
-define( 'CP_JS_PATH', plugin_dir_url( __FILE__ ).'assets/js/' );
+define('CP_TEMPLATE_PATH', plugin_dir_path(__FILE__).'frontend/template');
+define('CP_JS_PATH', plugin_dir_url(__FILE__).'assets/js/');
 
 require_once($dir.'/includes/class-collectionpress.php');
 require_once($dir.'/admin/settings/class-collectionpress-settings.php');
@@ -33,10 +33,8 @@ if (is_admin()) {
     $admin = new CollectionPress_Admin;
     add_action('admin_menu', array($admin, 'get_menus'));
     $CP_Author = new CP_Author();
-	add_action( 'wp_ajax_cp_get_author_ajax', array($CP_Author, 'cp_get_author_by_api'));
+    add_action('wp_ajax_cp_get_author_ajax', array($CP_Author, 'cp_get_author_by_api'));
 } else {
-   
-
     $shortcode = new CollectionPress_Shortcode();
     add_shortcode('collectionpress', array($shortcode, 'render'));
 }
