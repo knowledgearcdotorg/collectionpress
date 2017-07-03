@@ -26,14 +26,13 @@ class CollectionPress_ShortCode
     }
 
     public function include_template_file($fileName, $response)
-    {
-       
+    {        
         if (file_exists(locate_template('collectionpress/'.$fileName))) {
             include(locate_template('collectionpress/'.$fileName));
-	    } else {
+        } else {
             include(plugin_dir_path(__FILE__).'template/'.$fileName);
         }
-	}
+    }
 
     public function get_items($author)
     {
@@ -62,28 +61,25 @@ class CollectionPress_ShortCode
                         "order"          =>"DESC",
                         "posts_per_page" =>$posts_per_page,
                         "cache_results"  => false,
-                        "paged"          => $paged,
-                        )	);
+                        "paged"          => $paged) );
         $found_posts =$author_results->found_posts;
         $total_pages =$author_results->max_num_pages;
-        if($author_results->have_posts()): ?>
-            <?php while ( $author_results->have_posts() ) : $author_results->the_post(); ?>
-                <?php $post_format = et_pb_post_format(); ?>
-                    <article id="post-<?php the_ID(); ?>" <?php post_class( 'et_pb_post' ); ?>>
+        if ($author_results->have_posts()) :
+            while ($author_results->have_posts()) : $author_results->the_post(); ?>
 
+                <article id="post-<?php the_ID(); ?>" <?php post_class('et_pb_post'); ?>>
                     <?php
-                        $thumb = '';
+                    $thumb = '';
 
-                        $width = (int) apply_filters( 'et_pb_index_blog_image_width', 1080 );
+                    $width = (int) apply_filters('et_pb_index_blog_image_width', 1080);
 
-                        $height = (int) apply_filters( 'et_pb_index_blog_image_height', 675 );
-                        $classtext = 'et_pb_post_main_image';
-                        $titletext = get_the_title();
-                        $thumbnail = get_thumbnail( $width, $height, $classtext, $titletext, $titletext, false, 'Blogimage' );
-                        $thumb = $thumbnail["thumb"];
+                    $height = (int) apply_filters('et_pb_index_blog_image_height', 675);
+                    $classtext = 'et_pb_post_main_image';
+                    $titletext = get_the_title();
+                    $thumbnail = get_thumbnail($width, $height, $classtext, $titletext, $titletext, false, 'Blogimage');
+                    $thumb = $thumbnail["thumb"];
 
-                        et_divi_post_format_content();
-
+                    et_divi_post_format_content();               
                         if ( ! in_array( $post_format, array( 'link', 'audio', 'quote' ) ) ) {
                             if ( 'video' === $post_format && false !== ( $first_video = et_get_first_video() ) ) :
                                 printf(
@@ -117,8 +113,6 @@ class CollectionPress_ShortCode
                             }
                         ?>
                     <?php endif; ?>
-                
-
                 </article> <!-- .et_pb_post -->
         
             <?php endwhile; ?>
@@ -126,16 +120,16 @@ class CollectionPress_ShortCode
                 <?php               
                     $big = 999999999; // need an unlikely integer
                     echo paginate_links( array(
-                        'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-                        'format' => '?paged=%#%',
-                        'prev_text' => __('&laquo;'),
-                        'next_text' => __('&raquo;'),
-                        'current' => max( 1, get_query_var('paged') ),
-                        'total' => $total_pages
+                        'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                        'format'    =>'?paged=%#%',
+                        'prev_text' =>__('&laquo;'),
+                        'next_text' =>__('&raquo;'),
+                        'current'   =>max(1, get_query_var('paged')),
+                        'total'     =>$total_pages
                     ) );
                 ?>
             </div>
-        <?php endif; ?>     
+        <?php endif; ?>
         <?php
         //~ return ob_get_clean();
     }

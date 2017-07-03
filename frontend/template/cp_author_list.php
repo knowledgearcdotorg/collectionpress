@@ -11,14 +11,13 @@ get_header();
 $posts_per_page = get_option("post_per_page");
 $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
 $author_results = new WP_Query(array(
-				"post_type"=>"cp_authors",
-				"post_status"=>"publish",
-				"orderby"=>"modified",
-				"order"=>"DESC",
-				'posts_per_page' =>$posts_per_page,
-				'cache_results'  => false,
-				'paged' => $paged,
-				)	);
+				"post_type"      =>"cp_authors",
+                "post_status"    =>"publish",
+                "orderby"        =>"modified",
+                "order"          =>"DESC",
+                "posts_per_page" =>$posts_per_page,
+                "cache_results"  => false,
+                "paged"          => $paged));
 $found_posts =$author_results->found_posts;
 $total_pages =$author_results->max_num_pages;
 ?>
@@ -78,8 +77,6 @@ $total_pages =$author_results->max_num_pages;
                                     }
                                 ?>
                             <?php endif; ?>
-                        
-
                         </article> <!-- .et_pb_post -->
                 
                     <?php endwhile; ?>
@@ -87,12 +84,12 @@ $total_pages =$author_results->max_num_pages;
                         <?php               
                             $big = 999999999; // need an unlikely integer
                             echo paginate_links( array(
-                                'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-                                'format' => '?paged=%#%',
-                                'prev_text' => __('&laquo;'),
-                                'next_text' => __('&raquo;'),
-                                'current' => max( 1, get_query_var('paged') ),
-                                'total' => $total_pages
+                                'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                                'format'    =>'?paged=%#%',
+                                'prev_text' =>__('&laquo;'),
+                                'next_text' =>__('&raquo;'),
+                                'current'   =>max(1, get_query_var('paged')),
+                                'total'     =>$total_pages
                             ) );
                         ?>
                     </div>
