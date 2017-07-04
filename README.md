@@ -64,3 +64,9 @@ Lists all authors who have an Author Page.
 *limit*
 
 The number of records to display per page.
+
+## Template Overriding
+
+CollectionPress output can be overridden in your Wordpress Theme.  
+  
+All templates are located in frontend/template. To override copy files from frontend/template to your theme's collectionpress directory then modify to meet your requirements.
