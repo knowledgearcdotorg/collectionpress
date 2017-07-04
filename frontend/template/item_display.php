@@ -5,6 +5,7 @@
  * You can add this file to theme folder by creating collectionpress folder and paste this file  there.
  * Path will be "<theme_name>/collectionpress/item_display.php"
  * */
+
 ?>
 <ul>
     <?php foreach($response->response->docs as $doc): ?>
@@ -20,7 +21,7 @@
                 <?php $parts[] = $title; ?>
             <?php endif; ?>
 
-            <?php if (is_array($publisher = $doc->{"dc.publisher"})): ?>
+            <?php if (is_array($publisher = &$doc->{"dc.publisher"})): ?>
                 <?php $parts[] = array_shift($publisher); ?>
             <?php endif; ?>
 
