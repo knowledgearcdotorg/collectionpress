@@ -32,4 +32,25 @@
         </li>
     <?php endforeach; ?>
 </ul>
-
+<?php if ($limit): ?>
+	<?php
+	$total_count	= $response->response->numFound;
+	$start_page 	= $response->response->start;
+	$limit 			= $response->responseHeader->params->rows;
+	$total_results	= count($response->response->docs);
+	$total_pages 	= ceil($total_count/$limit);
+	?>
+	<div class="pagination">
+	<?php               
+		$big = 999999999; // need an unlikely integer
+		echo paginate_links( array(
+			'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+			'format'    =>'?paged=%#%',
+			'prev_text' =>__('&laquo;'),
+			'next_text' =>__('&raquo;'),
+			'current'   =>max(1, get_query_var('paged')),
+			'total'     =>$total_pages
+		) );
+	?>
+	</div>
+<?php endif; ?>
