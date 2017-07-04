@@ -20,7 +20,7 @@
                 <?php $parts[] = $title; ?>
             <?php endif; ?>
 
-            <?php if (is_array($publisher = $doc->{"dc.publisher"})): ?>
+            <?php if (is_array($publisher = &$doc->{"dc.publisher"})): ?>
                 <?php $parts[] = array_shift($publisher); ?>
             <?php endif; ?>
 

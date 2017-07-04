@@ -10,7 +10,7 @@ class CollectionPress_ShortCode
 {
     public function render($atts)
     {
-        if (isset($atts["author"])) {
+        if (isset($atts["author"]) ) {
             $this->get_items($atts["author"]);
         }
 
@@ -23,15 +23,10 @@ class CollectionPress_ShortCode
         if (isset($atts['list']) && $atts['list']=="authors") {
             $this->get_authors($this->limit);
         }
-    }
-
-    public function include_template_file($fileName, $response)
-    {        
-        if (file_exists(locate_template('collectionpress/'.$fileName))) {
-            include(locate_template('collectionpress/'.$fileName));
-        } else {
-            include(plugin_dir_path(__FILE__).'template/'.$fileName);
-        }
+        //~ else if ( isset($atts['list']) && $atts['list']=="items"
+            //~ && isset($atts['author']) && $atts['author']!="" ) {
+            //~ $this->get_items($atts["author"]);
+        //~ }
     }
 
     public function get_items($author)
@@ -46,8 +41,12 @@ class CollectionPress_ShortCode
         $response = wp_remote_get($this->get_url('discover.json?q=author:"'.$author.'"'), $args);
 
         $response = json_decode(wp_remote_retrieve_body($response));
-
-        $this->include_template_file("item_display.php",$response);
+        
+        if (file_exists(locate_template('collectionpress/item_display.php'))) {
+            include(locate_template('collectionpress/item_display.php'));
+        } else {
+            include(CP_TEMPLATE_PATH.'/item_display.php');
+        }
     }
 
     public function get_authors($limit){
@@ -65,57 +64,15 @@ class CollectionPress_ShortCode
         $found_posts =$author_results->found_posts;
         $total_pages =$author_results->max_num_pages;
         if ($author_results->have_posts()) :
-            while ($author_results->have_posts()) : $author_results->the_post(); ?>
-
-                <article id="post-<?php the_ID(); ?>" <?php post_class('et_pb_post'); ?>>
-                    <?php
-                    $thumb = '';
-
-                    $width = (int) apply_filters('et_pb_index_blog_image_width', 1080);
-
-                    $height = (int) apply_filters('et_pb_index_blog_image_height', 675);
-                    $classtext = 'et_pb_post_main_image';
-                    $titletext = get_the_title();
-                    $thumbnail = get_thumbnail($width, $height, $classtext, $titletext, $titletext, false, 'Blogimage');
-                    $thumb = $thumbnail["thumb"];
-
-                    et_divi_post_format_content();               
-                        if ( ! in_array( $post_format, array( 'link', 'audio', 'quote' ) ) ) {
-                            if ( 'video' === $post_format && false !== ( $first_video = et_get_first_video() ) ) :
-                                printf(
-                                    '<div class="et_main_video_container">
-                                        %1$s
-                                    </div>',
-                                    $first_video
-                                );
-                            elseif ( ! in_array( $post_format, array( 'gallery' ) ) && 'on' === et_get_option( 'divi_thumbnails_index', 'on' ) && '' !== $thumb ) : ?>
-                                <a href="<?php the_permalink(); ?>">
-                                    <?php print_thumbnail( $thumb, $thumbnail["use_timthumb"], $titletext, $width, $height ); ?>
-                                </a>
-                        <?php
-                            elseif ( 'gallery' === $post_format ) :
-                                et_pb_gallery_images();
-                            endif;
-                        } ?>
-
-                    <?php if ( ! in_array( $post_format, array( 'link', 'audio', 'quote' ) ) ) : ?>
-                        <?php if ( ! in_array( $post_format, array( 'link', 'audio' ) ) ) : ?>
-                            <h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-                        <?php endif; ?>
-
-                        <?php
-                            et_divi_post_meta();
-
-                            if ( 'on' !== et_get_option( 'divi_blog_style', 'false' ) || ( is_search() && ( 'on' === get_post_meta( get_the_ID(), '_et_pb_use_builder', true ) ) ) ) {
-                                truncate_post( 270 );
-                            } else {
-                                the_content();
-                            }
-                        ?>
-                    <?php endif; ?>
-                </article> <!-- .et_pb_post -->
-        
-            <?php endwhile; ?>
+            while ($author_results->have_posts()) : $author_results->the_post();
+                
+                if (file_exists(locate_template('collectionpress/author_display.php'))) {
+                    include(locate_template('collectionpress/author_display.php'));
+                } else {
+                    include(CP_TEMPLATE_PATH.'/author_display.php');
+                }
+                
+            endwhile; ?>
             <div class="pagination">
                 <?php               
                     $big = 999999999; // need an unlikely integer
