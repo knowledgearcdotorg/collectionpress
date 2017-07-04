@@ -45,7 +45,11 @@ class CollectionPress_ShortCode
         if (file_exists(locate_template('collectionpress/item_display.php'))) {
             include(locate_template('collectionpress/item_display.php'));
         } else {
+<<<<<<< HEAD
             include(CP_TEMPLATE_PATH.'/collectionpress/item_display.php');
+=======
+            include(CP_TEMPLATE_PATH.'/item_display.php');
+>>>>>>> refs/remotes/knowledgearcdotorg/master
         }
     }
 
@@ -69,7 +73,11 @@ class CollectionPress_ShortCode
                 if (file_exists(locate_template('collectionpress/author_display.php'))) {
                     include(locate_template('collectionpress/author_display.php'));
                 } else {
+<<<<<<< HEAD
                     include(CP_TEMPLATE_PATH.'/collectionpress/author_display.php');
+=======
+                    include(CP_TEMPLATE_PATH.'/author_display.php');
+>>>>>>> refs/remotes/knowledgearcdotorg/master
                 }
                 
             endwhile; ?>
