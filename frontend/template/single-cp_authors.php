@@ -111,6 +111,20 @@ $is_page_builder_used = et_pb_is_pagebuilder_used( get_the_ID() );
 						wp_link_pages( array( 'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'Divi' ), 'after' => '</div>' ) );
 					?>
 					</div> <!-- .entry-content -->
+
+					<div class="author-items-wrap">
+						<?php
+						$show_items = get_post_meta(get_the_ID(),"show_items",true);
+						$author_keyword = get_post_meta(get_the_ID(),"author_keyword",true);
+						if ( $show_items=="yes" ){
+							if ( $author_keyword=='' ){
+								$author_keyword = get_the_title();
+							}
+							echo do_shortcode('[collectionpress author="'.$author_keyword.'"]');
+						}
+						?>
+					</div>
+
 					<div class="et_post_meta_wrapper">
 					<?php
 					if ( et_get_option('divi_468_enable') == 'on' ){

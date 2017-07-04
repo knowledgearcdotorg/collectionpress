@@ -20,6 +20,7 @@ class CP_Author
         add_filter( 'enter_title_here', array( $this,'cp_custom_title' ) );
         add_filter( 'page_template', array( $this,'cp_author_template' ) );
         add_action( 'add_meta_boxes', array( $this,'cp_author_meta_box' ) );
+        add_action( 'save_post', array( $this, 'save_author_data' ) );
         
     }
     
@@ -92,7 +93,7 @@ class CP_Author
     {
         if ( is_page( 'author-list' ) ) {
             $templatefilename = 'cp_author_list.php';
-            $page_template = CP_TEMPLATE_PATH.'/'.$templatefilename;
+            $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }
         return $page_template;
     
@@ -102,15 +103,31 @@ class CP_Author
         add_meta_box( 'author-info', __('Author Info' ),  array( $this, 'cp_author_info_box'), "cp_authors", 'normal', 'high');	
     }
     
-    public function cp_author_info_box(){
+    public function cp_author_info_box($post){
         global $pagenow;
         global $typenow;
         wp_enqueue_script("jquery-ui-autocomplete");
-        //~ cp_authorspost-new.phpSs
+        $show_items = get_post_meta($post->ID,"show_items",true);
+        $author_keyword = get_post_meta($post->ID,"author_keyword",true);
+        wp_nonce_field( 'author_meta_nonce', 'author_meta_nonce' );
         ?>
         <style>
         .ui-front{z-index:9999!important;}
+        .inside p label{ font-weight:bold;}
         </style>
+
+        <div class='inside'>
+            <p>
+                <label for='show_items'>
+                    <?php echo __('Show items for this Author') ?>:
+                    <input type='checkbox' name='show_items' id='show_items' value='yes'
+                        <?php if( $show_items=='yes' || $show_items=='' ) echo 'checked="checked"' ?> />
+                        <?php echo __('Yes') ?>
+                </label>
+            </p>
+            <input type='hidden' name='author_keyword' id='author_keyword' value='<?php echo $author_keyword ?>' />
+        </div>
+
         <script type="text/javascript">
             jQuery(document).ready(function($){
                 var ajaxurl = "<?php echo admin_url( 'admin-ajax.php' );?>";
@@ -129,6 +146,7 @@ class CP_Author
                             event.preventDefault();
                             var com_label=ui.item.label;
                             title.val(com_label);
+                            $("#author_keyword").val(com_label);
                         },
                     });			
                 });
@@ -136,6 +154,25 @@ class CP_Author
         </script>
             
         <?php 
+    }
+
+    public function save_author_data($post_id) {
+        if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ){
+            return $post_id;
+        }
+        if ( !current_user_can( 'edit_post', $post_id ) ){
+            return $post_id;
+        }
+        
+        $post = get_post($post_id);
+
+        if(isset( $_POST['author_meta_nonce']) && wp_verify_nonce( $_POST['author_meta_nonce'], 'author_meta_nonce' )){
+            $show_items = (isset($_POST['show_items'])? ($_POST['show_items']): "no");
+            update_post_meta($post_id,'show_items',$show_items);	
+            $author_keyword = (isset($_POST['author_keyword'])? ($_POST['author_keyword']): "");
+            update_post_meta($post_id,'author_keyword',$author_keyword);	
+        }
+        return $post_id;
     }
 
     public function cp_get_author_by_api(){
