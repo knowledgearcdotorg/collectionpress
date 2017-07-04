@@ -10,17 +10,17 @@ class CollectionPress_ShortCode
 {
     public function render($atts)
     {
-        if ( isset($atts["author"]) ) {
+        if (isset($atts["author"]) ) {
             $this->get_items($atts["author"]);
         }
 
-        if ( isset($atts["limit"]) ) {
+        if (isset($atts["limit"])) {
             $this->limit= $atts["limit"];
         } else {
             $this->limit = get_option('posts_per_page');
         }
 
-        if ( isset($atts['list']) && $atts['list']=="authors" ) {
+        if (isset($atts['list']) && $atts['list']=="authors") {
             $this->get_authors($this->limit);
         }
         //~ else if ( isset($atts['list']) && $atts['list']=="items"
@@ -42,7 +42,7 @@ class CollectionPress_ShortCode
 
         $response = json_decode(wp_remote_retrieve_body($response));
         
-        if ( file_exists(locate_template('collectionpress/item_display.php')) ) {
+        if (file_exists(locate_template('collectionpress/item_display.php'))) {
             include(locate_template('collectionpress/item_display.php'));
         } else {
             include(CP_TEMPLATE_PATH.'/item_display.php');
@@ -66,7 +66,7 @@ class CollectionPress_ShortCode
         if ($author_results->have_posts()) :
             while ($author_results->have_posts()) : $author_results->the_post();
                 
-                if ( file_exists(locate_template('collectionpress/author_display.php')) ) {
+                if (file_exists(locate_template('collectionpress/author_display.php'))) {
                     include(locate_template('collectionpress/author_display.php'));
                 } else {
                     include(CP_TEMPLATE_PATH.'/author_display.php');
