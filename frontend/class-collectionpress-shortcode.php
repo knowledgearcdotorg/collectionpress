@@ -10,15 +10,16 @@ class CollectionPress_ShortCode
 {
     public function render($atts)
     {
-        if (isset($atts["author"]) ) {
-            $this->get_items($atts["author"]);
-        }
-
         if (isset($atts["limit"])) {
             $this->limit= $atts["limit"];
         } else {
-            $this->limit = get_option('posts_per_page');
+            $this->limit = 0;
         }
+
+        if (isset($atts["author"]) ) {
+            $this->get_items($atts["author"], $this->limit);
+        }
+
 
         if (isset($atts['list']) && $atts['list']=="authors") {
             $this->get_authors($this->limit);
@@ -29,7 +30,7 @@ class CollectionPress_ShortCode
         //~ }
     }
 
-    public function get_items($author)
+    public function get_items($author , $limit)
     {
         $options = collectionpress_settings();
 
@@ -37,9 +38,20 @@ class CollectionPress_ShortCode
             'timeout'=>30,
             'user-agent'=>'CollectionPress; '.home_url()
         );
+        $url = 'discover.json?q=author:"'.$author.'"';
 
-        $response = wp_remote_get($this->get_url('discover.json?q=author:"'.$author.'"'), $args);
+        if ( $limit ) {
+            $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+            if($paged==1){
+                $start = 0;
+            }else{
+                $start = (($limit*$paged)-$limit);
+            }
+            $url .='&rows='.$limit.'&start='.$start;
+        }
 
+        $response = wp_remote_get($this->get_url($url), $args);
+        
         $response = json_decode(wp_remote_retrieve_body($response));
         
         if (file_exists(locate_template('collectionpress/item_display.php'))) {
