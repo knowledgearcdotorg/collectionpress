@@ -21,7 +21,11 @@ class CP_Author
         add_filter( 'page_template', array( $this,'cp_author_template' ) );
         add_action( 'add_meta_boxes', array( $this,'cp_author_meta_box' ) );
         add_action( 'save_post', array( $this, 'save_author_data' ) );
-        
+
+        add_action( 'show_user_profile',  array( $this, 'cp_show_author_fields' ) );
+        add_action( 'edit_user_profile', array( $this,  'cp_show_author_fields' ) );
+        add_action( 'personal_options_update',  array( $this, 'save_cp_custom_profile_fields' ) );
+        add_action( 'edit_user_profile_update', array( $this,  'save_cp_custom_profile_fields' ) );
     }
     
     public function register_post_author()
@@ -79,11 +83,10 @@ class CP_Author
 
     public function cp_custom_title( $title )
     {
-
         $screen = get_current_screen();
 
         if ( 'cp_authors' == $screen->post_type ){
-            $title = 'Enter Author Name here';
+            $title = __('Enter Author Name here', 'cpress' );
         }
         
         return $title;
@@ -99,17 +102,23 @@ class CP_Author
     
     }
 
-    public function cp_author_meta_box(){
-        add_meta_box( 'author-info', __('Author Info' ),  array( $this, 'cp_author_info_box'), "cp_authors", 'normal', 'high');	
+    public function cp_author_meta_box()
+    {
+        add_meta_box( 'author-info', __('Author Info','cpress' ),  array( $this, 'cp_author_info_box'), "cp_authors", 'normal', 'high');	
     }
     
-    public function cp_author_info_box($post){
+    public function cp_author_info_box($post)
+    {
         global $pagenow;
         global $typenow;
         wp_enqueue_script("jquery-ui-autocomplete");
         $show_items = get_post_meta($post->ID,"show_items",true);
         $author_keyword = get_post_meta($post->ID,"author_keyword",true);
+        $show_posts = get_post_meta($post->ID,"show_posts",true);
+        $cp_related_author = get_post_meta($post->ID,"cp_related_author",true);
         wp_nonce_field( 'author_meta_nonce', 'author_meta_nonce' );
+        $authorusers = get_users( 'orderby=nicename&role=author' );
+        
         ?>
         <style>
         .ui-front{z-index:9999!important;}
@@ -119,11 +128,33 @@ class CP_Author
         <div class='inside'>
             <p>
                 <label for='show_items'>
-                    <?php echo __('Show items for this Author') ?>:
+                    <?php echo __('Show items for this Author','cpress') ?>:
                     <input type='checkbox' name='show_items' id='show_items' value='yes'
                         <?php if( $show_items=='yes' || $show_items=='' ) echo 'checked="checked"' ?> />
-                        <?php echo __('Yes') ?>
+                        <?php echo __('Yes','cpress') ?>
                 </label>
+            </p>
+            <p>
+                <label for='show_posts'>
+                    <?php echo __('Show posts for this Author','cpress') ?>:
+                    <input type='checkbox' name='show_posts' id='show_posts' value='yes'
+                        <?php if( $show_items=='yes' || $show_items=='' ) echo 'checked="checked"' ?> />
+                        <?php echo __('Yes','cpress') ?>
+                </label>
+            </p>
+            <p>
+                <label for='cp_related_author'>
+                    <?php echo __('Select Author','cpress') ?>:
+                </label>
+                <select name="cp_related_author" id="cp_related_author" >
+                    <option value="" ><?php echo  __( 'Select', 'cpress' )?> </option>
+                    <?php foreach($authorusers as $buser): ?>
+                        <option value="<?= $buser->ID ?>"
+                            <?php if(isset($buser->ID)) if($cp_related_author==$buser->ID) echo "selected='selected'";?>>
+                            <?= $buser->user_login; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>               
             </p>
             <input type='hidden' name='author_keyword' id='author_keyword' value='<?php echo $author_keyword ?>' />
         </div>
@@ -156,7 +187,8 @@ class CP_Author
         <?php 
     }
 
-    public function save_author_data($post_id) {
+    public function save_author_data($post_id)
+    {
         if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ){
             return $post_id;
         }
@@ -169,13 +201,20 @@ class CP_Author
         if(isset( $_POST['author_meta_nonce']) && wp_verify_nonce( $_POST['author_meta_nonce'], 'author_meta_nonce' )){
             $show_items = (isset($_POST['show_items'])? ($_POST['show_items']): "no");
             update_post_meta($post_id,'show_items',$show_items);	
+            $show_posts = (isset($_POST['show_posts'])? ($_POST['show_posts']): "no");
+            update_post_meta($post_id,'show_posts',$show_posts);	
             $author_keyword = (isset($_POST['author_keyword'])? ($_POST['author_keyword']): "");
             update_post_meta($post_id,'author_keyword',$author_keyword);	
+            $cp_related_author = (isset($_POST['cp_related_author'])? ($_POST['cp_related_author']): "");
+            update_post_meta($post_id,'cp_related_author',$cp_related_author);
+
+            update_user_meta($cp_related_author,'show_posts',$show_posts);	
         }
         return $post_id;
     }
 
-    public function cp_get_author_by_api(){
+    public function cp_get_author_by_api()
+    {
         if(isset($_REQUEST) && isset($_REQUEST['process']) && $_REQUEST['process']==true
             && isset($_REQUEST['nextNonce']) && $_REQUEST['nextNonce']=='SearchAuthor')
         {
@@ -192,7 +231,7 @@ class CP_Author
             $response = wp_remote_get($collection_shortcode->get_url('discover.json?q:&rows=0&facet=true&facet.field=author_filter&facet.prefix='.$search_term), $args);
                
             $response = json_decode(wp_remote_retrieve_body($response));
-            if(count($response->facet_counts->facet_fields)){
+            if(count($response->response->numFound)){
                 $author_keyword = array_filter($response->facet_counts->facet_fields->author_filter);
                 
                 foreach($author_keyword as $author){
@@ -204,12 +243,47 @@ class CP_Author
                 echo json_encode($result);
             }else{
                 $result[] = array(
-						'label'=> "Oops our bad ! No match available.",
+						'label'=> __("Oops our bad ! No match available.",'cpress'),
 						);
 				echo json_encode($result);
             }
         }
         wp_die();
+    }
+
+    public function cp_show_author_fields( $user )
+    {
+        if (isset($user->ID))
+        {
+			if ( $user->roles[0]!="author" )
+            {
+                return;
+            }
+        }
+        $show_posts = get_user_meta( $user->ID ,'show_posts', true);
+        ?>
+        <hr/>
+        <h3><?php echo  __( 'Auhtor Information', 'cpress' )?></h3>
+        <table class="form-table">
+            <tr>
+                <th><label for="show_posts"><?php echo  __( 'Show Author Posts', 'cpress' )?></label></th>
+                <td for="show_posts">
+                    <input type="checkbox" name="show_posts" id="show_posts" value="yes"
+                        <?php if ( $show_posts=="yes" || $show_posts=='' ) echo'checked="checked"'; ?> />
+                </td>
+            </tr>
+        </table>
+        <?php
+    }
+    
+    public function save_cp_custom_profile_fields( $user_id )
+    {	
+        if ( !current_user_can( 'edit_user', $user_id ) )
+        {
+            return false;
+        }
+        $show_posts = (isset($_POST['show_posts'])? ($_POST['show_posts']): "no");	
+        update_user_meta( $user_id, 'show_posts', $show_posts );
     }
 }
 

@@ -124,6 +124,16 @@ $is_page_builder_used = et_pb_is_pagebuilder_used( get_the_ID() );
 						}
 						?>
 					</div>
+					<div class="author-posts-wrap">
+						<?php
+						$show_posts = get_post_meta(get_the_ID(),"show_posts",true);
+						$cp_related_author = get_post_meta(get_the_ID(),"cp_related_author",true);
+						if ( $show_posts=="yes" && $cp_related_author!=''){
+							
+							echo do_shortcode('[collectionpress show_posts=true author_id="'.$cp_related_author.'" limit="1"]');
+						}
+						?>
+					</div>
 
 					<div class="et_post_meta_wrapper">
 					<?php
