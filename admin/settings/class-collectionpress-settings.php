@@ -44,7 +44,7 @@ class CollectionPress_Settings
         /* Create settings - rest url */
         add_settings_field(
             'rest_url',
-            'Rest Url',
+            __('Rest Url', 'cpress' ),
             array($this, "text_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
@@ -64,7 +64,7 @@ class CollectionPress_Settings
         /* Create settings - rest url */
         add_settings_field(
             'item_url',
-            'Item Url',
+            __('Item Url', 'cpress' ),
             array($this, "text_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
@@ -91,7 +91,7 @@ class CollectionPress_Settings
     /* Setting Section Description */
     function my_settings_section_description()
     {
-        echo wpautop("This aren't the Settings you're looking for. Move along.");
+        echo wpautop( __("This aren't the Settings you're looking for. Move along.", 'cpress' ) );
     }
 
     public function text_callback($args)

@@ -18,6 +18,11 @@ $dir = dirname( __FILE__ );
 define( 'CP_TEMPLATE_PATH', plugin_dir_path( __FILE__ ).'frontend/template' );
 define( 'CP_JS_PATH', plugin_dir_url( __FILE__ ).'assets/js/' );
 
+add_action('init','plugin_text_domain');
+function plugin_text_domain(){
+    load_plugin_textdomain('cpress', false, basename( dirname( __FILE__ ) ) . '/lang/' );
+}
+
 require_once($dir.'/includes/class-collectionpress.php');
 require_once($dir.'/admin/settings/class-collectionpress-settings.php');
 require_once($dir.'/includes/functions.php');
