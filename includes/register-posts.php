@@ -13,19 +13,36 @@ class CP_Author
 
     private $nonce = 'cp_author_nonce';
     
+    
     public function __construct()
     {
+        global $item_response;
         add_action( 'init', array( $this, 'register_post_author' ) );
-        add_filter('template_include', array( $this,'cp_custom_single' ) );
+        add_filter( 'template_include', array( $this,'cp_custom_single' ) );
         add_filter( 'enter_title_here', array( $this,'cp_custom_title' ) );
         add_filter( 'page_template', array( $this,'cp_author_template' ) );
         add_action( 'add_meta_boxes', array( $this,'cp_author_meta_box' ) );
         add_action( 'save_post', array( $this, 'save_author_data' ) );
-
+        //~ add_action( 'show_item_details', array( $this, 'cp_get_item_by_id' ), 10 ,1 );
+        add_action( 'init', array( $this, 'cp_rewrite_rule' ),10,0 );
+        add_action( 'init', array( $this, 'cp_rewrite_link' ),10,0 );
+       
     }
 
-    public function cp_rewrite_link(){
+    public function cp_rewrite_rule()
+    {
+        $page = get_page_by_path( 'items' );
+        
+        add_rewrite_rule( '^items/([0-9]+)?',
+            'index.php?page_id='.$page->ID.'&item_id=$matches[1]',
+            'top' );
+      
+    }
+    
+    public function cp_rewrite_link()
+    {
         add_rewrite_tag( 'aposts', '([0-9]+)' );
+        add_rewrite_tag( '%item_id%', '([^&]+)' );
     }
     
     public function register_post_author()
@@ -96,6 +113,10 @@ class CP_Author
     {
         if ( is_page( 'author-list' ) ) {
             $templatefilename = 'cp_author_list.php';
+            $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
+        }
+        if ( is_page( 'items' ) ) {
+            $templatefilename = 'cp_item.php';
             $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }
         return $page_template;
@@ -251,6 +272,21 @@ class CP_Author
         wp_die();
     }
 
+    public function cp_get_item_by_id($id)
+    {
+        $collection_shortcode = new CollectionPress_ShortCode();
+        $options = collectionpress_settings();
+
+        $args = array(
+            'timeout'=>30,
+            'user-agent'=>'CollectionPress; '.home_url()
+        );
+
+        $response = wp_remote_get($collection_shortcode->get_url('items/'.$id.'.json'), $args);
+           
+        $response = json_decode(wp_remote_retrieve_body($response));
+        return $response;
+    }
 }
 
 return new CP_Author();
