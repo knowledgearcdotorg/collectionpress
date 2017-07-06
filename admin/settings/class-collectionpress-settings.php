@@ -80,6 +80,44 @@ class CollectionPress_Settings
                 'value'     =>$settings["item_url"]
            )
        );
+       
+        add_settings_field(
+            'item_page',
+            __('Select Item Page', 'cpress' ),
+            array($this, "select_callback"),
+            'collectionpress_settings',
+            'collectionpress_settings_general',
+            array(
+                'id'        =>"item_page",
+                'label_for' =>'',
+                'class'     =>'',
+                'desc'      =>'',
+                'name'      =>"item_page",
+                'section'   =>"collectionpress_settings_general",
+                'size'      =>null,
+                'options'   =>isset($setting_config['options']) ? $setting_config['options'] : '',
+                'value'     =>$settings["item_page"]
+           )
+       );
+        add_settings_field(
+            'author_page',
+            __('Select Author Page', 'cpress' ),
+            array($this, "select_callback"),
+            'collectionpress_settings',
+            'collectionpress_settings_general',
+            array(
+                'id'        =>"author_page",
+                'label_for' =>'',
+                'class'     =>'',
+                'desc'      =>'',
+                'name'      =>"author_page",
+                'section'   =>"collectionpress_settings_general",
+                'size'      =>null,
+                'options'   =>isset($setting_config['options']) ? $setting_config['options'] : '',
+                'value'     =>$settings["author_page"]
+           )
+       );
+
     }
 
     /* Sanitize Callback Function */
@@ -112,4 +150,33 @@ HTML;
 
         echo $html;
     }
+    
+    public function select_callback($args)
+    {
+        $value = esc_attr(stripslashes($args['value']));
+        $size = (isset($args['size']) && ! is_null($args['size'])) ? $args['size'] : 'regular';
+        $page_ids=get_all_page_ids();
+        $html = <<<HTML
+<label
+    for="collectionpress_settings_general[{$args['id']}">{$args['desc']}
+    <select name="collectionpress_settings_general[{$args['id']}]" class="{$size}-text" >
+        <option value="">Select</option>
+HTML;
+    foreach($page_ids as $page){
+        $selected_text='';
+        if($value == $page){
+            $selected_text = "selected='selected'";
+        }
+         $html .= '
+        <option value="'.$page.'" '.$selected_text.' >
+                    '.get_the_title($page).'</option>';
+    }
+    $html .= <<<HTML
+    </select>
+</label>
+HTML;
+
+        echo $html;
+    }
+
 }
