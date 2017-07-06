@@ -1,5 +1,7 @@
 # CollectionPress
-Wordpress Collections Archives and Repositories.
+CollectionPress provides a variety of features for building author or researcher pages within Wordpress.
+
+Items archived in DSpace can also be displayed through CollectionPress.
 
 ## Getting Started
 
@@ -20,6 +22,25 @@ http://myarchive.tld/rest
 The Item Url provides a general url for creating links to items. In DSpace this might look like:
 
 http://myarchive.tld/handle
+
+## Author Pages
+
+CollectionPress provides a feature called Author Pages.
+
+Author Pages can be used for displaying information about an author or researcher, such as name, bio and location. You can also configure the Author Page to display the author's items.
+
+To manage your Author Pages, click on "Authors" from the wp-admin main menu.
+
+### Link a Registered User to an Author Page
+
+Author Pages can also be linked to existing Wordpress authors. Linking an Author Page to a registered author allows you to display the registered author's Wordpress blog posts within the Author Page.
+
+You can link a registered author by editing the Author Page:  
+
+- Scroll to "Author Details",
+- Check "Show Posts for this author",
+- Select the registered Wordpress author from the drop down list,
+- Save.
 
 ## Short Code
 
