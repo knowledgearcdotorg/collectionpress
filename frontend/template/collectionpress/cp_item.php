@@ -9,35 +9,35 @@
 
 get_header();
 if (isset($_GET) && isset($_GET['item_id'])){
-	if ( $_GET['item_id']!='' ){
-		$item_id = $_GET['item_id'];
-		$cp_author = new CP_Author();
-		//~ do_action( 'show_item_details', $item_id );
-		$response = $cp_author->cp_get_item_by_id($item_id);
-	}                        
+    if ( $_GET['item_id']!='' ){
+        $item_id = $_GET['item_id'];
+        $cp_author = new CP_Author();
+        //~ do_action( 'show_item_details', $item_id );
+        $response = $cp_author->cp_get_item_by_id($item_id);
+    }
 }
 ?>
 
 
 <div id="main-content">
-	<div class="container">
-		<div id="content-area" class="clearfix">
-			<div id="left-area">
+    <div class="container">
+        <div id="content-area" class="clearfix">
+            <div id="left-area">
                 <?php if(isset($response) && $response!=''): ?>
-					<?php foreach($response->metadata as $md): ?>
-						
-						<p><?php echo $md->element; ?></p>
-						<p><?php echo $md->qualifier; ?></p>
-						<p><?php echo $md->value; ?></p>
+                    <?php foreach($response->metadata as $md): ?>
 
-					<?php endforeach;?>	
-					
-				<?php endif; ?>
+                        <p><?php echo $md->element; ?></p>
+                        <p><?php echo $md->qualifier; ?></p>
+                        <p><?php echo $md->value; ?></p>
+
+                    <?php endforeach;?>	
+
+                <?php endif; ?>
             </div> <!-- #left-area -->
 
-			<?php get_sidebar(); ?>
-		</div> <!-- #content-area -->
-	</div> <!-- .container -->
+            <?php get_sidebar(); ?>
+        </div> <!-- #content-area -->
+    </div> <!-- .container -->
 </div> <!-- #main-content -->
 
 <?php get_footer(); ?>

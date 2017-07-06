@@ -9,13 +9,13 @@
 <ul>
     <?php foreach($response->response->docs as $doc): ?>
     	<?php $parts = array();?>
-        <li>
+    	<li>
             <?php if (is_array($title = $doc->title)): ?>
                 <?php $title = array_shift($title); ?>
 
                 <?php  if ($handle = $doc->handle): ?>
-                    <?php $url = $options['item_url']."/".$handle; ?>
-                    <?php $title = sprintf('<a href="%s" target="_blank">%s</a>', $url, $title); ?>
+                    <?php $url = add_query_arg("item_id",$doc->{"search.resourceid"},get_permalink($page_id)); ?>
+                     <?php $title = sprintf('<a href="%s" target="_blank">%s</a>', $url, $title); ?>
                 <?php endif; ?>
                 <?php $parts[] = $title; ?>
             <?php endif; ?>

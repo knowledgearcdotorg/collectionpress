@@ -31,10 +31,15 @@ class CP_Author
 
     public function cp_rewrite_rule()
     {
-        $page = get_page_by_path( 'items' );
-        
+        $options = collectionpress_settings();
+        if($options['item_page']){
+            $page_id = $options['item_page'];
+        }else{
+            $page = get_page_by_path( 'items' );
+            $page_id = $page->ID;
+        }
         add_rewrite_rule( '^items/([0-9]+)?',
-            'index.php?page_id='.$page->ID.'&item_id=$matches[1]',
+            'index.php?page_id='.$page_id.'&item_id=$matches[1]',
             'top' );
       
     }

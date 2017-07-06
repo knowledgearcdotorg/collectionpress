@@ -53,10 +53,16 @@ class CollectionPress_ShortCode
             }
             $url .='&rows='.$limit.'&start='.$start;
         }
-
         $response = wp_remote_get($this->get_url($url), $args);
         
         $response = json_decode(wp_remote_retrieve_body($response));
+
+        if($options['item_page']){
+            $page_id = $options['item_page'];
+        }else{
+            $page = get_page_by_path( 'items' );
+            $page_id = $page->ID;
+        }
         
         if (file_exists(locate_template('collectionpress/item_display.php'))) {
             include(locate_template('collectionpress/item_display.php'));
