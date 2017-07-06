@@ -22,10 +22,10 @@ class CP_Author
         add_action( 'add_meta_boxes', array( $this,'cp_author_meta_box' ) );
         add_action( 'save_post', array( $this, 'save_author_data' ) );
 
-        add_action( 'show_user_profile',  array( $this, 'cp_show_author_fields' ) );
-        add_action( 'edit_user_profile', array( $this,  'cp_show_author_fields' ) );
-        add_action( 'personal_options_update',  array( $this, 'save_cp_custom_profile_fields' ) );
-        add_action( 'edit_user_profile_update', array( $this,  'save_cp_custom_profile_fields' ) );
+    }
+
+    public function cp_rewrite_link(){
+        add_rewrite_tag( 'aposts', '([0-9]+)' );
     }
     
     public function register_post_author()
@@ -251,40 +251,6 @@ class CP_Author
         wp_die();
     }
 
-    public function cp_show_author_fields( $user )
-    {
-        if (isset($user->ID))
-        {
-			if ( $user->roles[0]!="author" )
-            {
-                return;
-            }
-        }
-        $show_posts = get_user_meta( $user->ID ,'show_posts', true);
-        ?>
-        <hr/>
-        <h3><?php echo  __( 'Auhtor Information', 'cpress' )?></h3>
-        <table class="form-table">
-            <tr>
-                <th><label for="show_posts"><?php echo  __( 'Show Author Posts', 'cpress' )?></label></th>
-                <td for="show_posts">
-                    <input type="checkbox" name="show_posts" id="show_posts" value="yes"
-                        <?php if ( $show_posts=="yes" || $show_posts=='' ) echo'checked="checked"'; ?> />
-                </td>
-            </tr>
-        </table>
-        <?php
-    }
-    
-    public function save_cp_custom_profile_fields( $user_id )
-    {	
-        if ( !current_user_can( 'edit_user', $user_id ) )
-        {
-            return false;
-        }
-        $show_posts = (isset($_POST['show_posts'])? ($_POST['show_posts']): "no");	
-        update_user_meta( $user_id, 'show_posts', $show_posts );
-    }
 }
 
 return new CP_Author();
