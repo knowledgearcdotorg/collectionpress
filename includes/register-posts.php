@@ -116,14 +116,13 @@ class CP_Author
 
     public function cp_author_template($page_template)
     {
-        $options = collectionpress_settings();
-		if ( is_page( 'author-list' ) || $options['author_page']  ) {
-            $templatefilename = 'cp_author_list.php';
+        $options = collectionpress_settings(); 
+		if ( is_page( 'author-list') || is_page($options['author_page'])  ) { 
+			$templatefilename = 'cp_author_list.php';
             $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }
-		
-        if ( is_page( 'items' ) || $options['item_page'] ) {            
-            $templatefilename = 'cp_item.php';
+        if ( is_page( 'items' ) || is_page($options['item_page']) ) {            
+            $templatefilename = 'cp_item.php';die("asds");
             $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }
         return $page_template;
