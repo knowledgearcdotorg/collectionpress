@@ -22,7 +22,7 @@ if (isset($_GET) && isset($_GET['item_id'])){
 <div id="main-content">
     <div class="container">
         <div id="content-area" class="clearfix">
-            <div id="left-area">
+            <div class="content-wrap">
                 <?php if(isset($response) && $response!=''): ?>
                     <?php foreach($response->metadata as $md): ?>
 
