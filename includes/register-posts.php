@@ -117,7 +117,7 @@ class CP_Author
     public function cp_author_template($page_template)
     {
         $options = collectionpress_settings();
-		if ( is_page( 'author-list' || $options['author_page'] ) ) {
+		if ( is_page( 'author-list' ) || $options['author_page']  ) {
             $templatefilename = 'cp_author_list.php';
             $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }
