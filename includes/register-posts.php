@@ -122,7 +122,7 @@ class CP_Author
             $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }
         if ( is_page( 'items' ) || is_page($options['item_page']) ) {            
-            $templatefilename = 'cp_item.php';die("asds");
+            $templatefilename = 'cp_item.php';
             $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }
         return $page_template;
