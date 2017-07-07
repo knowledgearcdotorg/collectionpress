@@ -116,11 +116,13 @@ class CP_Author
 
     public function cp_author_template($page_template)
     {
-        if ( is_page( 'author-list' ) ) {
+        $options = collectionpress_settings();
+		if ( is_page( 'author-list' || $options['author_page'] ) ) {
             $templatefilename = 'cp_author_list.php';
             $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }
-        if ( is_page( 'items' ) ) {
+		
+        if ( is_page( 'items' ) || $options['item_page'] ) {            
             $templatefilename = 'cp_item.php';
             $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }
