@@ -53,10 +53,10 @@ class CP_Author
     public function register_post_author()
     {
         $labels = array(
-            'name'               => __( 'Authors' ),
-            'singular_name'      => __( 'Author'),
-            'menu_name'          => __( 'Authors'),
-            'name_admin_bar'     => __( 'Authors' ),
+            'name'               => __( 'Authors','cpress' ),
+            'singular_name'      => __( 'Author','cpress'),
+            'menu_name'          => __( 'Authors','cpress'),
+            'name_admin_bar'     => __( 'Authors' ,'cpress'),
             'add_new'            => __( 'Add' ),
             'add_new_item'       => __( 'Add New' ),
             'new_item'           => __( 'New' ),
@@ -117,7 +117,7 @@ class CP_Author
     public function cp_author_template($page_template)
     {
         $options = collectionpress_settings(); 
-		if ( is_page( 'author-list') || is_page($options['author_page'])  ) { 
+		if ( is_page( 'author-list') || is_page($options['author_page']) ) { 
 			$templatefilename = 'cp_author_list.php';
             $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
         }

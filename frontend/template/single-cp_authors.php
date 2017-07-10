@@ -37,7 +37,7 @@ get_header();
                 </div> <!-- .entry-content -->
 
                 <div class="author-items-wrap">
-                    <h3><?php echo __('Author Item&apos;s','cpress') ?></h3>
+                    <h3><?php echo __('Author Items','cpress') ?></h3>
 
                     <?php
                     $show_items = get_post_meta(get_the_ID(),"show_items",true);
@@ -51,7 +51,7 @@ get_header();
                     ?>
                 </div>
                 <div class="author-posts-wrap">
-                    <h3><?php echo __('Author Blog Post&apos;s','cpress') ?></h3>
+                    <h3><?php echo __('Author Blog Posts','cpress') ?></h3>
                     <?php
                     $show_posts = get_post_meta(get_the_ID(),"show_posts",true);
                     $cp_related_author = get_post_meta(get_the_ID(),"cp_related_author",true);
