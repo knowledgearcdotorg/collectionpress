@@ -160,8 +160,8 @@ HTML;
 <label
     for="collectionpress_settings_general[{$args['id']}">{$args['desc']}
     <select name="collectionpress_settings_general[{$args['id']}]" class="{$size}-text" >
-        <option value="">Select</option>
 HTML;
+    $html .='<option value="">'.__('Select','cpress').'</option>';
     foreach($page_ids as $page){
         $selected_text='';
         if($value == $page){
