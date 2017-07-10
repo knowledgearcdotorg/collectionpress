@@ -61,14 +61,20 @@ msgstr "Hvile url"
 msgid "Item Url"
 msgstr "Element Url"
 
-msgid "Select Item Page"
-msgstr "Velg vareside"
+msgid "Item View Page"
+msgstr "Item View Page"
 
-msgid "Select Author Page"
-msgstr "Velg forfatterside"
+msgid "Specifies the page used by CollectionPress for displaying an item directly from DSpace."
+msgstr "Specifies the page used by CollectionPress for displaying an item directly from DSpace."
 
-msgid "This aren't the Settings you're looking for. Move along."
-msgstr "Dette er ikke innstillingene du leter etter. Flytt sammen."
+msgid "Author List Page"
+msgstr "Author List Page"
+
+msgid "Specifies the page used by CollectionPress for displaying a list of Author Pages."
+msgstr "Specifies the page used by CollectionPress for displaying a list of Author Pages."
+
+msgid "General settings for the CollectionPress plugin."
+msgstr "General settings for the CollectionPress plugin."
 
 msgid "Author"
 msgstr "Forfatter"

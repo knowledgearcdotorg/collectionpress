@@ -54,7 +54,7 @@ class CollectionPress_ShortCode
             $url .='&rows='.$limit.'&start='.$start;
         }
         $response = wp_remote_get($this->get_url($url), $args);
-        
+
         $response = json_decode(wp_remote_retrieve_body($response));
 
         if($options['item_page']){
@@ -63,7 +63,7 @@ class CollectionPress_ShortCode
             $page = get_page_by_path( 'items' );
             $page_id = $page->ID;
         }
-        
+
         if (file_exists(locate_template('collectionpress/item_display.php'))) {
             include(locate_template('collectionpress/item_display.php'));
         } else {
@@ -87,16 +87,16 @@ class CollectionPress_ShortCode
         $total_pages =$author_results->max_num_pages;
         if ($author_results->have_posts()) :
             while ($author_results->have_posts()) : $author_results->the_post();
-                
+
                 if (file_exists(locate_template('collectionpress/author_display.php'))) {
                     include(locate_template('collectionpress/author_display.php'));
                 } else {
                     include(CP_TEMPLATE_PATH.'/collectionpress/author_display.php');
                 }
-                
+
             endwhile; ?>
             <div class="pagination">
-                <?php               
+                <?php
                     $big = 999999999; // need an unlikely integer
                     echo paginate_links( array(
                         'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
@@ -130,16 +130,16 @@ class CollectionPress_ShortCode
 			$total_pages =$author_posts->max_num_pages;
 			if ($author_posts->have_posts()) :
 					while ($author_posts->have_posts()) : $author_posts->the_post();
-					
+
 						if (file_exists(locate_template('collectionpress/author_display_posts.php'))) {
 							include(locate_template('collectionpress/author_display_posts.php'));
 						} else {
 							include(CP_TEMPLATE_PATH.'/collectionpress/author_display_posts.php');
 						}
-					
+
 				endwhile; ?>
             <div class="pagination">
-                <?php               
+                <?php
                     $big = 999999999; // need an unlikely integer
                     echo paginate_links( array(
                         'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
@@ -153,10 +153,10 @@ class CollectionPress_ShortCode
             </div>
         <?php endif; ?>
         <?php
-			
+
 		}
 	}
-    
+
     public function get_url($endpoint)
     {
         $options = collectionpress_settings();

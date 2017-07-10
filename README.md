@@ -5,9 +5,11 @@ Items archived in DSpace can also be displayed through CollectionPress.
 
 ## Getting Started
 
-1. Install CollectionPress
-2. Configure CollectionPress by setting up a connection to the dspace demo
-3. Create a page or blog post. Add the collectionpress shortcode to pull an author's items.
+1. Install CollectionPress,
+2. Configure CollectionPress by setting up a connection to the dspace demo,
+3. Create a Wordpress Page. This page will be used for displaying your DSpace items,
+4. Select the Page you have just created using the Select Item Page dropdown, available in the CollectionPress general settings,
+5. Create a page or blog post. Add the collectionpress shortcode to pull an author's items.
 
 ## Settings
 
@@ -22,6 +24,12 @@ http://myarchive.tld/rest
 The Item Url provides a general url for creating links to items. In DSpace this might look like:
 
 http://myarchive.tld/handle
+
+### Select Item Page
+An item page is used to display a DSpace item directly via the REST API. You will need to create a Wordpress Page and assign it using the Select Item Page dropdown.
+
+### Select Author Page
+The author page displays a list of Author Pages. You will need to create a Wordpress Page and assign it using the Select Author Page dropdown.
 
 ## Author Pages
 

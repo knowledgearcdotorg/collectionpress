@@ -80,10 +80,10 @@ class CollectionPress_Settings
                 'value'     =>$settings["item_url"]
            )
        );
-       
+
         add_settings_field(
             'item_page',
-            __('Select Item Page', 'cpress' ),
+            __('Item View Page', 'cpress' ),
             array($this, "select_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
@@ -91,7 +91,7 @@ class CollectionPress_Settings
                 'id'        =>"item_page",
                 'label_for' =>'',
                 'class'     =>'',
-                'desc'      =>'',
+                'desc'      =>__('Specifies the page used by CollectionPress for displaying an item directly from DSpace.', 'cpress'),
                 'name'      =>"item_page",
                 'section'   =>"collectionpress_settings_general",
                 'size'      =>null,
@@ -101,7 +101,7 @@ class CollectionPress_Settings
        );
         add_settings_field(
             'author_page',
-            __('Select Author Page', 'cpress' ),
+            __('Author List Page', 'cpress' ),
             array($this, "select_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
@@ -109,7 +109,7 @@ class CollectionPress_Settings
                 'id'        =>"author_page",
                 'label_for' =>'',
                 'class'     =>'',
-                'desc'      =>'',
+                'desc'      =>__('Specifies the page used by CollectionPress for displaying a list of Author Pages.', 'cpress'),
                 'name'      =>"author_page",
                 'section'   =>"collectionpress_settings_general",
                 'size'      =>null,
@@ -129,7 +129,7 @@ class CollectionPress_Settings
     /* Setting Section Description */
     function my_settings_section_description()
     {
-        echo wpautop( __("This aren't the Settings you're looking for. Move along.", 'cpress' ) );
+        echo wpautop( __("General settings for the CollectionPress plugin.", 'cpress' ) );
     }
 
     public function text_callback($args)
@@ -150,7 +150,7 @@ HTML;
 
         echo $html;
     }
-    
+
     public function select_callback($args)
     {
         $value = esc_attr(stripslashes($args['value']));
@@ -158,7 +158,7 @@ HTML;
         $page_ids=get_all_page_ids();
         $html = <<<HTML
 <label
-    for="collectionpress_settings_general[{$args['id']}">{$args['desc']}
+    for="collectionpress_settings_general[{$args['id']}">
     <select name="collectionpress_settings_general[{$args['id']}]" class="{$size}-text" >
 HTML;
     $html .='<option value="">'.__('Select','cpress').'</option>';
@@ -175,6 +175,10 @@ HTML;
     </select>
 </label>
 HTML;
+
+        if (!empty($args['desc'])) {
+            $html .= '<p class="description">'.$args['desc'].'</p>';
+        }
 
         echo $html;
     }
