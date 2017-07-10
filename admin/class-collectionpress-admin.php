@@ -11,8 +11,8 @@ class CollectionPress_Admin
     public function get_menus()
     {
         add_options_page(
-            __('CollectionPress', 'cpress' ),
-            __('CollectionPress', 'cpress' ),
+            __('CollectionPress', 'cpress'),
+            __('CollectionPress', 'cpress'),
             'manage_options',
             'collectionpress',
             array($this, 'display_settings')
