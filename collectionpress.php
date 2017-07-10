@@ -5,6 +5,9 @@
   Author: KnowledgeArc
   Description: A plugin for displaying dspace information in Wordpress.
   Version: 1.0.0-dev
+  Copyright: 2017 KnowledgeArc Ltd
+  License: GPLv3
+  License URI: https://www.gnu.org/licenses/gpl.html
  */
 
 if (!function_exists('add_shortcode')) {
