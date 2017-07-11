@@ -1,5 +1,7 @@
 # CollectionPress
-Wordpress Collections Archives and Repositories.
+CollectionPress provides a variety of features for building author or researcher pages within Wordpress.
+
+Items archived in DSpace can also be displayed through CollectionPress.
 
 ## Getting Started
 
@@ -8,7 +10,6 @@ Wordpress Collections Archives and Repositories.
 3. Create a Wordpress Page. This page will be used for displaying your DSpace items,
 4. Select the Page you have just created using the Select Item Page dropdown, available in the CollectionPress general settings,
 5. Create a page or blog post. Add the collectionpress shortcode to pull an author's items.
-
 
 ## Settings
 
