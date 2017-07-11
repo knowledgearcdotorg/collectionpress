@@ -112,13 +112,19 @@ class CP_Author
     public function cp_author_template($page_template)
     {
         $options = collectionpress_settings(); 
-		if (is_page('author-list') || is_page($options['author_page'])) { 
-			$templatefilename = 'cp_author_list.php';
-            $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
+		if (is_page('author-list') || is_page($options['author_page']) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
+            if (get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
+                $page_template = locate_template('collectionpress/cp_author_list.php');
+            } else {
+                $page_template = CP_TEMPLATE_PATH.'/collectionpress/cp_author_list.php';
+            }
         }
-        if (is_page('items') || is_page($options['item_page'])) {
-            $templatefilename = 'cp_item.php';
-            $page_template = CP_TEMPLATE_PATH.'/collectionpress/'.$templatefilename;
+        if (is_page('items') || is_page($options['item_page']) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_item.php") {
+            if (get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_item.php") {
+                $page_template = locate_template('collectionpress/cp_item.php');
+            } else {
+                $page_template = CP_TEMPLATE_PATH.'/collectionpress/cp_item.php';
+            }
         }
         return $page_template;
     }

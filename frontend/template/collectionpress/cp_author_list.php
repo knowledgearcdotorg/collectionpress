@@ -53,6 +53,8 @@ $total_pages =$author_results->max_num_pages;
                         ));
                         ?>
                     </div>
+                <?php else : ?>
+                    <p><?php echo __('No results found.', 'cpress'); ?></p>
                 <?php endif; ?>
             </div> <!-- #left-area -->
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: CP Item
+ * Template Name: CP Item List
  * Template file of Collection Press To Item show
  * @author Avinash
  * You can add this file to theme folder by creating collectionpress folder and paste this file  there.
@@ -30,7 +30,9 @@ if (isset($_GET) && isset($_GET['item_id'])) {
                         <p><?php echo $md->qualifier; ?></p>
                         <p><?php echo $md->value; ?></p>
 
-                    <?php endforeach;?>	
+                    <?php endforeach;?>
+                <?php else: ?>
+                    <p><?php echo __("Item Id is incorrect!", 'cpress') ?></p>
                 <?php endif; ?>
             </div> <!-- #left-area -->
         <?php get_sidebar(); ?>
