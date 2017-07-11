@@ -20,6 +20,10 @@ Rest Url is used to configure the DSpace REST endpoint. An example endpoint migh
 
 http://myarchive.tld/rest
 
+### Item Url
+The Item Url provides a general url for creating links to items. In DSpace this might look like:
+
+http://myarchive.tld/handle
 
 ### Select Item Page
 An item page is used to display a DSpace item directly via the REST API. You will need to create a Wordpress Page and assign it using the Select Item Page dropdown.
@@ -45,7 +49,6 @@ You can link a registered author by editing the Author Page:
 - Check "Show Posts for this author",
 - Select the registered Wordpress author from the drop down list,
 - Save.
-
 
 ## Short Code
 
@@ -90,17 +93,9 @@ Lists all authors who have an Author Page.
 *limit*
 
 The number of records to display per page.
-Limit can be used in both shortcodes. If it doesn't provided in shortcode it will take default wordpress value of posts_per_page.
 
 ## Template Overriding
 
 CollectionPress output can be overridden in your Wordpress Theme.  
   
 All templates are located in frontend/template. To override copy files from frontend/template to your theme's collectionpress directory then modify to meet your requirements.
-The author single file can be pasted in theme root directory.
-
-## Template Usage
-Using template by 3 ways:
-1). Select the pages for Items List and Author List.
-2). If you pasted the template file as instructed above, then you have to choose template file in page options.
-3). If didn't done anything from above points. Create 2 pages by name Items and Author List and there slug(url) should be items and author-list respectively.
