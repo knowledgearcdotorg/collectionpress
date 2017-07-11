@@ -161,7 +161,7 @@ class CP_Author
                     <?php echo __('Show posts for this Author', 'cpress') ?>:
                     <input type='checkbox' name='show_posts' id='show_posts' value='yes'
                         <?php if ($show_posts=='yes' || $show_posts=='') :
-                            echo 'checked="checked" '
+                            echo 'checked="checked" ';
                         endif; ?> />
                         <?php echo __('Yes', 'cpress') ?>
                 </label>
