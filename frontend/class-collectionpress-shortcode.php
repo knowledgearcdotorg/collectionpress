@@ -51,7 +51,7 @@ class CollectionPress_ShortCode
         if ($options['item_page']) {
             $page_id = $options['item_page'];
         } else {
-            $page = get_page_by_path( 'items' );
+            $page = get_page_by_path('items');
             $page_id = $page->ID;
         }
         
@@ -66,7 +66,7 @@ class CollectionPress_ShortCode
     {
         $posts_per_page = $limit;
 
-        $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
         $author_results = new WP_Query(array(
                         "post_type"      =>"cp_authors",
                         "post_status"    =>"publish",

@@ -11,7 +11,7 @@ class CollectionPress_Settings
 
         $options = wp_parse_args(
             $settings
-        );
+       );
 
         return apply_filters('collectionpress_settings', $options);
     }
@@ -61,10 +61,10 @@ class CollectionPress_Settings
                 'value'     =>$settings["rest_url"]
             )
         );
-        
+
         add_settings_field(
             'item_page',
-            __('Item View Page', 'cpress' ),
+            __('Item View Page', 'cpress'),
             array($this, "select_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
@@ -79,10 +79,11 @@ class CollectionPress_Settings
                 'options'   =>isset($setting_config['options']) ? $setting_config['options'] : '',
                 'value'     =>$settings["item_page"]
            )
-       );
+        );
+       
         add_settings_field(
             'author_page',
-            __('Author List Page', 'cpress' ),
+            __('Author List Page', 'cpress'),
             array($this, "select_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
@@ -96,8 +97,9 @@ class CollectionPress_Settings
                 'size'      =>null,
                 'options'   =>isset($setting_config['options']) ? $setting_config['options'] : '',
                 'value'     =>$settings["author_page"]
-           )
-       );
+            )
+        );
+
     }
 
     /* Sanitize Callback Function */
@@ -109,7 +111,7 @@ class CollectionPress_Settings
     /* Setting Section Description */
     function my_settings_section_description()
     {
-        echo wpautop(__("This aren't the Settings you're looking for. Move along.", 'cpress'));
+        echo wpautop(__("General settings for the CollectionPress plugin.", 'cpress'));
     }
 
     public function text_callback($args)

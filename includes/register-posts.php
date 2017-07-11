@@ -22,8 +22,7 @@ class CP_Author
         add_action('add_meta_boxes', array($this, 'cp_author_meta_box'));
         add_action('save_post', array($this, 'save_author_data'));
         add_action('init', array($this, 'cp_rewrite_rule'), 10, 0);
-        add_action('init', array($this, 'cp_rewrite_link'), 10, 0);
-       
+        add_action('init', array($this, 'cp_rewrite_link'), 10, 0);       
     }
 
     public function cp_rewrite_rule()
@@ -42,8 +41,8 @@ class CP_Author
     
     public function cp_rewrite_link()
     {
-        add_rewrite_tag('aposts', '([0-9]+)' );
-        add_rewrite_tag( '%item_id%', '([^&]+)' );
+        add_rewrite_tag('aposts', '([0-9]+)');
+        add_rewrite_tag( '%item_id%', '([^&]+)');
     }
     
     public function register_post_author()
@@ -79,7 +78,7 @@ class CP_Author
             'has_archive'        => true,
             'hierarchical'       => false,
             'menu_position'      => null,
-            'supports'           => array( 'title', 'editor',  'thumbnail' ),
+            'supports'           => array('title', 'editor',  'thumbnail'),
             );
         register_post_type('cp_authors', $args);        
     }
@@ -101,17 +100,16 @@ class CP_Author
     public function cp_custom_title($title)
     {
         $screen = get_current_screen();
-
         if ('cp_authors' == $screen->post_type){
             $title = __('Enter Author Name here', 'cpress');
-        }
-        
+        }        
         return $title;
     }
 
     public function cp_author_template($page_template)
     {
-        $options = collectionpress_settings(); 
+        $options = collectionpress_settings();
+        global $post;
 		if (is_page('author-list') || is_page($options['author_page']) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
             if (get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
                 $page_template = locate_template('collectionpress/cp_author_list.php');
@@ -232,7 +230,7 @@ class CP_Author
         
         $post = get_post($post_id);
 
-        if ( isset($_POST['author_meta_nonce']) && wp_verify_nonce($_POST['author_meta_nonce'], 'author_meta_nonce') ){
+        if (isset($_POST['author_meta_nonce']) && wp_verify_nonce($_POST['author_meta_nonce'], 'author_meta_nonce')) {
             $show_items = (isset($_POST['show_items'])? ($_POST['show_items']): "no");
             update_post_meta($post_id, 'show_items', $show_items);	
             $show_posts = (isset($_POST['show_posts'])? ($_POST['show_posts']): "no");
@@ -241,7 +239,6 @@ class CP_Author
             update_post_meta($post_id, 'author_keyword', $author_keyword);	
             $cp_related_author = (isset($_POST['cp_related_author'])? ($_POST['cp_related_author']): "");
             update_post_meta($post_id, 'cp_related_author', $cp_related_author);
-
             update_user_meta($cp_related_author, 'show_posts', $show_posts);	
         }
         return $post_id;
@@ -302,4 +299,3 @@ class CP_Author
 }
 
 return new CP_Author();
-
