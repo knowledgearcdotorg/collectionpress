@@ -23,9 +23,9 @@ $total_pages =$author_results->max_num_pages;
 ?>
 
 <div id="main-content">
-    <div class="container">
+    <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
-            <div class="content-wrap">
+            <div class="left-area">
                 <?php if ($author_results->have_posts() ): ?>
                     <?php while ($author_results->have_posts()) : ?>
                         <?php $author_results->the_post(); ?>

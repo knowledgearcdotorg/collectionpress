@@ -9,9 +9,9 @@ get_header();
 ?>
 
 <div id="main-content">
-    <div class="container">
+    <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
-            <div class="content-wrap">
+            <div class="left-area">
                 <?php while (have_posts()) : ?>
                     <?php the_post(); ?>
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

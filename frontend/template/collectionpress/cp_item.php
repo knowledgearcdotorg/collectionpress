@@ -20,9 +20,9 @@ if (isset($_GET) && isset($_GET['item_id'])) {
 
 
 <div id="main-content">
-    <div class="container">
+    <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
-            <div class="content-wrap">
+            <div class="left-area">
                 <?php if (isset($response) && $response!='') : ?>
                     <?php foreach ($response->metadata as $md) : ?>
 
