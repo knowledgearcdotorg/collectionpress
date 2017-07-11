@@ -5,12 +5,13 @@ if (!defined('WPINC')) {
 
 class CollectionPress_Settings
 {
-    public function get_all() {
+    public function get_all()
+    {
         $settings = get_option('collectionpress_settings_general', array());
 
         $options = wp_parse_args(
             $settings
-       );
+        );
 
         return apply_filters('collectionpress_settings', $options);
     }
@@ -31,7 +32,7 @@ class CollectionPress_Settings
             'collectionpress_settings_group',             // Options group
             'collectionpress_settings_general',      // Option name/database
             array($this, 'validate')
-       );
+        );
 
         /* Create settings section */
         add_settings_section(
@@ -39,12 +40,12 @@ class CollectionPress_Settings
             'CollectionPress General Settings',  // Section title
             array($this, "my_settings_section_description"), // Section callback function
             'collectionpress_settings'                          // Settings page slug
-       );
+        );
 
         /* Create settings - rest url */
         add_settings_field(
             'rest_url',
-            __('Rest Url', 'cpress' ),
+            __('Rest Url', 'cpress'),
             array($this, "text_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
@@ -58,29 +59,9 @@ class CollectionPress_Settings
                 'size'      =>null,
                 'options'   =>isset($setting_config['options']) ? $setting_config['options'] : '',
                 'value'     =>$settings["rest_url"]
-           )
-       );
-
-        /* Create settings - rest url */
-        add_settings_field(
-            'item_url',
-            __('Item Url', 'cpress' ),
-            array($this, "text_callback"),
-            'collectionpress_settings',
-            'collectionpress_settings_general',
-            array(
-                'id'        =>"item_url",
-                'label_for' =>'',
-                'class'     =>'',
-                'desc'      =>'',
-                'name'      =>"item_url",
-                'section'   =>"collectionpress_settings_general",
-                'size'      =>null,
-                'options'   =>isset($setting_config['options']) ? $setting_config['options'] : '',
-                'value'     =>$settings["item_url"]
-           )
-       );
-
+            )
+        );
+        
         add_settings_field(
             'item_page',
             __('Item View Page', 'cpress' ),
@@ -117,7 +98,6 @@ class CollectionPress_Settings
                 'value'     =>$settings["author_page"]
            )
        );
-
     }
 
     /* Sanitize Callback Function */
@@ -129,7 +109,7 @@ class CollectionPress_Settings
     /* Setting Section Description */
     function my_settings_section_description()
     {
-        echo wpautop( __("General settings for the CollectionPress plugin.", 'cpress' ) );
+        echo wpautop(__("This aren't the Settings you're looking for. Move along.", 'cpress'));
     }
 
     public function text_callback($args)
@@ -150,7 +130,7 @@ HTML;
 
         echo $html;
     }
-
+    
     public function select_callback($args)
     {
         $value = esc_attr(stripslashes($args['value']));
@@ -158,29 +138,23 @@ HTML;
         $page_ids=get_all_page_ids();
         $html = <<<HTML
 <label
-    for="collectionpress_settings_general[{$args['id']}">
+    for="collectionpress_settings_general[{$args['id']}">{$args['desc']}
     <select name="collectionpress_settings_general[{$args['id']}]" class="{$size}-text" >
 HTML;
-    $html .='<option value="">'.__('Select','cpress').'</option>';
-    foreach($page_ids as $page){
-        $selected_text='';
-        if($value == $page){
-            $selected_text = "selected='selected'";
-        }
-         $html .= '
-        <option value="'.$page.'" '.$selected_text.' >
+        $html .='<option value="">'.__('Select', 'cpress').'</option>';
+        foreach ($page_ids as $page) {
+            $selected_text='';
+            if ($value == $page) {
+                $selected_text = "selected='selected'";
+            }
+            $html .= '
+            <option value="'.$page.'" '.$selected_text.' >
                     '.get_the_title($page).'</option>';
-    }
-    $html .= <<<HTML
+        }
+        $html .= <<<HTML
     </select>
 </label>
 HTML;
-
-        if (!empty($args['desc'])) {
-            $html .= '<p class="description">'.$args['desc'].'</p>';
-        }
-
         echo $html;
     }
-
 }

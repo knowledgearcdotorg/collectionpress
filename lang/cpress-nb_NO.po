@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-10 11:02+0530\n"
-"PO-Revision-Date: 2017-07-10 05:50+0000\n"
+"PO-Revision-Date: 2017-07-11 06:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: Bokmål\n"
 "Language: nb\n"
@@ -61,23 +61,37 @@ msgstr "Hvile url"
 msgid "Item Url"
 msgstr "Element Url"
 
-msgid "Item View Page"
-msgstr "Item View Page"
+msgid "Select Item Page"
+msgstr "Velg vareside"
 
-msgid "Specifies the page used by CollectionPress for displaying an item directly from DSpace."
-msgstr "Specifies the page used by CollectionPress for displaying an item directly from DSpace."
+msgid "Select Author Page"
+msgstr "Velg forfatterside"
 
-msgid "Author List Page"
-msgstr "Author List Page"
-
-msgid "Specifies the page used by CollectionPress for displaying a list of Author Pages."
-msgstr "Specifies the page used by CollectionPress for displaying a list of Author Pages."
-
-msgid "General settings for the CollectionPress plugin."
-msgstr "General settings for the CollectionPress plugin."
+msgid "This aren't the Settings you're looking for. Move along."
+msgstr "Dette er ikke innstillingene du leter etter. Flytt sammen."
 
 msgid "Author"
 msgstr "Forfatter"
 
 msgid "Authors"
 msgstr "Forfattere"
+
+msgid ""
+"Specifies the page used by CollectionPress for displaying a list of Author "
+"Pages."
+msgstr ""
+"Angir siden som ble brukt av CollectionPress for å vise en liste over "
+"forfattersider."
+
+msgid ""
+"Specifies the page used by CollectionPress for displaying an item directly "
+"from DSpace."
+msgstr ""
+"Angir siden som brukes av CollectionPress for å vise et element direkte fra "
+"DSpace."
+
+msgid "Item Id is incorrect!"
+msgstr "Element-ID er feil!"
+
+msgid "No results found."
+msgstr "Ingen resultater."
