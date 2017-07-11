@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="JCar" default="help" basedir=".">
+<project name="Wordpress build file" default="help" basedir=".">
     <property   file="build.properties"/>
     <property   name="path.wp.plugins" value="${path.wp}/wp-content/plugins/collectionpress/"/>
     <property   name="package.dest" value="${src}/build"/>
@@ -14,5 +14,47 @@
                 <include name="**/*.php"/>
             </fileset>
         </copy>
+    </target>
+
+    <target name="package" description="Packages the Wordpress plugin for easy installation.">
+        <delete dir="${package.dest}"/>
+        <mkdir dir="${package.dest}"/>
+
+        <zip
+            destfile="${package.dest}/${id}.zip"
+            basedir="${src}">
+            <fileset dir=".">
+                <include name="**/**"/>
+                <exclude name="build*"/>
+                <exclude name=".kdev4/**"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <target name="compile_languages" description="Compile the language files.">
+        <delete includeemptydirs="false">
+            <fileset dir="${src}/lang" includes="*.mo"/>
+        </delete>
+
+        <foreach param="filename" absparam="absfilename" target="compile_language">
+            <fileset dir="${src}/lang">
+                <type type="file"/>
+                <depth max="0" min="0"/>
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="compile_language" hidden="true">
+        <php function="str_replace" returnProperty="replaced">
+            <param value=".po"/>
+            <param value=".mo"/>
+            <param value="${absfilename}"/>
+        </php>
+
+        <exec command="msgfmt -cv -o ${replaced} ${absfilename}"/>
+    </target>
+
+    <target name="help" description="Help with running Phing">
+        <exec command="phing -l" passthru="true"/>
     </target>
 </project>
