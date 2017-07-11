@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-10 11:02+0530\n"
+"PO-Revision-Date: 2017-07-10 05:50+0000\n"
+"Last-Translator: \n"
+"Language-Team: Bokmål\n"
+"Language: nb\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Loco-Source-Locale: en_IN\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Poedit-Basepath: .\n"
+"X-Loco-Parser: loco_parse_po"
+
+msgid "CollectionPress"
+msgstr "CollectionPress"
+
+msgid "Enter Author Name here"
+msgstr "Skriv inn forfatternavn her"
+
+msgid "Author Info"
+msgstr "Forfatter Info"
+
+msgid "Show items for this Author"
+msgstr "Vis objekter for denne forfatteren"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Show posts for this Author"
+msgstr "Vis innlegg for denne forfatteren"
+
+msgid "Select Author"
+msgstr "Velg Forfatter"
+
+msgid "Select"
+msgstr "Velg"
+
+msgid "Oops our bad ! No match available."
+msgstr "Oops, vårt dårlig! Ingen kamp tilgjengelig."
+
+msgid "Pages:"
+msgstr "Sider:"
+
+msgid "Author Items"
+msgstr "Forfatterelementer"
+
+msgid "Author Blog Posts"
+msgstr "Forfatter blogginnlegg"
+
+msgid "CollectionPress General Settings"
+msgstr "CollectionPress Generelle innstillinger"
+
+msgid "Rest Url"
+msgstr "Hvile url"
+
+msgid "Item Url"
+msgstr "Element Url"
+
+msgid "Item View Page"
+msgstr "Item View Page"
+
+msgid "Specifies the page used by CollectionPress for displaying an item directly from DSpace."
+msgstr "Specifies the page used by CollectionPress for displaying an item directly from DSpace."
+
+msgid "Author List Page"
+msgstr "Author List Page"
+
+msgid "Specifies the page used by CollectionPress for displaying a list of Author Pages."
+msgstr "Specifies the page used by CollectionPress for displaying a list of Author Pages."
+
+msgid "General settings for the CollectionPress plugin."
+msgstr "General settings for the CollectionPress plugin."
+
+msgid "Author"
+msgstr "Forfatter"
+
+msgid "Authors"
+msgstr "Forfattere"
