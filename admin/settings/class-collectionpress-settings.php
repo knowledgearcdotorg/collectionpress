@@ -140,7 +140,7 @@ HTML;
         $page_ids=get_all_page_ids();
         $html = <<<HTML
 <label
-    for="collectionpress_settings_general[{$args['id']}">{$args['desc']}
+    for="collectionpress_settings_general[{$args['id']}">
     <select name="collectionpress_settings_general[{$args['id']}]" class="{$size}-text" >
 HTML;
         $html .='<option value="">'.__('Select', 'cpress').'</option>';
@@ -157,6 +157,9 @@ HTML;
     </select>
 </label>
 HTML;
+		if (!empty($args['desc'])) {
+            $html .= '<p class="description">'.$args['desc'].'</p>';
+        }
         echo $html;
     }
 }
