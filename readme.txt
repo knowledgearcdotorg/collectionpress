@@ -4,7 +4,7 @@ Contributors: knowledgearc
 Tags: dspace, rest, author page, authors
 Requires at least: 4.5
 Tested up to: 4.8
-Stable tag: 1.0.0-alpha
+Stable tag: trunk
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl.html
 

@@ -1,10 +1,10 @@
 <?php
 
 /*
-  Plugin Name: Collection Press
+  Plugin Name: CollectionPress
   Author: KnowledgeArc
   Description: A plugin for displaying dspace information in Wordpress.
-  Version: 1.0.0-dev
+  Version: 0.9.0
   Copyright: 2017 KnowledgeArc Ltd
   License: GPLv3
   License URI: https://www.gnu.org/licenses/gpl.html
