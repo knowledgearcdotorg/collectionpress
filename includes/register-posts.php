@@ -112,14 +112,14 @@ class CP_Author
         global $post;
 		if (is_page('author-list') || is_page($options['author_page']) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
             if (get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
-                $page_template = locate_template('collectionpress/cp_author_list.php');
+                $page_template = locate_template('template/collectionpress/cp_author_list.php');
             } else {
                 $page_template = CP_TEMPLATE_PATH.'/collectionpress/cp_author_list.php';
             }
         }
         if (is_page('items') || is_page($options['item_page']) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_item.php") {
             if (get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_item.php") {
-                $page_template = locate_template('collectionpress/cp_item.php');
+                $page_template = locate_template('template/collectionpress/cp_item.php');
             } else {
                 $page_template = CP_TEMPLATE_PATH.'/collectionpress/cp_item.php';
             }
@@ -231,15 +231,26 @@ class CP_Author
         $post = get_post($post_id);
 
         if (isset($_POST['author_meta_nonce']) && wp_verify_nonce($_POST['author_meta_nonce'], 'author_meta_nonce')) {
-            $show_items = (isset($_POST['show_items'])? ($_POST['show_items']): "no");
+            $show_items = (isset($_POST['show_items']) ? "yes" : "no");
             update_post_meta($post_id, 'show_items', $show_items);	
-            $show_posts = (isset($_POST['show_posts'])? ($_POST['show_posts']): "no");
+            $show_posts = (isset($_POST['show_posts']) ? "yes" : "no");
             update_post_meta($post_id, 'show_posts', $show_posts);	
-            $author_keyword = (isset($_POST['author_keyword'])? ($_POST['author_keyword']): "");
-            update_post_meta($post_id, 'author_keyword', $author_keyword);	
-            $cp_related_author = (isset($_POST['cp_related_author'])? ($_POST['cp_related_author']): "");
-            update_post_meta($post_id, 'cp_related_author', $cp_related_author);
-            update_user_meta($cp_related_author, 'show_posts', $show_posts);	
+            $author_keyword = (isset($_POST['author_keyword']) ? (sanitize_text_field($_POST['author_keyword'])) : "");
+            update_post_meta($post_id, 'author_keyword', $author_keyword);
+            $authorusers = get_users('orderby=nicename&role=author');
+            $all_user_ids = [];
+
+            foreach ($authorusers as $buser) {
+                $all_user_ids[] = $buser->ID;
+            }
+            
+            $cp_related_author = (isset($_POST['cp_related_author']) ? (sanitize_text_field($_POST['cp_related_author'])): "");
+            if (in_array( $cp_related_author, $all_user_ids)) {            
+                update_post_meta($post_id, 'cp_related_author', $cp_related_author);
+                update_user_meta($cp_related_author, 'show_posts', $show_posts);
+            } else {
+                wp_die(__('Invalid User, go back and try again.','cpress'));
+            }            	
         }
         return $post_id;
     }
