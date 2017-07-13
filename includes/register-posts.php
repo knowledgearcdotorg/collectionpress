@@ -263,7 +263,7 @@ class CPR_AuthorReg
         return $post_id;
     }
 
-    public function cpr_get_author_by_api()
+    public function get_author_by_api()
     {
         if (isset($_REQUEST) && isset($_REQUEST['process']) && $_REQUEST['process']==true
             && isset($_REQUEST['nextNonce']) && $_REQUEST['nextNonce']=='SearchAuthor') {
@@ -277,7 +277,7 @@ class CPR_AuthorReg
                 'user-agent'=>'CollectionPress; '.home_url()
             );
 
-            $response = wp_remote_get($collection_shortcode->cpr_get_url('discover.json?q:&rows=0&facet=true&facet.field=author_filter&facet.prefix='.$search_term), $args);
+            $response = wp_remote_get($collection_shortcode->get_url('discover.json?q:&rows=0&facet=true&facet.field=author_filter&facet.prefix='.$search_term), $args);
                
             $response = json_decode(wp_remote_retrieve_body($response));
             if (count($response->response->numFound)) {
@@ -300,7 +300,7 @@ class CPR_AuthorReg
         wp_die();
     }
 
-    public function cpr_get_item_by_id($id)
+    public function get_item_by_id($id)
     {
         $collection_shortcode = new CollectionPress_ShortCode();
         $options = collectionpress_settings();
@@ -310,7 +310,7 @@ class CPR_AuthorReg
             'user-agent'=>'CollectionPress; '.home_url()
         );
 
-        $response = wp_remote_get($collection_shortcode->cpr_get_url('items/'.$id.'.json'), $args);
+        $response = wp_remote_get($collection_shortcode->get_url('items/'.$id.'.json'), $args);
            
         $response = json_decode(wp_remote_retrieve_body($response));
         return $response;

@@ -32,38 +32,38 @@ require_once($dir.'/includes/import-from-dspace.php');
 require_once($dir.'/includes/register-posts.php');
 require_once($dir.'/frontend/class-collectionpress-shortcode.php');
 $settings = new CollectionPress_Settings;
-add_action('admin_init', array($settings, 'cpr_register'));
+add_action('admin_init', array($settings, 'register'));
 
 if (is_admin()) {
     require_once($dir.'/admin/class-collectionpress-admin.php');
 
-    $cpr_admin = new CollectionPress_Admin;
-    add_action('admin_menu', array($cpr_admin, 'cpr_get_menus'));
-    $cpr_authorreg = new CPR_AuthorReg();
-	add_action( 'wp_ajax_cpr_get_author_ajax', array($cpr_authorreg, 'cpr_get_author_by_api'));
+    $admin = new CollectionPress_Admin;
+    add_action('admin_menu', array($admin, 'get_menus'));
+    $authorreg = new CPR_AuthorReg();
+	add_action( 'wp_ajax_cpr_get_author_ajax', array($authorreg, 'get_author_by_api'));
 } else {
     $shortcode = new CollectionPress_Shortcode();
-    add_shortcode('collectionpress', array($shortcode, 'cpr_render'));
+    add_shortcode('collectionpress', array($shortcode, 'render'));
 }
 
 
 register_uninstall_hook(__FILE__, 'cpr_uninstall_options');
 
 function cpr_uninstall_options(){
-    if (! current_user_can('activate_plugins'))
+    if (! current_user_can('activate_plugins')) {
         return;
+    }
     
- 
     $option_name = 'collectionpress_settings_general';
-     
+    
     delete_option($option_name);
-     
-    $cpr_authors_posts = get_posts(array(
+    
+    $authors_posts = get_posts(array(
             'numberposts'   => -1,
             'post_type'     => 'cp_authors',
             'post_status'   => 'any' ));
     
-    foreach ( $cpr_authors_posts as $post ) {
+    foreach ( $authors_posts as $post ) {
         delete_post_meta( $post->ID, 'show_items' );
         delete_post_meta( $post->ID, 'author_keyword' );
         delete_post_meta( $post->ID, 'show_posts' );
