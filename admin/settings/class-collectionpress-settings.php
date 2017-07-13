@@ -80,7 +80,7 @@ class CollectionPress_Settings
                 'value'     =>$settings["item_page"]
            )
         );
-       
+
         add_settings_field(
             'author_page',
             __('Author List Page', 'cpress'),
@@ -132,7 +132,7 @@ HTML;
 
         echo $html;
     }
-    
+
     public function select_callback($args)
     {
         $value = esc_attr(stripslashes($args['value']));
@@ -157,7 +157,7 @@ HTML;
     </select>
 </label>
 HTML;
-		if (!empty($args['desc'])) {
+        if (!empty($args['desc'])) {
             $html .= '<p class="description">'.$args['desc'].'</p>';
         }
         echo $html;
