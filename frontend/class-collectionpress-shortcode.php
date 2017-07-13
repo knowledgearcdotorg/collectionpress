@@ -4,11 +4,11 @@ if (!defined('WPINC')) {
 }
 
 /**
- * Provides a short code renderer.
+ * Provides a short code cpr_renderer.
  */
 class CollectionPress_ShortCode
 {
-    public function render($atts)
+    public function cpr_render($atts)
     {
         if (isset($atts["limit"])) {
             $this->limit= $atts["limit"];
@@ -17,15 +17,15 @@ class CollectionPress_ShortCode
         }
 
         if (isset($atts["author"])) {
-            $this->get_items($atts["author"], $this->limit);
+            $this->cpr_get_items($atts["author"], $this->limit);
         }
 
 		if (isset($atts['list']) && $atts['list']=="authors") {
-            $this->get_authors($this->limit);
+            $this->cpr_get_authors($this->limit);
         }        
     }
 
-    public function get_items($author, $limit)
+    public function cpr_get_items($author, $limit)
     {
         $options = collectionpress_settings();
 
@@ -44,7 +44,7 @@ class CollectionPress_ShortCode
             }
             $url .='&rows='.$limit.'&start='.$start;
         }
-        $response = wp_remote_get($this->get_url($url), $args);
+        $response = wp_remote_get($this->cpr_get_url($url), $args);
         
         $response = json_decode(wp_remote_retrieve_body($response));
 
@@ -58,11 +58,11 @@ class CollectionPress_ShortCode
         if (file_exists(locate_template('template/collectionpress/item_display.php'))) {
             include(locate_template('template/collectionpress/item_display.php'));
         } else {
-            include(CP_TEMPLATE_PATH.'/collectionpress/item_display.php');
+            include(CPR_TEMPLATE_PATH.'/collectionpress/item_display.php');
         }
     }
 
-    public function get_authors($limit)
+    public function cpr_get_authors($limit)
     {
         $posts_per_page = $limit;
 
@@ -83,7 +83,7 @@ class CollectionPress_ShortCode
                 if (file_exists(locate_template('template/collectionpress/author_display.php'))) {
                     include(locate_template('template/collectionpress/author_display.php'));
                 } else {
-                    include(CP_TEMPLATE_PATH.'/collectionpress/author_display.php');
+                    include(CPR_TEMPLATE_PATH.'/collectionpress/author_display.php');
                 }
                 
             endwhile; ?>
@@ -104,7 +104,7 @@ class CollectionPress_ShortCode
         <?php
     }
     
-    public function get_url($endpoint)
+    public function cpr_get_url($endpoint)
     {
         $options = collectionpress_settings();
 

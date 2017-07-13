@@ -8,27 +8,27 @@ if (!defined('WPINC')) {
 }
 
 
-class CP_Author
+class CPR_AuthorReg
 {
     private $nonce = 'cp_author_nonce';
     
     public function __construct()
     {
         global $item_response;
-        add_action('init', array($this, 'register_post_author'));
-        add_filter('template_include', array($this, 'cp_custom_single'));
-        add_filter('enter_title_here', array($this, 'cp_custom_title'));
-        add_filter('page_template', array($this, 'cp_author_template'));
-        add_action('add_meta_boxes', array($this, 'cp_author_meta_box'));
-        add_action('save_post', array($this, 'save_author_data'));
-        add_action('init', array($this, 'cp_rewrite_rule'), 10, 0);
-        add_action('init', array($this, 'cp_rewrite_link'), 10, 0);       
+        add_action('init', array($this, 'cpr_register_post_author'));
+        add_filter('template_include', array($this, 'cpr_custom_single'));
+        add_filter('enter_title_here', array($this, 'cpr_custom_title'));
+        add_filter('page_template', array($this, 'cpr_author_template'));
+        add_action('add_meta_boxes', array($this, 'cpr_author_meta_box'));
+        add_action('save_post', array($this, 'cpr_save_author_data'));
+        add_action('init', array($this, 'cpr_rewrite_rule'), 10, 0);
+        add_action('init', array($this, 'cpr_rewrite_link'), 10, 0);       
     }
 
-    public function cp_rewrite_rule()
+    public function cpr_rewrite_rule()
     {
         $options = collectionpress_settings();
-        if ($options['item_page']) {
+        if (!empty($options) && $options['item_page']) {
             $page_id = $options['item_page'];
         } else {
             $page = get_page_by_path('items');
@@ -39,13 +39,13 @@ class CP_Author
             'top');      
     }
     
-    public function cp_rewrite_link()
+    public function cpr_rewrite_link()
     {
         add_rewrite_tag('aposts', '([0-9]+)');
         add_rewrite_tag( '%item_id%', '([^&]+)');
     }
     
-    public function register_post_author()
+    public function cpr_register_post_author()
     {
         $labels = array(
             'name'               => __('Authors', 'cpress'),
@@ -83,21 +83,21 @@ class CP_Author
         register_post_type('cp_authors', $args);        
     }
 
-    public function cp_custom_single($template)
+    public function cpr_custom_single($template)
     {
         $post_types = array('cp_authors');
         
         if (is_singular($post_types)) {
             if (!file_exists(locate_template('single-cp_authors.php'))) {
                 
-                $template = CP_TEMPLATE_PATH.'/single-cp_authors.php';
+                $template = CPR_TEMPLATE_PATH.'/single-cp_authors.php';
             }
         }
 
         return $template;
     }
 
-    public function cp_custom_title($title)
+    public function cpr_custom_title($title)
     {
         $screen = get_current_screen();
         if ('cp_authors' == $screen->post_type){
@@ -106,34 +106,42 @@ class CP_Author
         return $title;
     }
 
-    public function cp_author_template($page_template)
+    public function cpr_author_template($page_template)
     {
+        $cpr_author_page='';
+        $cpr_item_page='';
         $options = collectionpress_settings();
+        if (!empty($options) && $options['author_page']) {
+            $cpr_author_page = $options['item_page'];
+        }
+        if (!empty($options) && $options['item_page']) {
+            $cpr_item_page = $options['item_page'];
+        }
         global $post;
-		if (is_page('author-list') || is_page($options['author_page']) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
+		if (is_page('author-list') || is_page($cpr_author_page) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
             if (get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
                 $page_template = locate_template('template/collectionpress/cp_author_list.php');
             } else {
-                $page_template = CP_TEMPLATE_PATH.'/collectionpress/cp_author_list.php';
+                $page_template = CPR_TEMPLATE_PATH.'/collectionpress/cp_author_list.php';
             }
         }
-        if (is_page('items') || is_page($options['item_page']) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_item.php") {
+        if (is_page('items') || is_page($cpr_item_page) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_item.php") {
             if (get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_item.php") {
                 $page_template = locate_template('template/collectionpress/cp_item.php');
             } else {
-                $page_template = CP_TEMPLATE_PATH.'/collectionpress/cp_item.php';
+                $page_template = CPR_TEMPLATE_PATH.'/collectionpress/cp_item.php';
             }
         }
         return $page_template;
     }
 
-    public function cp_author_meta_box()
+    public function cpr_author_meta_box()
     {
-        add_meta_box('author-info', __('Author Info','cpress'),  array($this, 'cp_author_info_box'),
+        add_meta_box('author-info', __('Author Info','cpress'),  array($this, 'cpr_author_info_box'),
             "cp_authors", 'normal', 'high');	
     }
     
-    public function cp_author_info_box($post)
+    public function cpr_author_info_box($post)
     {
         global $pagenow;
         global $typenow;
@@ -204,7 +212,7 @@ class CP_Author
 
                 title.keyup(function(){
                    title.autocomplete({
-                        source:ajaxurl+"?action=cp_get_author_ajax&process=true&nextNonce=SearchAuthor",
+                        source:ajaxurl+"?action=cpr_get_author_ajax&process=true&nextNonce=SearchAuthor",
                         minLength:3,
                         select: function( event, ui ) {
                             event.preventDefault();
@@ -219,7 +227,7 @@ class CP_Author
         <?php
     }
 
-    public function save_author_data($post_id)
+    public function cpr_save_author_data($post_id)
     {
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return $post_id;
@@ -255,7 +263,7 @@ class CP_Author
         return $post_id;
     }
 
-    public function cp_get_author_by_api()
+    public function cpr_get_author_by_api()
     {
         if (isset($_REQUEST) && isset($_REQUEST['process']) && $_REQUEST['process']==true
             && isset($_REQUEST['nextNonce']) && $_REQUEST['nextNonce']=='SearchAuthor') {
@@ -269,7 +277,7 @@ class CP_Author
                 'user-agent'=>'CollectionPress; '.home_url()
             );
 
-            $response = wp_remote_get($collection_shortcode->get_url('discover.json?q:&rows=0&facet=true&facet.field=author_filter&facet.prefix='.$search_term), $args);
+            $response = wp_remote_get($collection_shortcode->cpr_get_url('discover.json?q:&rows=0&facet=true&facet.field=author_filter&facet.prefix='.$search_term), $args);
                
             $response = json_decode(wp_remote_retrieve_body($response));
             if (count($response->response->numFound)) {
@@ -292,7 +300,7 @@ class CP_Author
         wp_die();
     }
 
-    public function cp_get_item_by_id($id)
+    public function cpr_get_item_by_id($id)
     {
         $collection_shortcode = new CollectionPress_ShortCode();
         $options = collectionpress_settings();
@@ -302,11 +310,11 @@ class CP_Author
             'user-agent'=>'CollectionPress; '.home_url()
         );
 
-        $response = wp_remote_get($collection_shortcode->get_url('items/'.$id.'.json'), $args);
+        $response = wp_remote_get($collection_shortcode->cpr_get_url('items/'.$id.'.json'), $args);
            
         $response = json_decode(wp_remote_retrieve_body($response));
         return $response;
     }
 }
 
-return new CP_Author();
+return new CPR_AuthorReg();

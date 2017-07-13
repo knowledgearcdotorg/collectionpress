@@ -5,7 +5,7 @@ if (!defined('WPINC')) {
 
 class CollectionPress_Settings
 {
-    public function get_all()
+    public function cpr_get_all()
     {
         $settings = get_option('collectionpress_settings_general', array());
 
@@ -16,29 +16,33 @@ class CollectionPress_Settings
         return apply_filters('collectionpress_settings', $options);
     }
 
-    public function get($key, $default = false)
+    public function cpr_get($key, $default = false)
     {
-        $settings = $this->get_all();
+        $settings = $this->cpr_get_all();
         $value = ! empty($settings[$key]) ? $settings[$key] : $default;
         return apply_filters('collectionpress_setting_'.$key, $value);
     }
 
-    public function register()
+    public function cpr_register()
     {
-        $settings = $this->get_all();
-
+        $settings = $this->cpr_get_all();
+		if (empty($settings)){
+			$settings['rest_url']='';
+			$settings['item_page']='';
+			$settings['author_page']='';
+		}
         /* Register Settings */
         register_setting(
             'collectionpress_settings_group',             // Options group
             'collectionpress_settings_general',      // Option name/database
-            array($this, 'validate')
+            array($this, 'cpr_validate')
         );
 
         /* Create settings section */
         add_settings_section(
             'collectionpress_settings_general',                   // Section ID
             'CollectionPress General Settings',  // Section title
-            array($this, "my_settings_section_description"), // Section callback function
+            array($this, "cpr_settings_section_description"), // Section callback function
             'collectionpress_settings'                          // Settings page slug
         );
 
@@ -46,7 +50,7 @@ class CollectionPress_Settings
         add_settings_field(
             'rest_url',
             __('Rest Url', 'cpress'),
-            array($this, "text_callback"),
+            array($this, "cpr_text_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
             array(
@@ -65,7 +69,7 @@ class CollectionPress_Settings
         add_settings_field(
             'item_page',
             __('Item View Page', 'cpress'),
-            array($this, "select_callback"),
+            array($this, "cpr_select_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
             array(
@@ -84,7 +88,7 @@ class CollectionPress_Settings
         add_settings_field(
             'author_page',
             __('Author List Page', 'cpress'),
-            array($this, "select_callback"),
+            array($this, "cpr_select_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
             array(
@@ -103,18 +107,18 @@ class CollectionPress_Settings
     }
 
     /* Sanitize Callback Function */
-    public function validate($input)
+    public function cpr_validate($input)
     {
         return $input;
     }
 
     /* Setting Section Description */
-    function my_settings_section_description()
+    function cpr_settings_section_description()
     {
         echo wpautop(__("General settings for the CollectionPress plugin.", 'cpress'));
     }
 
-    public function text_callback($args)
+    public function cpr_text_callback($args)
     {
         $value = esc_attr(stripslashes($args['value']));
         $size = (isset($args['size']) && ! is_null($args['size'])) ? $args['size'] : 'regular';
@@ -133,7 +137,7 @@ HTML;
         echo $html;
     }
 
-    public function select_callback($args)
+    public function cpr_select_callback($args)
     {
         $value = esc_attr(stripslashes($args['value']));
         $size = (isset($args['size']) && ! is_null($args['size'])) ? $args['size'] : 'regular';

@@ -82,7 +82,7 @@ get_header();
                                         if (file_exists(locate_template('collectionpress/author_display_posts.php'))) {
                                             include(locate_template('collectionpress/author_display_posts.php'));
                                         } else {
-                                            include(CP_TEMPLATE_PATH.'/collectionpress/author_display_posts.php');
+                                            include(CPR_TEMPLATE_PATH.'/collectionpress/author_display_posts.php');
                                         }
 
                                     endwhile; ?>
