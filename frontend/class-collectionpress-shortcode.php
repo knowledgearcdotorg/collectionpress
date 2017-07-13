@@ -58,7 +58,7 @@ class CollectionPress_ShortCode
         if (file_exists(locate_template('template/collectionpress/item_display.php'))) {
             include(locate_template('template/collectionpress/item_display.php'));
         } else {
-            include(CP_TEMPLATE_PATH.'/collectionpress/item_display.php');
+            include(CPR_TEMPLATE_PATH.'/collectionpress/item_display.php');
         }
     }
 
@@ -83,7 +83,7 @@ class CollectionPress_ShortCode
                 if (file_exists(locate_template('template/collectionpress/author_display.php'))) {
                     include(locate_template('template/collectionpress/author_display.php'));
                 } else {
-                    include(CP_TEMPLATE_PATH.'/collectionpress/author_display.php');
+                    include(CPR_TEMPLATE_PATH.'/collectionpress/author_display.php');
                 }
                 
             endwhile; ?>

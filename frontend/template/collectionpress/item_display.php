@@ -15,7 +15,7 @@
 
                 <?php  if ($handle = $doc->handle) : ?>
                     <?php $url = add_query_arg("item_id",$doc->{"search.resourceid"},get_permalink($page_id)); ?>
-                    <?php $title = sprintf('<a href="%s" target="_blank">%s</a>', $url, $title); ?>
+                    <?php $title = sprintf('<a href="%s" target="_blank">%s</a>', esc_url($url), $title); ?>
                 <?php endif; ?>
                 <?php $parts[] = $title; ?>
             <?php endif; ?>

@@ -18,11 +18,10 @@ if (!function_exists('add_shortcode')) {
 
 $dir = dirname(__FILE__);
 
-define( 'CP_TEMPLATE_PATH', plugin_dir_path(__FILE__).'frontend/template' );
-define( 'CP_JS_PATH', plugin_dir_url(__FILE__).'assets/js/' );
+define( 'CPR_TEMPLATE_PATH', plugin_dir_path(__FILE__).'frontend/template' );
 
-add_action('init','plugin_text_domain');
-function plugin_text_domain(){
+add_action('init','cpr_text_domain');
+function cpr_text_domain(){
     load_plugin_textdomain('cpress', false, basename( dirname(__FILE__) ) . '/lang/' );
 }
 
@@ -40,9 +39,35 @@ if (is_admin()) {
 
     $admin = new CollectionPress_Admin;
     add_action('admin_menu', array($admin, 'get_menus'));
-    $CP_Author = new CP_Author();
-	add_action( 'wp_ajax_cp_get_author_ajax', array($CP_Author, 'cp_get_author_by_api'));
+    $authorreg = new CPR_AuthorReg();
+	add_action( 'wp_ajax_cpr_get_author_ajax', array($authorreg, 'get_author_by_api'));
 } else {
     $shortcode = new CollectionPress_Shortcode();
     add_shortcode('collectionpress', array($shortcode, 'render'));
+}
+
+
+register_uninstall_hook(__FILE__, 'cpr_uninstall_options');
+
+function cpr_uninstall_options(){
+    if (! current_user_can('activate_plugins')) {
+        return;
+    }
+    
+    $option_name = 'collectionpress_settings_general';
+    
+    delete_option($option_name);
+    
+    $authors_posts = get_posts(array(
+            'numberposts'   => -1,
+            'post_type'     => 'cp_authors',
+            'post_status'   => 'any' ));
+    
+    foreach ( $authors_posts as $post ) {
+        delete_post_meta( $post->ID, 'show_items' );
+        delete_post_meta( $post->ID, 'author_keyword' );
+        delete_post_meta( $post->ID, 'show_posts' );
+        delete_post_meta( $post->ID, 'cp_related_author' );
+        wp_delete_post( $post->ID, true );
+    }
 }

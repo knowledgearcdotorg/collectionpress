@@ -26,7 +26,11 @@ class CollectionPress_Settings
     public function register()
     {
         $settings = $this->get_all();
-
+		if (empty($settings)){
+			$settings['rest_url']='';
+			$settings['item_page']='';
+			$settings['author_page']='';
+		}
         /* Register Settings */
         register_setting(
             'collectionpress_settings_group',             // Options group
@@ -38,7 +42,7 @@ class CollectionPress_Settings
         add_settings_section(
             'collectionpress_settings_general',                   // Section ID
             'CollectionPress General Settings',  // Section title
-            array($this, "my_settings_section_description"), // Section callback function
+            array($this, "settings_section_description"), // Section callback function
             'collectionpress_settings'                          // Settings page slug
         );
 
@@ -109,7 +113,7 @@ class CollectionPress_Settings
     }
 
     /* Setting Section Description */
-    function my_settings_section_description()
+    function settings_section_description()
     {
         echo wpautop(__("General settings for the CollectionPress plugin.", 'cpress'));
     }
