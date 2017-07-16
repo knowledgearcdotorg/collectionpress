@@ -26,6 +26,7 @@
             <fileset dir=".">
                 <include name="**/**"/>
                 <exclude name="build*"/>
+		<exclude name="*.kdev4"/>
                 <exclude name=".kdev4/**"/>
             </fileset>
         </zip>
