@@ -20,16 +20,11 @@ Rest Url is used to configure the DSpace REST endpoint. An example endpoint migh
 
 http://myarchive.tld/rest
 
-### Item Url
-The Item Url provides a general url for creating links to items. In DSpace this might look like:
+### Item View Page
+An item page is used to display a DSpace item directly via the REST API. You will need to create a Wordpress Page and assign it using the Item View Page dropdown in order to view a DSpace item in Wordpress.
 
-http://myarchive.tld/handle
-
-### Select Item Page
-An item page is used to display a DSpace item directly via the REST API. You will need to create a Wordpress Page and assign it using the Select Item Page dropdown.
-
-### Select Author Page
-The author page displays a list of Author Pages. You will need to create a Wordpress Page and assign it using the Select Author Page dropdown.
+### Author List Page
+The author list page displays a list of Author Pages. You will need to create a Wordpress Page and assign it using the Author List Page dropdown in order to browse authors.
 
 ## Author Pages
 
@@ -38,6 +33,30 @@ CollectionPress provides a feature called Author Pages.
 Author Pages can be used for displaying information about an author or researcher, such as name, bio and location. You can also configure the Author Page to display the author's items.
 
 To manage your Author Pages, click on "Authors" from the wp-admin main menu.
+
+### Creating an Author Page
+
+To create an author page, log into Wordpress admin and select Authors -> Add from the Dashboard menu or select Authors -> All and click on Add from the Authors page.
+
+Once in the "Add New" page, specify your author's details.
+
+When typing the author's name, a controlled list of names are retrieved from DSpace; in order for DSpace items to be listed in the Author Page, **the author name must exactly match an author name in DSpace**.
+
+#### Author Info
+
+You can use the Author Info section to specify what is shown on the author page as well as link the author page to a registered Wordpress author.
+
+##### Show items for this Author
+
+Tick to show the DSpace items corresponding to the Author's name. The author's name must exactly match an author in DSpace.
+
+##### Show posts for this Author
+
+Tick to show blog posts belonging to the author. You must link the author page to a registered Wordpress author for this feature to work.
+
+##### Select Author
+
+Select the registered Wordpress author to link to the Author Page. You only need to link a Wordpress author to an author page if **Show posts for this Author** is **Yes**.
 
 ### Link a Registered User to an Author Page
 
@@ -50,9 +69,11 @@ You can link a registered author by editing the Author Page:
 - Select the registered Wordpress author from the drop down list,
 - Save.
 
-## Short Code
+## Shortcode
 
 The CollectionPress shortcode allows you to include DSpace item lists within blog posts, pages and other content which can parse shortcode.
+
+**You do not need to use the CollectionPress shortcode in an Author Page**. Instead, tick **Show items for this Author** in the **Author Details** section of the Author Page editor.
 
 The basic CollectionPress shortcode.
 
@@ -98,4 +119,4 @@ The number of records to display per page.
 
 CollectionPress output can be overridden in your Wordpress Theme.  
   
-All templates are located in frontend/template. To override copy files from frontend/template to your theme's collectionpress directory then modify to meet your requirements.
+All templates are located in frontend/template. To override, copy files from frontend/template to your theme's collectionpress directory then modify to meet your needs.
