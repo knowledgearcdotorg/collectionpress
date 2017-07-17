@@ -4,12 +4,11 @@ CollectionPress provides a variety of features for building author or researcher
 Items archived in DSpace can also be displayed through CollectionPress.
 
 ## Prerequisites
+You need to be running a DSpace instance which is using the KnowledgeArc REST API.
 
-You need to be running a DSpace instance which is using the [KnowledgeArc REST API](https://github.com/knowledgearcdotorg/dspace).
+The core REST API currently has limited functionality that is required for CollectionPress to deliver a full set of features. In particular, CollectionPress makes use of the DSpace Discovery (which is simply a wrapper for Apache Solr), which is currently only exposed via the KnowledgeArc REST API.
 
-The core REST API currently lacks the functionality required for CollectionPress to deliver a full set of features. In particular, CollectionPress makes use of the DSpace Discovery (which is simply a wrapper for Apache Solr), which is currently only exposed via the KnowledgeArc REST API.
-
-There are plans in the future for incorporating the core REST API but with a new Spring REST API now in the works, CollectionPress will continue to use the most mature and stable REST API available; KnowledgeArc REST API.
+The CollectionPress roadmap includes supporting the DSpace REST API as it develops.
 
 ## Getting Started
 
