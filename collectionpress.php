@@ -28,7 +28,6 @@ function cpr_text_domain(){
 require_once($dir.'/includes/class-collectionpress.php');
 require_once($dir.'/admin/settings/class-collectionpress-settings.php');
 require_once($dir.'/includes/functions.php');
-require_once($dir.'/includes/import-from-dspace.php');
 require_once($dir.'/includes/register-posts.php');
 require_once($dir.'/frontend/class-collectionpress-shortcode.php');
 $settings = new CollectionPress_Settings;
