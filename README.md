@@ -3,17 +3,31 @@ CollectionPress provides a variety of features for building author or researcher
 
 Items archived in DSpace can also be displayed through CollectionPress.
 
+## Prerequisites
+
+You need to be running a DSpace instance which is using the [KnowledgeArc REST API](https://github.com/knowledgearcdotorg/dspace).
+
+The core REST API currently has limited functionality that is required for CollectionPress to deliver a full set of features. In particular, CollectionPress makes use of the DSpace Discovery (a simple wrapper for Apache Solr), which is currently only exposed via the KnowledgeArc REST API.
+
+The CollectionPress roadmap includes supporting the DSpace REST API as it develops.
+
 ## Getting Started
 
-1. Install CollectionPress,
-2. Configure CollectionPress by setting up a connection to the dspace demo,
-3. Create a Wordpress Page. This page will be used for displaying your DSpace items,
-4. Select the Page you have just created using the Select Item Page dropdown, available in the CollectionPress general settings,
-5. Create a page or blog post. Add the collectionpress shortcode to pull an author's items.
+1. Log into your Wordpress admin,
+2. Install CollectionPress,
+3. Configure CollectionPress by setting up a connection your DSpace instance (Settings -> CollectionPress),
+4. Create a Page (Pages -> Add New). This page will be used for displaying your DSpace items,
+5. Select the Page you have just created in step 4 using the **Item View Page** dropdown, available in the CollectionPress general settings (Settings -> CollectionPress),
+6. Create a page or blog post. Add the collectionpress shortcode to display an author's items:
+
+[collectionpress list="items" author="Author Name"]
+
+You can also create Author Pages using the CollectionPress Author Pages manager (Authors -> Add).
+
 
 ## Settings
 
-Available settings for configuring CollectionPress are:  
+Available settings for configuring CollectionPress are:
 
 ### Rest Url
 Rest Url is used to configure the DSpace REST endpoint. An example endpoint might look like:
