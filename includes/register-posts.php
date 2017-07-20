@@ -253,12 +253,14 @@ class CPR_AuthorReg
             }
             
             $cp_related_author = (isset($_POST['cp_related_author']) ? (sanitize_text_field($_POST['cp_related_author'])): "");
-            if (in_array( $cp_related_author, $all_user_ids)) {            
-                update_post_meta($post_id, 'cp_related_author', $cp_related_author);
-                update_user_meta($cp_related_author, 'show_posts', $show_posts);
-            } else {
-                wp_die(__('Invalid User, go back and try again.','cpress'));
-            }            	
+            if ($cp_related_author) {            
+                if (in_array( $cp_related_author, $all_user_ids)) {            
+                    update_post_meta($post_id, 'cp_related_author', $cp_related_author);
+                    update_user_meta($cp_related_author, 'show_posts', $show_posts);
+                } else {
+                    wp_die(__('Invalid User, go back and try again.','cpress'));
+                }
+            }
         }
         return $post_id;
     }
