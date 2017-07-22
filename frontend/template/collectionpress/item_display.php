@@ -6,6 +6,7 @@
  * Path will be "<theme_name>/collectionpress/item_display.php"
  * */
 ?>
+<h3><?php echo __("Author's Works", 'cpress') ?></h3>
 <ul>
     <?php foreach ($response->response->docs as $doc) : ?>
         <?php $parts = array();?>

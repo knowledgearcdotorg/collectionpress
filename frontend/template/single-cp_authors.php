@@ -38,8 +38,6 @@ get_header();
                         </div> <!-- .entry-content -->
 
                         <div class="author-items-wrap">
-                            <h3><?php echo __('Author Items', 'cpress') ?></h3>
-
                             <?php
                             $show_items = get_post_meta(get_the_ID(), "show_items", true);
                             $author_keyword = get_post_meta(get_the_ID(), "author_keyword", true);
@@ -56,7 +54,7 @@ get_header();
                         $cp_related_author = get_post_meta(get_the_ID(), "cp_related_author", true);
                         if ($show_posts=="yes" && $cp_related_author!='') : ?>
                             <div class="author-posts-wrap">
-                                <h3><?php echo __('Author Blog Posts', 'cpress') ?></h3>
+                                <h3><?php echo __("Author's Blog Posts", 'cpress') ?></h3>
                                 <?php
                                 $aposts=1;
                                 if (isset($_GET) && isset($_GET['aposts'])) {
