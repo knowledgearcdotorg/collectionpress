@@ -45,6 +45,13 @@ if (is_admin()) {
     add_shortcode('collectionpress', array($shortcode, 'render'));
 }
 
+function cpr_rewrite_flush() {
+    $authorreg = new CPR_AuthorReg();
+    $authorreg->cpr_register_post_author();
+    flush_rewrite_rules();
+}
+register_activation_hook(__FILE__, 'cpr_rewrite_flush');
+
 
 register_uninstall_hook(__FILE__, 'cpr_uninstall_options');
 
