@@ -98,7 +98,9 @@ get_header();
                                         wp_reset_postdata();
                                     ?>
                                     </div>
-                                <?php endif; ?>                    
+                                <?php else: ?>
+                                    <p><?php echo __('No blog posts currently available.', 'cpress'); ?></p>
+                                <?php endif; ?>                
                             </div>
                         <?php endif; ?>
                         <div class="cp_post_meta_wrapper">
