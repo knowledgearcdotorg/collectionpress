@@ -95,3 +95,12 @@ msgstr "Ingen resultater."
 
 msgid "Item Id is incorrect!"
 msgstr "Element-ID er feil!"
+
+msgid "Item Id is incorrect!"
+msgstr "Arbeids-ID er feil!"
+
+msgid "No blog posts currently available."
+msgstr "Ingen blogginnlegg tilgjengelig for øyeblikket."
+
+msgid "No works currently archived."
+msgstr "Ingen verk arkiveres for tiden."

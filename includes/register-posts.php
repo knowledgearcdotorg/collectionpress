@@ -155,7 +155,7 @@ class CPR_AuthorReg
         $show_posts = get_post_meta($post->ID,"show_posts", true);
         $cp_related_author = get_post_meta($post->ID, "cp_related_author", true);
         wp_nonce_field('author_meta_nonce', 'author_meta_nonce');
-        $authorusers = get_users('orderby=nicename&role=author');        
+        $authorusers = get_users('orderby=nicename&role=author');
         ?>
         <style>
         .ui-front{z-index:9999!important;}
