@@ -15,7 +15,7 @@ class CPR_AuthorReg
     public function __construct()
     {
         global $item_response;
-        //~ add_action('init', array($this, 'cpr_register_post_author'));
+        add_action('init', array($this, 'cpr_register_post_author'));
         add_filter('template_include', array($this, 'cpr_custom_single'));
         add_filter('enter_title_here', array($this, 'cpr_custom_title'));
         add_filter('page_template', array($this, 'cpr_author_template'));
