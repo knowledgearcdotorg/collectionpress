@@ -118,22 +118,26 @@ class CPR_AuthorReg
             $cpr_item_page = $options['item_page'];
         }
         global $post;
-		if (is_page('author-list') || is_page($cpr_author_page) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_author_list.php") {
+		if (is_page('author-list') || is_page($cpr_author_page) || get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_author_list.php") { 
             if (get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_author_list.php") {
                 $page_template = locate_template('template/collectionpress/cp_author_list.php');
-            } else if (is_page('items') || is_page($cpr_author_page)) {
-                $page_template = locate_template('template/collectionpress/cp_author_list.php');
-            }else {
-                $page_template = CPR_TEMPLATE_PATH.'/collectionpress/cp_author_list.php';
+            } else if (is_page('author-list') || is_page($cpr_author_page)) {
+                if (locate_template('template/collectionpress/cp_author_list.php')) {
+                    $page_template = locate_template('template/collectionpress/cp_author_list.php');
+                }else {
+                    $page_template = CPR_TEMPLATE_PATH.'/collectionpress/cp_author_list.php';
+                }
             }
         }
-        if (is_page('items') || is_page($cpr_item_page) || get_post_meta($post->ID, "_wp_page_template", true)=="collectionpress/cp_item.php") {
+        if (is_page('items') || is_page($cpr_item_page) || get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_item.php") {
             if (get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_item.php") {
                 $page_template = locate_template('template/collectionpress/cp_item.php');
             } else if (is_page('items') || is_page($cpr_item_page)) {
-                $page_template = locate_template('template/collectionpress/cp_item.php');
-            } else {
-                $page_template = CPR_TEMPLATE_PATH.'/collectionpress/cp_item.php';
+                if (locate_template('template/collectionpress/cp_item.php')) {
+                    $page_template = locate_template('template/collectionpress/cp_item.php');
+                } else {
+                    $page_template = CPR_TEMPLATE_PATH.'/collectionpress/cp_item.php';
+                }
             }
         }
         return $page_template;
