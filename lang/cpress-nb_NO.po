@@ -104,3 +104,21 @@ msgstr "Ingen blogginnlegg tilgjengelig for øyeblikket."
 
 msgid "No works currently archived."
 msgstr "Ingen verk arkiveres for tiden."
+
+msgid "Display Items"
+msgstr "Vis elementer"
+
+msgid "Within Wordpress"
+msgstr "Innenfor Wordpress"
+
+msgid "Specifies the Wordpress page used for displaying a DSpace item."
+msgstr "Angir Wordpress-siden som brukes til å vise et DSpace-element."
+
+msgid "By linking to DSpace"
+msgstr "Ved å koble til DSpace"
+
+msgid "Handle Prefix"
+msgstr "Håndtere prefiks"
+
+msgid "Specifies the page used by CollectionPress for displaying an item directly from DSpace."
+msgstr "Angir siden som brukes av CollectionPress for å vise et element direkte fra DSpace."

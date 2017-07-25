@@ -3,6 +3,9 @@
  * Display Settings
  */
 ?>
+<style>
+.display_item_wrap label{font-weight:bold; margin-right:8px;}
+</style>
 <div class="wrap">
 
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
@@ -25,5 +28,16 @@
 
         </div>
     </div>
-
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery("input[name='collectionpress_settings_general[display_item]']").click(function(){
+                if (jQuery('#within_wp').is(':checked')) {
+                    jQuery('#handle_url').attr("disabled",true);
+                }
+                if (jQuery('#within_dspace').is(':checked')) {
+                    jQuery('#handle_url').attr("disabled",false);
+                }
+            });
+        });
+    </script>
 </div>
