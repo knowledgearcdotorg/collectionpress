@@ -26,12 +26,12 @@ class CollectionPress_Settings
     public function register()
     {
         $settings = $this->get_all();
-		if (empty($settings)){
-			$settings['rest_url']='';
-			$settings['item_page']='';
-			$settings['author_page']='';
-		}
-        /* Register Settings */
+        $settings['rest_url']  = (isset($settings['rest_url']) ? $settings['rest_url']:'');
+        $settings['handle_url']  = (isset($settings['handle_url']) ? $settings['handle_url']:'');
+        $settings['item_page']  = (isset($settings['item_page']) ? $settings['item_page']:'');
+        $settings['author_page']  = (isset($settings['author_page']) ? $settings['author_page']:'');
+        $settings['display_item']  = (isset($settings['display_item']) ? $settings['display_item']:'');
+		/* Register Settings */
         register_setting(
             'collectionpress_settings_group',             // Options group
             'collectionpress_settings_general',      // Option name/database
@@ -66,6 +66,14 @@ class CollectionPress_Settings
             )
         );
 
+        add_settings_field( 
+            'within_wp', 
+            __( 'Display Items', 'cpress' ), 
+            array($this, "field_within_wp_render"),
+            'collectionpress_settings', 
+            'collectionpress_settings_general'
+        );
+
         add_settings_field(
             'item_page',
             __('Item View Page', 'cpress'),
@@ -84,7 +92,6 @@ class CollectionPress_Settings
                 'value'     =>$settings["item_page"]
            )
         );
-
         add_settings_field(
             'author_page',
             __('Author List Page', 'cpress'),
@@ -144,7 +151,7 @@ HTML;
         $page_ids=get_all_page_ids();
         $html = <<<HTML
 <label
-    for="collectionpress_settings_general[{$args['id']}">
+    for="collectionpress_settings_general[{$args['id']}]">
     <select name="collectionpress_settings_general[{$args['id']}]" class="{$size}-text" >
 HTML;
         $html .='<option value="">'.__('Select', 'cpress').'</option>';
@@ -165,5 +172,37 @@ HTML;
             $html .= '<p class="description">'.$args['desc'].'</p>';
         }
         echo $html;
+    }
+
+    public function field_within_wp_render()
+    {
+        $page_ids=get_all_page_ids();
+        $settings = $this->get_all();
+        $settings['display_item']  = (isset($settings['display_item']) ? $settings['display_item']:'');
+        $settings['handle_url']    = (isset($settings['handle_url']) ? $settings['handle_url']:'');
+        ?>
+        <label for='within_wp'>
+            <input type='radio' id='within_wp' name='collectionpress_settings_general[display_item]'
+                <?php checked( $settings['display_item'], 'within_wp' ); ?>
+                value='within_wp'> <?php echo __('Within Wordpress', 'cpress'); ?>
+        </label>
+        <br>
+        <label for='within_dspace'>
+            <input type='radio' name='collectionpress_settings_general[display_item]' id='within_dspace'
+                <?php checked( $settings['display_item'], 'within_dspace' ); ?>
+                value='within_dspace'> <?php echo __('By linking to DSpace', 'cpress'); ?>
+        </label>
+        <div class='display_item_wrap'>
+            <label for='handle_url'><?php echo __('Handle Prefix', 'cpress'); ?>:</label>
+            <input type='text' name='collectionpress_settings_general[handle_url]' id='handle_url' class="regular-text"
+                placeholder="E.g. http://domain.tld/handle"
+                <?php if ($settings['display_item']!= 'within_dspace') {
+                    echo "disabled='disabled'";
+                } ?>
+                value='<?php echo $settings['handle_url'] ?>' >
+            <br>
+            <span class="howto"><?php echo __('Specifies the page used by CollectionPress for displaying an item directly from DSpace.', 'cpress'); ?></span>
+        </div>
+        <?php
     }
 }

@@ -48,7 +48,7 @@ class CollectionPress_ShortCode
         
         $response = json_decode(wp_remote_retrieve_body($response));
 
-        if ($options['item_page']) {
+        if (isset($options['item_page']) && $options['item_page']) {
             $page_id = $options['item_page'];
         } else {
             $page = get_page_by_path('items');

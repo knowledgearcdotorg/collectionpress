@@ -28,7 +28,7 @@ class CPR_AuthorReg
     public function cpr_rewrite_rule()
     {
         $options = collectionpress_settings();
-        if (!empty($options) && $options['item_page']) {
+        if (!empty($options) && isset($options['item_page']) && $options['item_page']) {
             $page_id = $options['item_page'];
         } else {
             $page = get_page_by_path('items');
@@ -111,10 +111,10 @@ class CPR_AuthorReg
         $cpr_author_page='';
         $cpr_item_page='';
         $options = collectionpress_settings();
-        if (!empty($options) && $options['author_page']) {
-            $cpr_author_page = $options['item_page'];
+        if (!empty($options) && isset($options['author_page']) && $options['author_page']) {
+            $cpr_author_page = $options['author_page'];
         }
-        if (!empty($options) && $options['item_page']) {
+        if (!empty($options) && isset($options['item_page']) && $options['item_page']) {
             $cpr_item_page = $options['item_page'];
         }
         global $post;
@@ -257,8 +257,8 @@ class CPR_AuthorReg
             }
             
             $cp_related_author = (isset($_POST['cp_related_author']) ? (sanitize_text_field($_POST['cp_related_author'])): "");
-            if ($cp_related_author) {            
-                if (in_array( $cp_related_author, $all_user_ids)) {            
+            if ($cp_related_author) {
+                if (in_array( $cp_related_author, $all_user_ids)) {
                     update_post_meta($post_id, 'cp_related_author', $cp_related_author);
                     update_user_meta($cp_related_author, 'show_posts', $show_posts);
                 } else {
