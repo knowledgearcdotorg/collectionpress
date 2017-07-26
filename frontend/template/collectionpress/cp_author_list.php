@@ -7,7 +7,7 @@
  * Path will be "<theme_name>/collectionpress/cp_author_list.php"
  * */
 get_header();
-$posts_per_page = get_option("post_per_page");
+$posts_per_page = get_option("posts_per_page");
 $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
 $author_results = new WP_Query(array(
                 "post_type"      =>"cp_authors",
