@@ -8,7 +8,7 @@
  * */
 get_header();
 $posts_per_page = get_option("posts_per_page");
-$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+$paged = ( get_query_var('page') ) ? get_query_var('page') : 1;
 $author_results = new WP_Query(array(
                 "post_type"      =>"cp_authors",
                 "post_status"    =>"publish",
@@ -24,6 +24,7 @@ $total_pages =$author_results->max_num_pages;
 <div id="main-content">
     <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
+			<?php get_sidebar(); ?>
             <div class="left-area">
                 <?php if ($author_results->have_posts() ): ?>
                     <?php while ($author_results->have_posts()) : ?>
@@ -57,7 +58,6 @@ $total_pages =$author_results->max_num_pages;
                 <?php endif; ?>
             </div> <!-- #left-area -->
 
-        <?php get_sidebar(); ?>
         </div> <!-- #content-area -->
     </div> <!-- .container -->
 </div> <!-- #main-content -->

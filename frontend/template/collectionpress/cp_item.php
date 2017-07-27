@@ -22,6 +22,7 @@ if (isset($_GET) && isset($_GET['item_id'])) {
 <div id="main-content">
     <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
+			<?php get_sidebar(); ?>
             <div class="left-area">
                 <?php if (isset($response) && $response!='') : ?>
                     <?php foreach ($response->metadata as $md) : ?>
@@ -35,7 +36,6 @@ if (isset($_GET) && isset($_GET['item_id'])) {
                     <p><?php echo __("Item Id is incorrect!", 'cpress') ?></p>
                 <?php endif; ?>
             </div> <!-- #left-area -->
-        <?php get_sidebar(); ?>
         </div> <!-- #content-area -->
     </div> <!-- .container -->
 </div> <!-- #main-content -->
