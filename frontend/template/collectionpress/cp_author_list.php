@@ -24,6 +24,7 @@ $total_pages =$author_results->max_num_pages;
 <div id="main-content">
     <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
+			<?php get_sidebar(); ?>
             <div class="left-area">
                 <?php if ($author_results->have_posts() ): ?>
                     <?php while ($author_results->have_posts()) : ?>
@@ -57,7 +58,6 @@ $total_pages =$author_results->max_num_pages;
                 <?php endif; ?>
             </div> <!-- #left-area -->
 
-        <?php get_sidebar(); ?>
         </div> <!-- #content-area -->
     </div> <!-- .container -->
 </div> <!-- #main-content -->

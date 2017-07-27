@@ -11,6 +11,7 @@ get_header();
 <div id="main-content">
     <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
+            <?php get_sidebar(); ?>
             <div class="left-area">
                 <?php while (have_posts()) : ?>
                     <?php the_post(); ?>
@@ -115,8 +116,6 @@ get_header();
 
                 <?php endwhile; ?>
             </div> <!-- #content -->
-
-            <?php get_sidebar(); ?>
         </div> <!-- #content-area -->
     </div> <!-- .container -->
 </div> <!-- #main-content -->
