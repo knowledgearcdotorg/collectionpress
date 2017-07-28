@@ -19,9 +19,11 @@
                         <?php
                         if(isset($options['display_item']) && $options['display_item']=='within_wp' && isset($options['item_page'])){
                             $url = add_query_arg("item_id",$doc->{"search.resourceid"},get_permalink($page_id));
-                        } else {
+                        }
+                        /* else {
                             $url = $options['handle_url']."/".$handle;
-                        }?>
+                        }*/
+                        ?>
                         <?php $title = sprintf('<a href="%s" target="_blank">%s</a>', esc_url($url), $title); ?>
                     <?php endif; ?>
                     <?php $parts[] = $title; ?>
