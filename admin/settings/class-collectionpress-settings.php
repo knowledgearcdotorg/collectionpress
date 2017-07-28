@@ -66,13 +66,13 @@ class CollectionPress_Settings
             )
         );
 
-        add_settings_field( 
-            'within_wp', 
-            __( 'Display Items', 'cpress' ), 
-            array($this, "field_within_wp_render"),
-            'collectionpress_settings', 
-            'collectionpress_settings_general'
-        );
+        //~ add_settings_field( 
+            //~ 'within_wp', 
+            //~ __( 'Display Items', 'cpress' ), 
+            //~ array($this, "field_within_wp_render"),
+            //~ 'collectionpress_settings', 
+            //~ 'collectionpress_settings_general'
+        //~ );
 
         add_settings_field(
             'item_page',

@@ -7,7 +7,6 @@
  */
 get_header();
 ?>
-
 <div id="main-content">
     <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
@@ -93,7 +92,7 @@ get_header();
                                             'format'    =>'?aposts=%#%',
                                             'prev_text' =>__('&laquo;'),
                                             'next_text' =>__('&raquo;'),
-                                            'current'   =>max(1, get_query_var('aposts')),
+                                            'current'   =>max(1, $aposts),
                                             'total'     =>$total_pages
                                             ));
                                         wp_reset_postdata();

@@ -35,15 +35,23 @@ class CollectionPress_ShortCode
         );
         $url = 'discover.json?q=author:"'.$author.'"';
 
-        if ($limit) {
-            $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
-            if ($paged==1) {
-                $start = 0;
-            } else {
-                $start = (($limit*$paged)-$limit);
-            }
-            $url .='&rows='.$limit.'&start='.$start;
+        if ($limit==0) {
+            $limit = get_option('posts_per_page');
         }
+            
+        $paged = 1;
+        if (isset($_GET) && isset($_GET['citem'])) {
+            if ($_GET['citem']!=''){
+                $paged = $_GET['citem'];
+            }
+        }
+
+        if ($paged==1) {
+            $start = 0;
+        } else {
+            $start = (($limit*$paged)-$limit);
+        }
+        $url .='&rows='.$limit.'&start='.$start;
         $response = wp_remote_get($this->get_url($url), $args);
         
         $response = json_decode(wp_remote_retrieve_body($response));
@@ -64,9 +72,18 @@ class CollectionPress_ShortCode
 
     public function get_authors($limit)
     {
-        $posts_per_page = $limit;
-
-        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+        if ($limit) {
+            $posts_per_page = $limit;
+        } else {
+            $posts_per_page = get_option('posts_per_page');
+        }
+        
+        $paged = 1;
+        if (isset($_GET) && isset($_GET['cauthors'])) {
+            if ($_GET['cauthors']!=''){
+                $paged = $_GET['cauthors'];
+            }
+        }
         $author_results = new WP_Query(array(
                         "post_type"      =>"cp_authors",
                         "post_status"    =>"publish",
@@ -91,11 +108,11 @@ class CollectionPress_ShortCode
                 <?php
                     $big = 999999999; // need an unlikely integer
                     echo paginate_links(array(
-                        'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-                        'format'    =>'?paged=%#%',
+                        //~ 'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                        'format'    =>'?cauthors=%#%',
                         'prev_text' =>__('&laquo;'),
                         'next_text' =>__('&raquo;'),
-                        'current'   =>max(1, get_query_var('paged')),
+                        'current'   =>max(1, $paged),
                         'total'     =>$total_pages
                     ));
                 ?>

@@ -8,7 +8,12 @@
  * */
 get_header();
 $posts_per_page = get_option("posts_per_page");
-$paged = ( get_query_var('page') ) ? get_query_var('page') : 1;
+$clist =1;
+if (isset($_GET) && isset($_GET['clist'])) {
+	if ($_GET['clist']!=''){
+		$clist = $_GET['clist'];
+	}
+}
 $author_results = new WP_Query(array(
                 "post_type"      =>"cp_authors",
                 "post_status"    =>"publish",
@@ -16,7 +21,7 @@ $author_results = new WP_Query(array(
                 "order"          =>"DESC",
                 "posts_per_page" =>$posts_per_page,
                 "cache_results"  => false,
-                "paged"          => $paged));
+                "paged"          => $clist));
 $found_posts =$author_results->found_posts;
 $total_pages =$author_results->max_num_pages;
 ?>
@@ -44,11 +49,11 @@ $total_pages =$author_results->max_num_pages;
                         <?php
                         $big = 999999999; // need an unlikely integer
                         echo paginate_links(array(
-                        'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-                        'format'    =>'?paged=%#%',
+                        //~ 'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                        'format'    =>'?clist=%#%',
                         'prev_text' =>__('&laquo;'),
                         'next_text' =>__('&raquo;'),
-                        'current'   =>max(1, get_query_var('paged')),
+                        'current'   =>max(1, $clist),
                         'total'     =>$total_pages
                         ));
                         ?>
