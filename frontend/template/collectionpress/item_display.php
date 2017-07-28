@@ -17,10 +17,9 @@
 
                     <?php  if ($handle = $doc->handle) : ?>
                         <?php
-                        if(isset($options['display_item']) && $options['display_item']=='within_wp' && isset($options['item_page'])){
-                            $url = add_query_arg("item_id",$doc->{"search.resourceid"},get_permalink($page_id));
-                        }
-                        /* else {
+                        //~ if(isset($options['display_item']) && $options['display_item']=='within_wp' && isset($options['item_page'])){
+                            $url = add_query_arg("item_id",$doc->{"search.resourceid"},get_permalink($options['item_page']));
+                        /* } else {
                             $url = $options['handle_url']."/".$handle;
                         }*/
                         ?>
@@ -53,11 +52,11 @@
             <?php
             $big = 999999999; // need an unlikely integer
             echo paginate_links(array(
-                'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-                'format'    =>'?paged=%#%',
+                //~ 'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                'format'    =>'?citem=%#%',
                 'prev_text' =>__('&laquo;'),
                 'next_text' =>__('&raquo;'),
-                'current'   =>max(1, get_query_var('paged')),
+                'current'   =>max(1, $paged),
                 'total'     =>$total_pages
                 ));
             ?>
