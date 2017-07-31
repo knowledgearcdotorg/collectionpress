@@ -17,8 +17,9 @@ if (!function_exists('add_shortcode')) {
 
 
 $dir = dirname(__FILE__);
-
+define( 'CPR_PLUGIN_VERSION', '0.9.0' );
 define( 'CPR_TEMPLATE_PATH', plugin_dir_path(__FILE__).'frontend/template' );
+define( 'CPR_ROOT_URL', plugins_url('', __FILE__) );
 
 add_action('init','cpr_text_domain');
 function cpr_text_domain(){
