@@ -43,7 +43,7 @@ $total_pages =$author_results->max_num_pages;
                                 endif; ?>
                             </a>
 -->
-                            <h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                            <p class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></p>
                             <?php //the_content(); ?>
                         </article> <!-- .et_pb_post -->
 
