@@ -66,17 +66,17 @@ class CollectionPress_Settings
             )
         );
 
-        //~ add_settings_field( 
-            //~ 'within_wp', 
-            //~ __( 'Display Items', 'cpress' ), 
-            //~ array($this, "field_within_wp_render"),
-            //~ 'collectionpress_settings', 
-            //~ 'collectionpress_settings_general'
-        //~ );
+        add_settings_field( 
+            'within_wp', 
+            __( 'Display Items', 'cpress' ), 
+            array($this, "field_within_wp_render"),
+            'collectionpress_settings', 
+            'collectionpress_settings_general'
+        );
 
         add_settings_field(
             'item_page',
-            __('Item View Page', 'cpress'),
+            __('Item Page', 'cpress'),
             array($this, "select_callback"),
             'collectionpress_settings',
             'collectionpress_settings_general',
@@ -84,7 +84,7 @@ class CollectionPress_Settings
                 'id'        =>"item_page",
                 'label_for' =>'',
                 'class'     =>'',
-                'desc'      =>__('Specifies the page used by CollectionPress for displaying an item directly from DSpace.', 'cpress'),
+                'desc'      =>__('Specifies the Wordpress page used for displaying a DSpace item.', 'cpress'),
                 'name'      =>"item_page",
                 'section'   =>"collectionpress_settings_general",
                 'size'      =>null,
@@ -181,19 +181,20 @@ HTML;
         $settings['display_item']  = (isset($settings['display_item']) ? $settings['display_item']:'');
         $settings['handle_url']    = (isset($settings['handle_url']) ? $settings['handle_url']:'');
         ?>
-        <label for='within_wp'>
+        <label for='within_wp' class='td_lbl'>
             <input type='radio' id='within_wp' name='collectionpress_settings_general[display_item]'
                 <?php checked( $settings['display_item'], 'within_wp' ); ?>
                 value='within_wp'> <?php echo __('Within Wordpress', 'cpress'); ?>
         </label>
         <br>
-        <label for='within_dspace'>
+        <label for='within_dspace' class='td_lbl'>
             <input type='radio' name='collectionpress_settings_general[display_item]' id='within_dspace'
                 <?php checked( $settings['display_item'], 'within_dspace' ); ?>
                 value='within_dspace'> <?php echo __('By linking to DSpace', 'cpress'); ?>
         </label>
+        <br>
         <div class='display_item_wrap'>
-            <label for='handle_url'><?php echo __('Handle Prefix', 'cpress'); ?>:</label>
+            <label for='handle_url'><?php echo __('Handle Prefix', 'cpress'); ?></label>
             <input type='text' name='collectionpress_settings_general[handle_url]' id='handle_url' class="regular-text"
                 placeholder="E.g. http://domain.tld/handle"
                 <?php if ($settings['display_item']!= 'within_dspace') {

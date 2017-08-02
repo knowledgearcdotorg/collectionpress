@@ -22,6 +22,7 @@ if (isset($_GET) && isset($_GET['item_id'])) {
 <div id="main-content">
     <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
+            <h2 class="entry-title"><?php the_title()?></h2>
 			<?php get_sidebar(); ?>
             <div class="left-area">
                 <?php if (isset($response) && $response!='') : ?>

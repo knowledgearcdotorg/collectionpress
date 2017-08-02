@@ -10,9 +10,7 @@ class CollectionPress_ShortCode
 {
     public function render($atts)
     {
-        if ((strtolower(wp_get_theme()) != "divi") && (strtolower(wp_get_theme()) != "divi-child")) {
-            do_action("cpr_styles");
-        }
+        do_action("cpr_styles");
         
         if (isset($atts["limit"])) {
             $this->limit= $atts["limit"];
