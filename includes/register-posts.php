@@ -25,7 +25,8 @@ class CPR_AuthorReg
         add_action('init', array($this, 'cpr_rewrite_link'), 10, 0);
         // Load frontend JS & CSS
         add_action('wp_enqueue_scripts', array($this, 'cp_register_styles'), 700);
-        add_action('cpr_styles', array($this, 'cp_enqueue_styles'), 700);
+        add_action('cpr_styles', array($this, 'cp_enqueue_styles'));
+        add_action('wp_head', array($this, 'cpr_add_styles_head'));
     }
 
     public function cpr_rewrite_rule()
@@ -113,9 +114,7 @@ class CPR_AuthorReg
         }        
         return $title;
     }
-
-    public function cpr_author_template($page_template)
-    {
+    public function cpr_add_styles_head(){
         $cpr_author_page='';
         $cpr_item_page='';
         $options = collectionpress_settings();
@@ -128,8 +127,29 @@ class CPR_AuthorReg
         global $post;
 		if (is_page('author-list') || is_page($cpr_author_page) || get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_author_list.php") {
             if ((strtolower(wp_get_theme()) != "divi") && (strtolower(wp_get_theme()) != "divi-child")) {
+                do_action("cpr_styles"); 
+            }
+        }
+        if (is_page('items') || is_page($cpr_item_page) || get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_item.php") {
+            if ((strtolower(wp_get_theme()) != "divi") && (strtolower(wp_get_theme()) != "divi-child")) {
                 do_action("cpr_styles");
             }
+        }
+    }
+    
+    public function cpr_author_template($page_template)
+    {
+        $cpr_author_page='';
+        $cpr_item_page='';
+        $options = collectionpress_settings();
+        if (!empty($options) && isset($options['author_page']) && $options['author_page']) {
+            $cpr_author_page = $options['author_page'];
+        }
+        if (!empty($options) && isset($options['item_page']) && $options['item_page']) {
+            $cpr_item_page = $options['item_page'];
+        }
+        global $post;
+		if (is_page('author-list') || is_page($cpr_author_page) || get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_author_list.php") {            
             if (get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_author_list.php") {
                 $page_template = locate_template('template/collectionpress/cp_author_list.php');
             } else if (is_page('author-list') || is_page($cpr_author_page)) {
@@ -141,9 +161,6 @@ class CPR_AuthorReg
             }
         }
         if (is_page('items') || is_page($cpr_item_page) || get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_item.php") {
-            if ((strtolower(wp_get_theme()) != "divi") && (strtolower(wp_get_theme()) != "divi-child")) {
-                do_action("cpr_styles");
-            }
             if (get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_item.php") {
                 $page_template = locate_template('template/collectionpress/cp_item.php');
             } else if (is_page('items') || is_page($cpr_item_page)) {
@@ -348,7 +365,7 @@ class CPR_AuthorReg
     
     public function cp_enqueue_styles()
     {
-        if (wp_script_is('cpr-frontend', 'enqueued')) {
+        if (wp_style_is('cpr-frontend', 'enqueued')) {
             return;
         } else {
             wp_enqueue_style('cpr-frontend');
