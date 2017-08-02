@@ -4,7 +4,12 @@
  */
 ?>
 <style>
-.display_item_wrap label{font-weight:bold; margin-right:8px;}
+div.display_item_wrap {
+    margin-left: 25px;
+}
+.td_lbl {
+    padding-bottom: 35px;
+}
 </style>
 <div class="wrap">
 
