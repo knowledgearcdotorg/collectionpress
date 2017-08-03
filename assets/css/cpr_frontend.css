@@ -1,3 +1,8 @@
+.karc-cp-container .sidebar, .karc-cp-container .widget-area{
+    float: left;
+    margin-left: 0;
+}
+
 .karc-cp-container .left-area > article {
 	display: flex;
 	padding: 2%;
