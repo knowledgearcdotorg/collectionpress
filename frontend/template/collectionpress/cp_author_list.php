@@ -29,19 +29,22 @@ $total_pages =$author_results->max_num_pages;
 <div id="main-content">
     <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
-			<?php get_sidebar(); ?>
+            <h2 class="entry-title"><?php the_title()?></h2>
+			<?php // get_sidebar(); ?>
             <div class="left-area">
                 <?php if ($author_results->have_posts() ): ?>
                     <?php while ($author_results->have_posts()) : ?>
                         <?php $author_results->the_post(); ?>
                         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<!--
                             <a href="<?php the_permalink(); ?>">
                                 <?php if (has_post_thumbnail()) :
                                     the_post_thumbnail();
                                 endif; ?>
                             </a>
-                            <h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-                            <?php the_content(); ?>
+-->
+                            <p class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></p>
+                            <?php //the_content(); ?>
                         </article> <!-- .et_pb_post -->
 
                     <?php endwhile; ?>

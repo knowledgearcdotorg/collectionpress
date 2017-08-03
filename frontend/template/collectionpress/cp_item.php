@@ -12,7 +12,6 @@ if (isset($_GET) && isset($_GET['item_id'])) {
     if ($_GET['item_id']!='') {
         $item_id = $_GET['item_id'];
         $cp_author = new CPR_AuthorReg();
-        //~ do_action( 'show_item_details', $item_id );
         $response = $cp_author->get_item_by_id($item_id);
     }
 }
@@ -22,6 +21,7 @@ if (isset($_GET) && isset($_GET['item_id'])) {
 <div id="main-content">
     <div class="container karc-cp-container">
         <div id="content-area" class="clearfix">
+            <h2 class="entry-title"><?php the_title()?></h2>
 			<?php get_sidebar(); ?>
             <div class="left-area">
                 <?php if (isset($response) && $response!='') : ?>
