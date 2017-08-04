@@ -4,7 +4,7 @@
   Plugin Name: CollectionPress
   Author: KnowledgeArc
   Description: A plugin for displaying dspace information in Wordpress.
-  Version: 0.9.0
+  Version: 0.9.1
   Copyright: 2017 KnowledgeArc Ltd
   License: GPLv3
   License URI: https://www.gnu.org/licenses/gpl.html
@@ -60,16 +60,16 @@ function cpr_uninstall_options(){
     if (! current_user_can('activate_plugins')) {
         return;
     }
-    
+
     $option_name = 'collectionpress_settings_general';
-    
+
     delete_option($option_name);
-    
+
     $authors_posts = get_posts(array(
             'numberposts'   => -1,
             'post_type'     => 'cp_authors',
             'post_status'   => 'any' ));
-    
+
     foreach ( $authors_posts as $post ) {
         delete_post_meta( $post->ID, 'show_items' );
         delete_post_meta( $post->ID, 'author_keyword' );

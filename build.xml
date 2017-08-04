@@ -16,7 +16,7 @@
         </copy>
     </target>
 
-    <target name="package" description="Packages the Wordpress plugin for easy installation.">
+    <target name="package" description="Packages the Wordpress plugin for easy installation." depends="compile_languages">
         <delete dir="${package.dest}"/>
         <mkdir dir="${package.dest}"/>
 
