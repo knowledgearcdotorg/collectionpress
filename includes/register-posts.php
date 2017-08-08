@@ -316,6 +316,7 @@ class CPR_AuthorReg
         $post = get_post($post_id);
 
         if (isset($_POST['author_meta_nonce']) && wp_verify_nonce($_POST['author_meta_nonce'], 'author_meta_nonce')) {
+            unset($_POST['author_meta_nonce']);
             $show_items = (isset($_POST['show_items']) ? "yes" : "no");
             update_post_meta($post_id, 'show_items', $show_items);	
             $show_posts = (isset($_POST['show_posts']) ? "yes" : "no");
@@ -338,6 +339,13 @@ class CPR_AuthorReg
                     wp_die(__('Invalid User, go back and try again.','cpress'));
                 }
             }
+            $new_slug = sanitize_title($post->post_title);
+            wp_update_post(
+                array (
+                    'ID'        => $post_id,
+                    'post_name' => $new_slug
+                )
+            );
         }
         return $post_id;
     }
