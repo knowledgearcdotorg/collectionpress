@@ -28,6 +28,8 @@ class CPR_AuthorReg
         add_action('wp_enqueue_scripts', array($this, 'cp_register_styles'), 700);
         add_action('cpr_styles', array($this, 'cp_enqueue_styles'));
         add_action('wp_head', array($this, 'cpr_add_styles_head'));
+        //Adding Custom classes in body
+        add_filter('body_class', array($this, 'cpr_body_classes'));
     }
 
     public function cpr_rewrite_rule()
@@ -410,6 +412,25 @@ class CPR_AuthorReg
                 wp_enqueue_style('cpr-frontend');
             }
         }
+    }
+   
+    public function cpr_body_classes($classes) {
+        $options = collectionpress_settings();
+        if (!empty($options) && isset($options['author_page']) && $options['author_page']) {
+            $cpr_author_page = $options['author_page'];
+        }
+        if (!empty($options) && isset($options['item_page']) && $options['item_page']) {
+            $cpr_item_page = $options['item_page'];
+        }
+               
+        global $post;
+		if (is_page('author-list') || is_page($cpr_author_page) || get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_author_list.php") {
+            $classes[] = " cp_author-list";
+        }
+        if (is_page('items') || is_page($cpr_item_page) || get_post_meta($post->ID, "_wp_page_template", true)=="template/collectionpress/cp_item.php") {
+            $classes[] = " cp_item-list";
+        }
+        return $classes;
     }
 }
 
