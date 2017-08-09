@@ -48,19 +48,21 @@
         $total_results  = count($response->response->docs);
         $total_pages    = ceil($total_count/$limit);
         ?>
-        <div class="pagination">
-            <?php
-            $big = 999999999; // need an unlikely integer
-            echo paginate_links(array(
-                //~ 'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-                'format'    =>'?citem=%#%',
-                'prev_text' =>__('&laquo;'),
-                'next_text' =>__('&raquo;'),
-                'current'   =>max(1, $paged),
-                'total'     =>$total_pages
-                ));
-            ?>
-        </div>
+        <?php if ($total_pages>1) : ?>
+            <div class="pagination">
+                <?php
+                $big = 999999999; // need an unlikely integer
+                echo paginate_links(array(
+                    //~ 'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                    'format'    =>'?citem=%#%',
+                    'prev_text' =>__('&laquo;'),
+                    'next_text' =>__('&raquo;'),
+                    'current'   =>max(1, $paged),
+                    'total'     =>$total_pages
+                    ));
+                ?>
+            </div>
+        <?php endif; ?>
     <?php endif; ?>
 <?php else: ?>
     <p><?php echo __('No works currently archived.', 'cpress'); ?></p>

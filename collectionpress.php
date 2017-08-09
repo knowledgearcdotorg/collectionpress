@@ -17,9 +17,10 @@ if (!function_exists('add_shortcode')) {
 
 
 $dir = dirname(__FILE__);
-define( 'CPR_PLUGIN_VERSION', '0.9.0' );
+define( 'CPR_PLUGIN_VERSION', '1.0.0' );
 define( 'CPR_TEMPLATE_PATH', plugin_dir_path(__FILE__).'frontend/template' );
 define( 'CPR_ROOT_URL', plugins_url('', __FILE__) );
+define( 'CPR_BASENAME', plugin_basename(__FILE__) );
 
 add_action('init','cpr_text_domain');
 function cpr_text_domain(){
@@ -42,17 +43,35 @@ if (is_admin()) {
     $authorreg = new CPR_AuthorReg();
 	add_action( 'wp_ajax_cpr_get_author_ajax', array($authorreg, 'get_author_by_api'));
 } else {
-    $shortcode = new CollectionPress_Shortcode();
+    $shortcode = new CollectionPress_ShortCode();
     add_shortcode('collectionpress', array($shortcode, 'render'));
 }
 
-function cpr_rewrite_flush() {
+function cpr_rewrite_flush()
+{
     $authorreg = new CPR_AuthorReg();
     $authorreg->cpr_register_post_author();
     flush_rewrite_rules();
 }
 register_activation_hook(__FILE__, 'cpr_rewrite_flush');
 
+//Setting Page Link
+function cpr_settings_link($links)
+{
+    $settings_link = '<a href="options-general.php?page=collectionpress">Settings</a>'; 
+    array_unshift($links, $settings_link); 
+    return $links; 
+}
+add_filter("plugin_action_links_".CPR_BASENAME, 'cpr_settings_link');
+
+//Redirect to Setting page after Plugin Activation
+function cpr_activation_redirect( $plugin )
+{
+    if ($plugin == CPR_BASENAME) {
+        exit(wp_redirect(admin_url('options-general.php?page=collectionpress')));
+    }
+}
+add_action( 'activated_plugin', 'cpr_activation_redirect' );
 
 register_uninstall_hook(__FILE__, 'cpr_uninstall_options');
 
