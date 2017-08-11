@@ -66,7 +66,7 @@ class CollectionPress_ShortCode
         }
         
         if (file_exists(locate_template('template/collectionpress/item_display.php'))) {
-            include(locate_template('template/collectionpress/item_display.php'));
+            get_template_part('template/collectionpress/item_display.php');
         } else {
             include(CPR_TEMPLATE_PATH.'/collectionpress/item_display.php');
         }
@@ -81,9 +81,9 @@ class CollectionPress_ShortCode
         }
         
         $paged = 1;
-        if (isset($_GET) && isset($_GET['cauthors'])) {
-            if ($_GET['cauthors']!=''){
-                $paged = $_GET['cauthors'];
+        if (isset($_GET) && isset($_GET['clist'])) {
+            if ($_GET['clist']!=''){
+                $paged = $_GET['clist'];
             }
         }
         $author_results = new WP_Query(array(
@@ -96,29 +96,33 @@ class CollectionPress_ShortCode
                         "paged"          => $paged));
         $found_posts =$author_results->found_posts;
         $total_pages =$author_results->max_num_pages;
-        if ($author_results->have_posts()) :
-            while ($author_results->have_posts()) :
-				$author_results->the_post();                
-                if (file_exists(locate_template('template/collectionpress/author_display.php'))) {
-                    include(locate_template('template/collectionpress/author_display.php'));
-                } else {
-                    include(CPR_TEMPLATE_PATH.'/collectionpress/author_display.php');
-                }
-                
-            endwhile; ?>
-            <div class="pagination">
-                <?php
-                    $big = 999999999; // need an unlikely integer
-                    echo paginate_links(array(
-                        //~ 'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-                        'format'    =>'?cauthors=%#%',
-                        'prev_text' =>__('&laquo;'),
-                        'next_text' =>__('&raquo;'),
-                        'current'   =>max(1, $paged),
-                        'total'     =>$total_pages
-                    ));
-                ?>
-            </div>
+        if ($author_results->have_posts()) : ?>
+            <ul class="author-names-list"> 
+                <?php while ($author_results->have_posts()) :
+                    $author_results->the_post();                
+                    if (file_exists(locate_template('template/collectionpress/author_display.php'))) {
+                        get_template_part('template/collectionpress/author_display.php');
+                    } else {
+                        include(CPR_TEMPLATE_PATH.'/collectionpress/author_display.php');
+                    }
+                    
+                endwhile; ?>
+            </ul>
+            <?php if ($total_pages>1) : ?>
+                <div class="pagination">
+                    <?php
+                        $big = 999999999; // need an unlikely integer
+                        echo paginate_links(array(
+                            //~ 'base'      =>str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                            'format'    =>'?clist=%#%',
+                            'prev_text' =>__('&laquo;'),
+                            'next_text' =>__('&raquo;'),
+                            'current'   =>max(1, $paged),
+                            'total'     =>$total_pages
+                        ));
+                    ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
         <?php
     }
