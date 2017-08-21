@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-10 11:02+0530\n"
-"PO-Revision-Date: 2017-08-04 15:07+0530\n"
+"PO-Revision-Date: 2017-08-21 16:39+0530\n"
 "Last-Translator: Admin <Admin@LENOVO-PC>\n"
 "Language-Team: Bokmål\n"
 "Language: nb\n"
@@ -116,3 +116,51 @@ msgstr "Ved å koble til DSpace"
 
 msgid "Handle Prefix"
 msgstr "Håndtere prefiks"
+
+msgid "CollectionPress Author Import by CSV"
+msgstr "CollectionPress Forfatter Import av CSV"
+
+msgid "CollectionPress Author Import by SOLR"
+msgstr "CollectionPress Forfatter Import av SOLR"
+
+msgid "Import Author by"
+msgstr "Importforfatter av"
+
+msgid "By Uploading CSV"
+msgstr "Ved å laste opp CSV"
+
+msgid "By SOLR"
+msgstr "Av SOLR"
+
+msgid "Upload CSV"
+msgstr "Last opp CSV"
+
+msgid "Skip Number of Lines"
+msgstr "Hopp over antall linjer"
+
+msgid "Names per Page"
+msgstr "Navn per side"
+
+msgid "Use CSV File only"
+msgstr "Bruk bare CSV-fil"
+
+msgid "Dismiss this notice"
+msgstr "Avvis denne kunngjøringen"
+
+msgid "You have to upload the file"
+msgstr "Du må laste opp filen"
+
+msgid "Cheating ahhhh..."
+msgstr "Fusk ahhhh..."
+
+msgid "Successfully Imported"
+msgstr "Innført med suksess"
+
+msgid "Select All"
+msgstr "Velg alle"
+
+msgid "Select which author to publish"
+msgstr "Velg hvilken forfatter å publisere"
+
+msgid "REST URL is important for  SOLR Query to work"
+msgstr "REST URL er viktig for SOLR Query å jobbe"

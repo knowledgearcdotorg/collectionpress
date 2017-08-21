@@ -131,7 +131,7 @@ class CollectionPress_Settings
         $size = (isset($args['size']) && ! is_null($args['size'])) ? $args['size'] : 'regular';
         $html = <<<HTML
 <label
-    for="collectionpress_settings_general[{$args['id']}">{$args['desc']}
+    for="collectionpress_settings_general[{$args['id']}]">{$args['desc']}
     <input
         type="text"
         class="{$size}-text"

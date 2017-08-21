@@ -40,6 +40,14 @@ class CollectionPress_Admin
             'collectionpress-csv-import',
             array($this, 'import_authors_by_csv')
         );
+        add_submenu_page(
+            null, 
+            __('CollectionPress Author Import by SOLR', 'cpress'),
+            __('CollectionPress Author Import by SOLR', 'cpress'),
+            'manage_options',
+            'collectionpress-solr-import',
+            array($this, 'import_authors_by_solr')
+        );
     }
 
     public function display_settings()
@@ -55,5 +63,10 @@ class CollectionPress_Admin
     public function import_authors_by_csv()
     {
         include_once dirname(__FILE__).'/views/import-authors-by-csv.php';
+    }
+    
+    public function import_authors_by_solr()
+    {
+        include_once dirname(__FILE__).'/views/import-authors-by-solr.php';
     }
 }

@@ -18,6 +18,39 @@ $basedir = $upload_dir['basedir'];
         <?php echo __("Back to Import Page", 'cpress'); ?>
     </a>
 </p>
+<style>
+.pagination {
+    border-top: 1px solid #eee;
+    font-size: 0.875rem;
+    font-weight: 800;
+    padding: 2em 0 3em;
+    text-align: center;
+}
+.page-numbers.current {
+    font-size: 0.9375rem;
+}
+.page-numbers.current {
+    color: #767676;
+    display: inline-block;
+}
+.page-numbers {
+    padding: 0.5em 0.75em;
+}
+.page-numbers {
+    display: inline-block;
+}
+.prev.page-numbers, .next.page-numbers {
+    transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s, color 0.3s ease-in-out 0s;
+}
+.prev.page-numbers, .next.page-numbers {
+    background-color: #ddd;
+    border-radius: 2px;
+    display: inline-block;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.25em 0.5em 0.4em;
+}
+</style>
 <?php
 //Processing Post Values
  
@@ -68,7 +101,9 @@ $skip_lines = $_GET['skip_lines'];
 $names_per_page = $_GET['names_per_page'];
 
 if (!isset($_GET['filename']) || !isset($_GET['skip_lines']) || !isset($_GET['names_per_page'])) {
-    wp_die("Cheating uhhhh....");
+    wp_die('<div class="wrap">
+                <div class="updated notice notice-success is-dismissible" id="message"><p>'.__('Cheating ahhhh...', 'cpress').'.</p></div>
+            </div>');
 }
 
 if ($paged>1) {
