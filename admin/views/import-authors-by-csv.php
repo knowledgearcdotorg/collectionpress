@@ -67,6 +67,10 @@ $new_name = $_GET['filename'];
 $skip_lines = $_GET['skip_lines'];
 $names_per_page = $_GET['names_per_page'];
 
+if (!isset($_GET['filename']) || !isset($_GET['skip_lines']) || !isset($_GET['names_per_page'])) {
+    wp_die("Cheating uhhhh....");
+}
+
 if ($paged>1) {
     $skip_authors = (($paged-1)*$names_per_page)+ $skip_lines;
 } else {
@@ -89,14 +93,17 @@ if (isset($_POST['checkbox_nonce']) && wp_verify_nonce($_POST['checkbox_nonce'],
                 $my_post['post_status']   = 'publish';
                 $my_post['post_type']     = 'cp_authors';
                 $my_post['post_author']   = get_current_user_id();
-                // Insert the post into the database
-                $post_id = wp_insert_post( $my_post );
-                if ($post_id) {
-                    update_post_meta($post_id, "author_keyword", $author_keyword);
-                    update_post_meta($post_id, "show_items", "yes");
-                    update_post_meta($post_id, "show_posts", "no");
+                //Check if author existed in cp_authors-post type
+                if (post_exists($my_post['post_title'])==0) {
+                    // Insert the post into the database if auhtor not exists.
+                    $post_id = wp_insert_post( $my_post );
+                    if ($post_id) {
+                        update_post_meta($post_id, "author_keyword", $author_keyword);
+                        update_post_meta($post_id, "show_items", "yes");
+                        update_post_meta($post_id, "show_posts", "no");
+                    }
                 }
-            }           
+            }
         }
         $post_count++;        
     }
