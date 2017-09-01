@@ -55,7 +55,7 @@ if (isset($_POST['import_author_nonce']) && wp_verify_nonce($_POST['import_autho
     //~ unset($_POST['import_author_nonce']);
     $rest_url = $_POST['rest_url'];
     $skip_lines = $_POST['skip_lines'];
-    $names_per_page = $_POST['names_per_page'];
+    $names_per_page = 20;
     
     if ($rest_url) {
         $url  = '&rest_url='.$rest_url;
@@ -139,6 +139,26 @@ if (isset($_POST['checkbox_nonce']) && wp_verify_nonce($_POST['checkbox_nonce'],
 ?>
 <h3><?php echo __("Author", 'cpress') ?></h3>
 <p class="h6"><?php echo __("Select which author to publish", 'cpress') ?></p>
+
+<form action="" method="get">
+    <input type="hidden" name="page" value="collectionpress-solr-import" required/>
+    <input name="rest_url" type="hidden" value="<?= $rest_url ?>" required/>
+    <input type="hidden" name="skip_lines" value="<?= $skip_lines ?>" required/>
+    <table>
+        <tr>
+            <td>
+                <label for="names_per_page"><?php echo __('Names per Page', 'cpress') ?>:</label>
+           </td>
+            <td>
+                <input type="number" min='1' name="names_per_page" value="<?= $names_per_page ?>" required/>
+            </td>
+            <td>
+                <input name="submit" id="submit" class="button button-primary" value="Save Changes" type="submit">
+            </td>
+        </tr>
+    </table>
+</form>
+
 <p><label><input type="checkbox" name="select_all" value="all" id="chkselectall"><?php echo __('Select All', 'cpress'); ?></label></p>
 <form action="" method="POST">
     <?php  wp_nonce_field('checkbox_nonce', 'checkbox_nonce'); ?>
