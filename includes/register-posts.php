@@ -188,6 +188,14 @@ class CPR_AuthorReg
         $author_keyword = get_post_meta($post->ID,"author_keyword", true);
         $show_posts = get_post_meta($post->ID,"show_posts", true);
         $cp_related_author = get_post_meta($post->ID, "cp_related_author", true);
+        $author_title = get_post_meta($post->ID, "author_title", true);
+        $author_department = get_post_meta($post->ID, "author_department", true);
+        $author_location = get_post_meta($post->ID, "author_location", true);
+        $author_phone = get_post_meta($post->ID, "author_phone", true);
+        $author_email = get_post_meta($post->ID, "author_email", true);
+        $author_research_ints = get_post_meta($post->ID, "author_research_ints", true);
+        $author_teaching_ints = get_post_meta($post->ID, "author_teaching_ints", true);
+        $author_orcid = get_post_meta($post->ID, "author_orcid", true);
         wp_nonce_field('author_meta_nonce', 'author_meta_nonce');
         $authorusers = get_users('orderby=nicename&role=author');
         ?>
@@ -233,6 +241,62 @@ class CPR_AuthorReg
                         </option>
                     <?php endforeach; ?>
                 </select>               
+            </p>
+            <p>
+                <label for='author_title'>
+                    <?php echo __('Title', 'cpress') ?>:
+                </label>
+                <input type='text' name='author_title' id='author_title' value='<?= $author_title ?>'
+                         class="input-text regular-text" />
+            </p>
+            <p>
+                <label for='author_department'>
+                    <?php echo __('Department', 'cpress') ?>:
+                </label>
+                <input type='text' name='author_department' id='author_department' value='<?= $author_department ?>'
+                         class="input-text regular-text" />
+            </p>
+            <p>
+                <label for='author_location'>
+                    <?php echo __('Location', 'cpress') ?>:
+                </label>
+                <input type='text' name='author_location' id='author_location' value='<?= $author_location ?>'
+                         class="input-text regular-text" />
+            </p>
+            <p>
+                <label for='author_phone'>
+                    <?php echo __('Phone Number', 'cpress') ?>:
+                </label>
+                <input type='text' name='author_phone' id='author_phone' value='<?= $author_phone ?>'
+                         class="input-text regular-text" />
+            </p>
+            <p>
+                <label for='author_email'>
+                    <?php echo __('Email', 'cpress') ?>:
+                </label>
+                <input type='email' name='author_email' id='author_email' value='<?= $author_email ?>'
+                         class="input-text regular-text" />
+            </p>
+            <p>
+                <label for='author_research_ints'>
+                    <?php echo __('Research Interests', 'cpress') ?>:
+                </label>
+                <input type='text' name='author_research_ints' id='author_research_ints' value='<?= $author_research_ints ?>'
+                         class="input-text regular-text" />
+            </p>
+            <p>
+                <label for='author_teaching_ints'>
+                    <?php echo __('Teaching Interests', 'cpress') ?>:
+                </label>
+                <input type='text' name='author_teaching_ints' id='author_teaching_ints' value='<?= $author_teaching_ints ?>'
+                         class="input-text regular-text" />
+            </p>
+            <p>
+                <label for='author_orcid'>
+                    <?php echo __('ORCID ID', 'cpress') ?>:
+                </label>
+                <input type='text' name='author_orcid' id='author_orcid' value='<?= $author_orcid ?>'
+                     class="input-text regular-text" />
             </p>
             <input type='hidden' name='author_keyword' id='author_keyword' value='<?php echo $author_keyword ?>' />
         </div>
@@ -280,10 +344,37 @@ class CPR_AuthorReg
             unset($_POST['author_meta_nonce']);
             $show_items = (isset($_POST['show_items']) ? "yes" : "no");
             update_post_meta($post_id, 'show_items', $show_items);	
+
             $show_posts = (isset($_POST['show_posts']) ? "yes" : "no");
             update_post_meta($post_id, 'show_posts', $show_posts);	
+
             $author_keyword = (isset($_POST['author_keyword']) ? (sanitize_text_field($_POST['author_keyword'])) : "");
             update_post_meta($post_id, 'author_keyword', $author_keyword);
+
+            $author_title = (isset($_POST['author_title']) ? (sanitize_text_field($_POST['author_title'])) : "");
+            update_post_meta($post_id, 'author_title', $author_title);
+
+            $author_department = (isset($_POST['author_department']) ? (sanitize_text_field($_POST['author_department'])) : "");
+            update_post_meta($post_id, 'author_department', $author_department);
+
+            $author_location = (isset($_POST['author_location']) ? (sanitize_text_field($_POST['author_location'])) : "");
+            update_post_meta($post_id, 'author_location', $author_location);
+
+            $author_phone = (isset($_POST['author_phone']) ? (sanitize_text_field($_POST['author_phone'])) : "");
+            update_post_meta($post_id, 'author_phone', $author_phone);
+
+            $author_email = (isset($_POST['author_email']) ? (sanitize_text_field($_POST['author_email'])) : "");
+            update_post_meta($post_id, 'author_email', $author_email);
+
+            $author_research_ints = (isset($_POST['author_research_ints']) ? (sanitize_text_field($_POST['author_research_ints'])) : "");
+            update_post_meta($post_id, 'author_research_ints', $author_research_ints);
+
+            $author_teaching_ints = (isset($_POST['author_teaching_ints']) ? (sanitize_text_field($_POST['author_teaching_ints'])) : "");
+            update_post_meta($post_id, 'author_teaching_ints', $author_teaching_ints);
+
+            $author_orcid = (isset($_POST['author_orcid']) ? (sanitize_text_field($_POST['author_orcid'])) : "");
+            update_post_meta($post_id, 'author_orcid', $author_orcid);
+
             $authorusers = get_users('orderby=nicename&role=author');
             $all_user_ids = [];
 
