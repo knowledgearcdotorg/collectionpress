@@ -231,13 +231,13 @@ class CPR_AuthorReg
                 <select name="cp_related_author" id="cp_related_author" >
                     <option value="" ><?php echo  __( 'Select', 'cpress' )?> </option>
                     <?php foreach ($authorusers as $buser) : ?>
-                        <option value="<?= $buser->ID ?>"
+                        <option value="<?php echo  $buser->ID ?>"
                             <?php if (isset($buser->ID)) :
                                 if ($cp_related_author==$buser->ID) :
                                     echo "selected='selected' ";
                                 endif;
                             endif; ?> >
-                            <?= $buser->user_login; ?>
+                            <?php echo  $buser->user_login; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>               
@@ -246,56 +246,56 @@ class CPR_AuthorReg
                 <label for='author_title'>
                     <?php echo __('Title', 'cpress') ?>:
                 </label>
-                <input type='text' name='author_title' id='author_title' value='<?= $author_title ?>'
+                <input type='text' name='author_title' id='author_title' value='<?php echo  $author_title ?>'
                          class="input-text regular-text" />
             </p>
             <p>
                 <label for='author_department'>
                     <?php echo __('Department', 'cpress') ?>:
                 </label>
-                <input type='text' name='author_department' id='author_department' value='<?= $author_department ?>'
+                <input type='text' name='author_department' id='author_department' value='<?php echo  $author_department ?>'
                          class="input-text regular-text" />
             </p>
             <p>
                 <label for='author_location'>
                     <?php echo __('Location', 'cpress') ?>:
                 </label>
-                <input type='text' name='author_location' id='author_location' value='<?= $author_location ?>'
+                <input type='text' name='author_location' id='author_location' value='<?php echo  $author_location ?>'
                          class="input-text regular-text" />
             </p>
             <p>
                 <label for='author_phone'>
                     <?php echo __('Phone Number', 'cpress') ?>:
                 </label>
-                <input type='text' name='author_phone' id='author_phone' value='<?= $author_phone ?>'
+                <input type='text' name='author_phone' id='author_phone' value='<?php echo  $author_phone ?>'
                          class="input-text regular-text" />
             </p>
             <p>
                 <label for='author_email'>
                     <?php echo __('Email', 'cpress') ?>:
                 </label>
-                <input type='email' name='author_email' id='author_email' value='<?= $author_email ?>'
+                <input type='email' name='author_email' id='author_email' value='<?php echo  $author_email ?>'
                          class="input-text regular-text" />
             </p>
             <p>
                 <label for='author_research_ints'>
                     <?php echo __('Research Interests', 'cpress') ?>:
                 </label>
-                <input type='text' name='author_research_ints' id='author_research_ints' value='<?= $author_research_ints ?>'
+                <input type='text' name='author_research_ints' id='author_research_ints' value='<?php echo  $author_research_ints ?>'
                          class="input-text regular-text" />
             </p>
             <p>
                 <label for='author_teaching_ints'>
                     <?php echo __('Teaching Interests', 'cpress') ?>:
                 </label>
-                <input type='text' name='author_teaching_ints' id='author_teaching_ints' value='<?= $author_teaching_ints ?>'
+                <input type='text' name='author_teaching_ints' id='author_teaching_ints' value='<?php echo  $author_teaching_ints ?>'
                          class="input-text regular-text" />
             </p>
             <p>
                 <label for='author_orcid'>
                     <?php echo __('ORCID ID', 'cpress') ?>:
                 </label>
-                <input type='text' name='author_orcid' id='author_orcid' value='<?= $author_orcid ?>'
+                <input type='text' name='author_orcid' id='author_orcid' value='<?php echo  $author_orcid ?>'
                      class="input-text regular-text" />
             </p>
             <input type='hidden' name='author_keyword' id='author_keyword' value='<?php echo $author_keyword ?>' />

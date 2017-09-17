@@ -94,7 +94,7 @@
                                 </td>
                                 <td>
                                     <input name="rest_url" type="text" id="rest_url" class="input-text regular-text"
-                                    value="<?= $url ?>" required/>
+                                    value="<?php echo  $url ?>" required/>
                                 </td>
                             </tr>
                             <tr>
