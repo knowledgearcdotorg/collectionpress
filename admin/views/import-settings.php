@@ -75,14 +75,6 @@
                                     <input type="number" min='0' name="skip_lines" value="0" required/>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <label for="names_per_page"><?php echo __('Names per Page', 'cpress') ?>:</label>
-                               </td>
-                                <td>
-                                    <input type="number" min='1' name="names_per_page" value="20" required/>
-                                </td>
-                            </tr>
                         </table>
                         <?php submit_button(); ?>
                     </form>            
@@ -102,7 +94,7 @@
                                 </td>
                                 <td>
                                     <input name="rest_url" type="text" id="rest_url" class="input-text regular-text"
-                                    value="<?= $url ?>" required/>
+                                    value="<?php echo  $url ?>" required/>
                                 </td>
                             </tr>
                             <tr>
@@ -111,14 +103,6 @@
                                 </td>
                                 <td>
                                     <input type="number" min='0' name="skip_lines" value="0" required/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="names_per_page"><?php echo __('Names per Page', 'cpress') ?>:</label>
-                               </td>
-                                <td>
-                                    <input type="number" min='1' name="names_per_page" value="20" required/>
                                 </td>
                             </tr>
                         </table>

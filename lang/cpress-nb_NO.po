@@ -164,3 +164,24 @@ msgstr "Velg hvilken forfatter å publisere"
 
 msgid "REST URL is important for  SOLR Query to work"
 msgstr "REST URL er viktig for SOLR Query å jobbe"
+
+msgid "Title"
+msgstr "Tittel"
+
+msgid "Department"
+msgstr "Avdeling"
+
+msgid "Location"
+msgstr "Plassering"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Email"
+msgstr "e-post"
+
+msgid "Research Interests"
+msgstr "Forskningsinteresser"
+
+msgid "Teaching Interests"
+msgstr "Undervisningsinteresser"
