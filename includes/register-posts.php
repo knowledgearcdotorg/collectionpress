@@ -130,13 +130,11 @@ class CPR_AuthorReg
         $post_content = $content;
         //Author Single Page Content Customization
         if (is_singular('cp_authors')) {
-            ob_start();
             if (locate_template('template/collectionpress/single_cp_authors-content.php')) {
                 include(locate_template('template/collectionpress/single_cp_authors-content.php'));
             }else {
                 include(CPR_TEMPLATE_PATH.'/collectionpress/single_cp_authors-content.php');
             }
-            $post_content .= ob_get_clean();
         }
         //Author and Item List Page Content Customization
         $cpr_author_page='';
@@ -149,28 +147,26 @@ class CPR_AuthorReg
             $cpr_item_page = $options['item_page'];
         }
         if (is_page('author-list') || is_page($cpr_author_page)) {
-            ob_start();
+            //~ ob_start();
             if (is_page('author-list') || is_page($cpr_author_page)) {
                 if (locate_template('template/collectionpress/cp_author_list-content.php')) {
-                    $post_content .= get_template_part('template/collectionpress/cp_author_list','content'); 
+                    get_template_part('template/collectionpress/cp_author_list','content'); 
                 }else {
-                    $post_content .= include(CPR_TEMPLATE_PATH.'/collectionpress/cp_author_list-content.php');
+                    include(CPR_TEMPLATE_PATH.'/collectionpress/cp_author_list-content.php');
                 }
             }
-            $post_content .= ob_get_clean();
+            //~ $post_content .= ob_get_clean();
         }
         if (is_page('items') || is_page($cpr_item_page)) {
-            ob_start();
             if (is_page('items') || is_page($cpr_item_page)) {
                 if (locate_template('template/collectionpress/cp_item-content.php')) {
-                    $post_content .= get_template_part('template/collectionpress/cp_item','content');
+                    get_template_part('template/collectionpress/cp_item','content');
                 } else {
-                    $post_content .= include(CPR_TEMPLATE_PATH.'/collectionpress/cp_item-content.php');
+                    include(CPR_TEMPLATE_PATH.'/collectionpress/cp_item-content.php');
                 }
             }
-            $post_content .= ob_get_clean();
         }
-        return $post_content;
+        return $post_content ;
     }
 
     public function cpr_author_meta_box()

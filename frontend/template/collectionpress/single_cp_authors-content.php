@@ -107,7 +107,7 @@ if ($show_posts=="yes" && $cp_related_author!='') : ?>
                 if (file_exists(locate_template('template/collectionpress/author_display_posts.php'))) {
                     get_template_part('template/collectionpress/author_display_posts');
                 } else {
-                    include(CPR_TEMPLATE_PATH.'/template/collectionpress/author_display_posts.php');
+                    include(CPR_TEMPLATE_PATH.'/collectionpress/author_display_posts.php');
                 }
 
             endwhile; ?>
