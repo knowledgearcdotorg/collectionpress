@@ -132,20 +132,24 @@ endif;
 
         <?php endwhile; ?>
     </ul>
-    <?php if ($total_pages>1) : ?>
-        <div class="pagination">            
-            <?php if ($prev_link) : ?>
-                <span class="previous" >
-                    <a class="previous-page-link  page-numbers" href="<?php echo $prev_link ?>">&laquo;</a>
-                </span>
-            <?php endif; ?>
-            <?php if ($next_link) : ?>
-                <span class="next" >
-                    <a class="next-page-link  page-numbers" href="<?php echo $next_link ?>">&raquo;</a>
-                </span>
-            <?php endif; ?>
-        </div>
-    <?php endif; ?>
-<?php else : ?>
-    <p><?php echo __('No results found.', 'cpress'); ?></p>
-<?php endif; ?>            
+   <?php if ($total_pages>1) : ?>
+       <ul class="pagination">            
+           <?php if ($prev_link) : ?>
+               <li class="previous" >
+                   <a class="previous-page-link  page-numbers" href="<?php echo $prev_link ?>"><span class="glyphicon glyphicon-arrow-left"></span></a>
+               </li>
+           <?php else :?>
+               <li class="previous disabled" >
+                   <a class="previous-page-link  page-numbers" href="<?php echo $prev_link ?>"><span class="glyphicon glyphicon-arrow-left"></span></a>
+               </li>
+           <?php endif; ?>
+           <?php if ($next_link) : ?>
+               <li class="next" >
+                   <a class="next-page-link  page-numbers" href="<?php echo $next_link ?>"><span class="glyphicon glyphicon-arrow-right"></span></a>
+               </li>
+           <?php endif; ?>
+       </ul>
+   <?php endif; ?>
+   <?php else : ?>
+   <p><?php echo __('No results found.', 'cpress'); ?></p>
+   <?php endif; ?>            
