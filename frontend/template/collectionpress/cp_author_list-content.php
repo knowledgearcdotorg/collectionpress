@@ -10,12 +10,12 @@ $limit = $posts_per_page = get_option("posts_per_page");
 $clist =1;
 $slist =1;
 $offset = 0;
-if (isset($_GET) && isset($_GET['offset'])) {
-    if ($_GET['offset']!=''){
+if (isset($_GET) && isset($_GET['offset'])) :
+    if ($_GET['offset']!='') :
         $offset = $_GET['offset'];
         $limit = $offset+$posts_per_page;
-    }
-}
+    endif;
+endif;
 $found_posts = $wpdb->get_var("
         SELECT      COUNT(ID)
         FROM        $wpdb->posts
@@ -23,11 +23,11 @@ $found_posts = $wpdb->get_var("
         );
 $total_pages = ceil($found_posts/$posts_per_page);
 
-if (isset($_GET) && isset($_GET['starts_with']) && ($_GET['starts_with']!='')) {
+if (isset($_GET) && isset($_GET['starts_with']) && ($_GET['starts_with']!='')) :
     $starts_with = $_GET['starts_with'];
-    if ($starts_with=="0_9") {
+    if ($starts_with=="0_9") :
         $starts_with = 0;
-    }    
+    endif;
     //query
     $postids = $wpdb->get_col($wpdb->prepare("
 	SELECT      ID
@@ -35,42 +35,42 @@ if (isset($_GET) && isset($_GET['starts_with']) && ($_GET['starts_with']!='')) {
 	WHERE       $wpdb->posts.post_title >= '%s'
 	AND 		$wpdb->posts.post_type = 'cp_authors'
 	ORDER BY    $wpdb->posts.post_title ASC", $starts_with));
-    if (count($postids)) {
+    if (count($postids)) :
         $offset = $found_posts - count($postids) ;
-    }
+    endif;
     $limit = $offset+$posts_per_page;
-    
-}
+endif;
+
 $prev_link='';
 $next_link='';
 $poffset = ($offset - $posts_per_page);
 
-if ($limit >= $found_posts) {
+if ($limit >= $found_posts) :
     $limit = $found_posts;
-}
-if ($offset <= 0 || $poffset <= 0) {
+endif;
+if ($offset <= 0 || $poffset <= 0) :
     $poffset = 0;
     $limit = $posts_per_page;
-}
+endif;
 
 
-if ($offset!=0 && $limit < $found_posts) {
+if ($offset!=0 && $limit < $found_posts) :
     $prev_link= add_query_arg("offset",$poffset,get_permalink());
     $next_link= add_query_arg("offset",$limit,get_permalink());
-} else if ($offset == 0 && $limit < $found_posts) {
+elseif ($offset == 0 && $limit < $found_posts) :
     $next_link= add_query_arg("offset",$limit,get_permalink());
-} else if ($limit >= $found_posts) {
+elseif ($limit >= $found_posts) :
     $prev_link= add_query_arg("offset",$poffset,get_permalink());
-}
+endif;
 
 
 $startCapital = 65;
 $sort_html = "<div class=''>";
     $sort_html .= "<ul class='aplhasort-wrap list-inline'>";
         $sort_html .= "<li class ='alphabet-lists'><a href='". add_query_arg("sort", "0_9" ,get_permalink()) ."'>0-9</a></li>";
-            for ($i = 0; $i<26; $i++) {
+            for ($i = 0; $i<26; $i++) :
                 $sort_html .= "<li class ='alphabet-lists'><a href='". add_query_arg("starts_with", chr($startCapital + $i) ,get_permalink()) ."'>" .  chr($startCapital + $i) . "</a></li>";
-            }
+            endfor;
         $sort_html .= '</ul>';
     $sort_html .='<p class="pagination-info">Now showing items '.$offset.'-'.$limit.' of '.$found_posts.'</p>';
 $sort_html .= '</div>';
@@ -79,14 +79,14 @@ $sort_html .= '</div>';
 $sort_html_list = "<div class='col-x-8'>
     <select class='aphabet-list visible-xs'>";
         $sort_html_list .= "<option value='". add_query_arg("sort", "0_9" ,get_permalink()) ."'>0-9</option>";
-        for ($i = 0; $i<26; $i++) {
+        for ($i = 0; $i<26; $i++) :
             $sort_html_list .= "<option  value='". add_query_arg("starts_with", chr($startCapital + $i) ,get_permalink()) ."'>" .  chr($startCapital + $i) . "</option>";
-        }
+        endfor;
     $sort_html_list .= "</select>";
     $sort_html_list .='<p style="padding: 10px 0 ;">Now showing items '.$offset.'-'.$limit.' of '.$found_posts.'</p>';
 $sort_html .= '</div>';
 
-if (isset($postids)) {
+if (isset($postids)) :
     $author_results = new WP_Query(array(
                 "post__in"       =>$postids,
                 "post_type"      =>"cp_authors",
@@ -96,7 +96,7 @@ if (isset($postids)) {
                 "posts_per_page" =>$posts_per_page,
                 "cache_results"  => false,
                 ));
-} else {
+else :
     $author_results = new WP_Query(array(
                 "post_type"      =>"cp_authors",
                 "post_status"    =>"publish",
@@ -107,7 +107,7 @@ if (isset($postids)) {
                 "offset"          => $offset,
                 "limit"          => $limit,
                 ));
-}
+endif;
 
 ?>
 
