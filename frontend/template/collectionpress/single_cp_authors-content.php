@@ -67,6 +67,9 @@
         <span class="author-info-desc"><?php echo $author_orcid ?></span>
     </p>
 <?php endif; ?>
+<div class='atr-main-content'>
+<?php echo $content; ?>
+</div>
 <?php
     if ( $show_items=="yes" ){
         if ( $author_keyword=='' ){
