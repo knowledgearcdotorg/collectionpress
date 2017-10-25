@@ -127,11 +127,11 @@ class CPR_AuthorReg
     public function cpr_custom_content($content)
     {
         global $post;
-        $post_content = $content;
+        $post_content = '';
         //Author Single Page Content Customization
-        if (is_singular('cp_authors')) {
+        if (is_singular('cp_authors')) {            
             if (locate_template('template/collectionpress/single_cp_authors-content.php')) {
-                include(locate_template('template/collectionpress/single_cp_authors-content.php'));
+                get_template_part('template/collectionpress/single_cp_authors','content');
             }else {
                 include(CPR_TEMPLATE_PATH.'/collectionpress/single_cp_authors-content.php');
             }
@@ -147,7 +147,7 @@ class CPR_AuthorReg
             $cpr_item_page = $options['item_page'];
         }
         if (is_page('author-list') || is_page($cpr_author_page)) {
-            //~ ob_start();
+            $post_content = $content;
             if (is_page('author-list') || is_page($cpr_author_page)) {
                 if (locate_template('template/collectionpress/cp_author_list-content.php')) {
                     get_template_part('template/collectionpress/cp_author_list','content'); 
@@ -158,6 +158,7 @@ class CPR_AuthorReg
             //~ $post_content .= ob_get_clean();
         }
         if (is_page('items') || is_page($cpr_item_page)) {
+            $post_content = $content;
             if (is_page('items') || is_page($cpr_item_page)) {
                 if (locate_template('template/collectionpress/cp_item-content.php')) {
                     get_template_part('template/collectionpress/cp_item','content');
