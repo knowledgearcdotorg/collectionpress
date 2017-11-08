@@ -72,7 +72,7 @@ $sort_html = "<div class=''>";
                 $sort_html .= "<li class ='alphabet-lists'><a href='". add_query_arg("starts_with", chr($startCapital + $i) ,get_permalink()) ."'>" .  chr($startCapital + $i) . "</a></li>";
             endfor;
         $sort_html .= '</ul>';
-    $sort_html .='<p class="pagination-info">Now showing items '.$offset.'-'.$limit.' of '.$found_posts.'</p>';
+    $sort_html .='<p class="pagination-info">Now showing items '.$offset+1.'-'.$limit.' of '.$found_posts.'</p>';
 $sort_html .= '</div>';
 
 
@@ -83,7 +83,7 @@ $sort_html_list = "<div class='col-x-8'>
             $sort_html_list .= "<option  value='". add_query_arg("starts_with", chr($startCapital + $i) ,get_permalink()) ."'>" .  chr($startCapital + $i) . "</option>";
         endfor;
     $sort_html_list .= "</select>";
-    $sort_html_list .='<p style="padding: 10px 0 ;">Now showing items '.$offset.'-'.$limit.' of '.$found_posts.'</p>';
+    $sort_html_list .='<p style="padding: 10px 0 ;">Now showing items '.$offset+1.'-'.$limit.' of '.$found_posts.'</p>';
 $sort_html .= '</div>';
 
 if (isset($postids)) :
