@@ -66,7 +66,7 @@ class CollectionPress_ShortCode
         }
         
         if (file_exists(locate_template('template/collectionpress/item_display.php'))) {
-            get_template_part('template/collectionpress/item_display.php');
+            include(get_stylesheet_directory().'template/collectionpress/item_display.php');
         } else {
             include(CPR_TEMPLATE_PATH.'/collectionpress/item_display.php');
         }
@@ -101,7 +101,7 @@ class CollectionPress_ShortCode
                 <?php while ($author_results->have_posts()) :
                     $author_results->the_post();                
                     if (file_exists(locate_template('template/collectionpress/author_display.php'))) {
-                        get_template_part('template/collectionpress/author_display.php');
+                        include(get_stylesheet_directory().'template/collectionpress/author_display.php');
                     } else {
                         include(CPR_TEMPLATE_PATH.'/collectionpress/author_display.php');
                     }
